@@ -16,7 +16,6 @@ export interface IAuth extends IFirebaseBase {
 export interface IUser extends IFirebaseBase {
   uid: string;
   username: string;
-  email: string;
   auth: Nullable<IAuth>;
 }
 

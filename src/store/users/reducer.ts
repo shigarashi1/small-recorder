@@ -13,7 +13,6 @@ const initialUserState: IUserState = {
     _id: null,
     uid: '',
     username: '',
-    email: '',
     auth: null,
     createdAt: null,
     updatedAt: null,
@@ -45,7 +44,7 @@ export function userReducer(state: IUserState = initialUserState, action: UsersA
 
 export function userErrorReducer(state: TUserErrorState = [], action: UsersActions): TUserErrorState {
   switch (action.type) {
-    case ActionType.LOGIN_REQUEST_FAILTURE:
+    case ActionType.SIGN_IN_REQUEST_FAILTURE:
       return [];
   }
 
@@ -54,26 +53,26 @@ export function userErrorReducer(state: TUserErrorState = [], action: UsersActio
 
 export function loginReducer(state: TLoginState = initialLoginState, action: UsersActions): TLoginState {
   switch (action.type) {
-    case ActionType.LOGIN_REQUEST:
+    case ActionType.SIGN_IN_REQUEST:
       return {
         ...state,
         isLoggingIn: true,
       };
 
-    case ActionType.LOGIN_REQUEST_SUCCESS:
+    case ActionType.SIGN_IN_REQUEST_SUCCESS:
       return {
         ...state,
         isLoggingIn: false,
         isLoggedIn: true,
       };
 
-    case ActionType.LOGOUT_REQUEST:
+    case ActionType.SIGN_OUT_REQUEST:
       return {
         ...state,
         isLoggingIn: true,
       };
 
-    case ActionType.LOGOUT_REQUEST_SUCCESS:
+    case ActionType.SIGN_OUT_REQUEST_SUCCESS:
       return {
         ...state,
         isLoggingIn: false,

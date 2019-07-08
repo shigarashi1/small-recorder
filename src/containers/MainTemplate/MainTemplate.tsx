@@ -11,7 +11,7 @@ interface IStateToProps {
 }
 
 interface IDispatchToProps {
-  logout: typeof fromUser.logout;
+  logout: typeof fromUser.signOut;
 }
 
 type TProps = IStateToProps & IDispatchToProps;
@@ -28,7 +28,7 @@ function mapStateToProps(state: AppState): IStateToProps {
 
 function mapDispatchToProps(dispatch: Dispatch): IDispatchToProps {
   return {
-    logout: () => dispatch<any>(fromUser.logout()),
+    logout: () => dispatch<any>(fromUser.signOut()),
   };
 }
 

@@ -7,7 +7,7 @@ import * as fromUser from '../../../store/users';
 import PageTitle from '../../atoms/PageTitle/PageTitle';
 
 interface IProps {
-  login: typeof fromUser.login;
+  login: typeof fromUser.signIn;
 }
 
 interface IState {

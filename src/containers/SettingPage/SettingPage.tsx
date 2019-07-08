@@ -11,7 +11,7 @@ interface IStateToProps {
 }
 
 interface IDispatchToProps {
-  login: typeof fromUser.login;
+  login: typeof fromUser.signIn;
 }
 
 type TProps = IStateToProps & IDispatchToProps;

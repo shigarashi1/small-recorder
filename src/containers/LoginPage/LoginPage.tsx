@@ -12,7 +12,7 @@ interface IStateToProps {
 }
 
 interface IDispatchToProps {
-  login: typeof fromUser.login;
+  login: typeof fromUser.signIn;
 }
 
 type TProps = IStateToProps & IDispatchToProps;
@@ -33,7 +33,7 @@ function mapStateToProps(state: AppState): IStateToProps {
 
 function mapDispatchToProps(dispatch: Dispatch): IDispatchToProps {
   return {
-    login: () => dispatch<any>(fromUser.login()),
+    login: () => dispatch<any>(fromUser.signIn()),
   };
 }
 

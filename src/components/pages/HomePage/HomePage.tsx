@@ -6,7 +6,7 @@ import * as fromUser from '../../../store/users';
 import PageTitle from '../../atoms/PageTitle/PageTitle';
 
 interface IProps {
-  logout: typeof fromUser.logout;
+  logout: typeof fromUser.signOut;
 }
 
 interface IState {
