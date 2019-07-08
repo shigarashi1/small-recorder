@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "small-recorder-dev",
+    "prod": "small-recorder"
+  }
+}

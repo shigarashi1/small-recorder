@@ -9,5 +9,10 @@ __sample
 dist
 build
 
-# firebase cache
+# firebase
 .firebase
+# .firebaserc
+firestore.rules
+
+# log
+**.log
