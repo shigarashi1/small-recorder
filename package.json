@@ -8,8 +8,8 @@
     "build": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
     "lint": "tslint -p ./tsconfig.json",
     "test": "react-scripts test --setupFiles ./src/configuration/setupTests.ts",
-    "deploy": "firebase deploy --project default",
-    "deploy:production": "firebase deploy --project --prod"
+    "deploy": "npm run build && firebase deploy --project default",
+    "deploy:production": "npm run build && firebase deploy --project --prod"
   },
   "husky": {
     "hooks": {
@@ -39,7 +39,6 @@
   "bugs": {
     "url": "https://github.com/shigarashi1/small-recorder/issues"
   },
-  "homepage": "https://github.com/shigarashi1/small-recorder#readme",
   "dependencies": {
     "@material-ui/core": "4.2.0",
     "@material-ui/styles": "4.2.0",
