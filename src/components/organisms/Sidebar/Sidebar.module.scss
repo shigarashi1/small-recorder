@@ -1,0 +1,12 @@
+// @types
+.list {
+  min-width: 150px;
+  .listItemActive {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    > div {
+      > span {
+        color: #fff;
+      }
+    }
+  }
+}

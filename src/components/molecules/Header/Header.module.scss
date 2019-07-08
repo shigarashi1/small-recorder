@@ -1,0 +1,12 @@
+@import '../../../styles/variables';
+
+#container {
+  height: $height-header;
+  top: 0;
+  position: absolute;
+  flex-direction: row !important;
+  justify-content: space-between;
+  .right {
+    justify-content: flex-end;
+  }
+}

@@ -1,0 +1,231 @@
+@startuml schema-diagram
+
+' =====================================
+' FirebaseBaseObject
+' =====================================
+object IFirebaseBase {
+  _id: firebase_doc_id
+  createdAt: timestamp
+  updatedAt: timestamp
+}
+
+' =====================================
+' Firebase Schema
+' =====================================
+object Users {
+  uid: firebase.auth.uid
+  username: string
+  email: string
+  auth: Auth
+}
+
+Users *-- Auth
+
+object RecordCategories {
+  user: Users
+  name: string
+  hasDeleted: boolean
+}
+
+RecordCategories *-- Users
+
+object RecordTargets {
+  user: Users
+  category: RecordCategories
+  count: number
+  term: 'day' | 'week' | 'month'
+}
+
+RecordTargets *-- Users
+
+object Records {
+  user: Users
+  date: number
+  category: RecordCategories
+  record: string
+}
+
+Records *-- Users
+Records *-- RecordCategories
+
+object Auth {
+  isAdmin: boolean
+}
+
+Users <|-- IFirebaseBase
+RecordCategories <|-- IFirebaseBase
+RecordTargets <|-- IFirebaseBase
+Records <|-- IFirebaseBase
+Auth <|-- IFirebaseBase
+
+
+' =====================================
+' IPageBase
+' =====================================
+object IPageBase {
+  loading: boolean
+  loaded: boolean
+  errors: IPageError[]
+}
+
+object IPageError {
+  code: string
+  message: string
+}
+
+IPageBase o-- IPageError
+
+
+ILoginPage <|-- IPageBase
+IRecordPage <|-- IPageBase
+IReportPage <|-- IPageBase
+ISearchPage <|-- IPageBase
+ISettingPage <|--	IPageBase
+
+' =====================================
+' Redux Store
+' =====================================
+object ReduxStore {
+  userFeature: IUserFeature
+  lookupsFeature: ILookupsFeature
+  loginPage: ILoginPage
+  recordPage: IRecordPage
+  reportPage: IReportPage
+  searchPage: ISearchPage
+  settingPage: ISettingPage
+}
+
+ReduxStore *-- IUserFeature
+ReduxStore *-- ILookupsFeature
+ReduxStore *-- ILoginPage
+ReduxStore *-- IRecordPage
+ReduxStore *-- IReportPage
+ReduxStore *-- ISearchPage
+ReduxStore *-- ISettingPage
+
+
+' =====================================
+' IUserFeature Store
+' =====================================
+object IUserFeature {
+  user: Users
+  login: ILogin
+}
+
+object ILogin {
+  loggedIn: boolean
+  loggingIn: boolean
+}
+
+IUserFeature *-- Users
+IUserFeature *-- ILogin
+
+
+' =====================================
+' ILookupsFeature Store
+' =====================================
+object ILookupsFeature {
+  categories: RecordCategories[]
+  targets: RecordTargets[]
+}
+
+ILookupsFeature o-- "n" RecordCategories
+ILookupsFeature o-- "n" RecordTargets
+
+
+' =====================================
+' ILoginPage Store
+' =====================================
+object ILoginPage {
+  formData: any(ISignInForm | ISignUpForm)
+}
+
+ILoginPage *-- ILoginFormBase
+
+object ILoginFormBase {
+  email: string
+  password: string
+}
+
+object ISignInForm {
+}
+
+object ISignUpForm {
+  username: string
+  confirmation: string
+}
+
+ISignInForm <|-- ILoginFormBase
+ISignUpForm <|-- ILoginFormBase
+
+
+' =====================================
+' IRecordPage Store
+' =====================================
+object IRecordPage {
+  currentDate: number
+  records: Records
+}
+
+IRecordPage o-- "n" Records
+
+
+' =====================================
+' IReportPage Store
+' =====================================
+object IReportPage {
+  filter: IReportFilter
+  records: Records
+}
+
+object ReportFilter {
+  isMonth: boolean
+  from: number
+  to: number
+}
+
+IReportPage *-- ReportFilter
+IReportPage o-- "n" Records
+
+
+' =====================================
+' ISearchPage Store
+' =====================================
+object ISearchPage {
+  filter: ISearchFilter
+  records: Records
+}
+
+object ISearchFilter {
+  from: number
+  to: number
+  category: RecordCategories
+  record: string
+  sortType: 'date' | 'category' | 'record'
+  orderType: 'asc' | 'desc'
+  hasDeleted: boolean
+}
+
+ISearchPage *-- ISearchFilter
+ISearchPage o-- "n" Records
+ISearchFilter *-- RecordCategories
+
+
+' =====================================
+' ISettingPage Store
+' =====================================
+object ISettingPage {
+  editingType: 'category' | 'target'
+  dialogType: 'create' | 'edit' | 'delete' | 'none'
+  selectingCategory: RecordCategories
+  selectingTarget: RecordTargets
+  currentCategories: RecordCategories[]
+  currentTargets: RecordTargets[]
+}
+
+ISettingPage *-- RecordCategories
+ISettingPage *-- RecordTargets
+ISettingPage o-- "n" RecordCategories
+ISettingPage o-- "n" RecordTargets
+
+@enduml

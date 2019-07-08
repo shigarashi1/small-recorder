@@ -1,0 +1,85 @@
+import { ActionType, UsersActions } from './action';
+import { TApiError } from '../../types/api';
+import { IPageBase } from '../../types/page-base';
+import { ILogin } from '../../types/login-page';
+import { IUser } from '../../types/firebase';
+
+export interface IUserState extends IPageBase {
+  user: IUser;
+}
+
+const initialUserState: IUserState = {
+  user: {
+    _id: null,
+    uid: '',
+    username: '',
+    email: '',
+    auth: null,
+    createdAt: null,
+    updatedAt: null,
+  },
+  isLoaded: false,
+  isLoading: false,
+};
+
+export type TUserErrorState = TApiError[];
+
+export type TLoginState = ILogin;
+
+const initialLoginState: TLoginState = {
+  isLoggedIn: true,
+  isLoggingIn: false,
+};
+
+export function userReducer(state: IUserState = initialUserState, action: UsersActions): IUserState {
+  switch (action.type) {
+    case ActionType.LOAD_USER_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+  }
+
+  return state;
+}
+
+export function userErrorReducer(state: TUserErrorState = [], action: UsersActions): TUserErrorState {
+  switch (action.type) {
+    case ActionType.LOGIN_REQUEST_FAILTURE:
+      return [];
+  }
+
+  return state;
+}
+
+export function loginReducer(state: TLoginState = initialLoginState, action: UsersActions): TLoginState {
+  switch (action.type) {
+    case ActionType.LOGIN_REQUEST:
+      return {
+        ...state,
+        isLoggingIn: true,
+      };
+
+    case ActionType.LOGIN_REQUEST_SUCCESS:
+      return {
+        ...state,
+        isLoggingIn: false,
+        isLoggedIn: true,
+      };
+
+    case ActionType.LOGOUT_REQUEST:
+      return {
+        ...state,
+        isLoggingIn: true,
+      };
+
+    case ActionType.LOGOUT_REQUEST_SUCCESS:
+      return {
+        ...state,
+        isLoggingIn: false,
+        isLoggedIn: false,
+      };
+  }
+
+  return state;
+}

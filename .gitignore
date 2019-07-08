@@ -1,0 +1,16 @@
+# setting
+node_modules
+# __sample
+
+# tmp
+.DS_Store
+
+# build
+dist
+build
+
+# firebase cache
+.firebase
+
+# sample component
+__SamplePage

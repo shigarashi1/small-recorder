@@ -1,0 +1,14 @@
+@import './_reset.scss';
+@import './_variables';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  background-color: $bg-color;
+}
