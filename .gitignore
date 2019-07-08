@@ -1,6 +1,6 @@
 # setting
 node_modules
-# __sample
+__sample
 
 # tmp
 .DS_Store
@@ -11,6 +11,3 @@ build
 
 # firebase cache
 .firebase
-
-# sample component
-__SamplePage
