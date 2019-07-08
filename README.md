@@ -24,6 +24,12 @@ $ npm start
 $ npm run build
 ```
 
+## Running the tests
+
+```
+$ npm run test
+```
+
 <!-- npm install
 // --save
 npm install --save  \
