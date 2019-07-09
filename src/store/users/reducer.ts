@@ -28,6 +28,7 @@ export type TLoginState = ILogin;
 const initialLoginState: TLoginState = {
   isLoggedIn: true,
   isLoggingIn: false,
+  additionalInfo: null,
 };
 
 export function userReducer(state: IUserState = initialUserState, action: UsersActions): IUserState {
