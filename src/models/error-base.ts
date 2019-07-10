@@ -19,10 +19,6 @@ export class ErrorBase<T = TError> extends Error {
   get errors() {
     return this._errors;
   }
-
-  get message() {
-    return '';
-  }
 }
 
 function isIError(value: any): value is IError {
