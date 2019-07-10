@@ -8,3 +8,8 @@
     justify-content: flex-end;
   }
 }
+
+.fixed {
+  top: 0;
+  position: fixed !important;
+}

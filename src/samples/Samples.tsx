@@ -33,6 +33,11 @@ export const ATOMS_SAMPLES: IProps[] = [
 
 export const MOLECULES_SAMPLES: IProps[] = [
   {
+    title: 'Header',
+    contexts: 'Headerです。',
+    node: <Header isLoggedIn={false} onOpen={brackFunc('Header Open!')} isFixed={false} />,
+  },
+  {
     title: 'SampleCard1',
     contexts: 'SampleCardのテストです。',
     node: <p>SampleCardのテスト</p>,
@@ -48,10 +53,5 @@ export const MOLECULES_SAMPLES: IProps[] = [
       />
     ),
     onAction: brackFunc('SampleCard2'),
-  },
-  {
-    title: 'Header',
-    contexts: 'Headerです。',
-    node: <Header isLoggedIn={false} onOpen={brackFunc('Header Open!')} />,
   },
 ];

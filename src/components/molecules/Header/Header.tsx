@@ -10,14 +10,18 @@ import HeaderTitle from '../../atoms/HeaderTitle/HeaderTitle';
 
 interface IProps {
   isLoggedIn: boolean;
+  isFixed?: boolean;
   onOpen: () => void;
 }
 
 const Header: React.FC<IProps> = (props: IProps) => {
+  const { onOpen, isLoggedIn, isFixed } = props;
+  const className = isFixed ? styles.fixed : '';
+
   const renderLeftBlock = () => {
     return (
       <React.Fragment>
-        <IconButton color="inherit" aria-label="Menu" onClick={props.onOpen}>
+        <IconButton color="inherit" aria-label="Menu" onClick={onOpen}>
           <Icon>menu_icon</Icon>
         </IconButton>
         <HeaderTitle title="Small Recorder" />
@@ -26,7 +30,7 @@ const Header: React.FC<IProps> = (props: IProps) => {
   };
 
   const renderRightBlock = () => {
-    if (!props.isLoggedIn) {
+    if (!isLoggedIn) {
       return null;
     }
     return (
@@ -37,11 +41,15 @@ const Header: React.FC<IProps> = (props: IProps) => {
   };
 
   return (
-    <AppBar id={styles.container} position="static">
+    <AppBar id={styles.container} className={className} position="static">
       <Toolbar>{renderLeftBlock()}</Toolbar>
       <Toolbar className={styles.right}>{renderRightBlock()}</Toolbar>
     </AppBar>
   );
+};
+
+Header.defaultProps = {
+  isFixed: true,
 };
 
 export default Header;

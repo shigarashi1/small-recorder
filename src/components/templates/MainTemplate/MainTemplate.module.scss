@@ -3,8 +3,9 @@
 
 $padding-top: $height-header + 5px;
 
-// #template {
-//   .container {
-//     padding: $padding-top 5px 5px;
-//   }
-// }
+#template {
+  background-color: $bg-color;
+  .container {
+    padding: $padding-top 5px 5px;
+  }
+}
