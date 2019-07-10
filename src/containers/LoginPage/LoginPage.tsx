@@ -6,6 +6,7 @@ import * as fromUser from '../../store/users';
 import { AppState } from '../../store';
 
 import LoginPage from '../../components/pages/LoginPage/LoginPage';
+import ErrorBoundary from '../../components/molecules/ErrorBoundary/ErrorBoundary';
 
 interface IStateToProps {
   isLoggedIn: boolean;
@@ -19,9 +20,9 @@ type TProps = IStateToProps & IDispatchToProps;
 
 const LoginPageContainer: React.FC<TProps> = (props: TProps) => {
   return (
-    <React.Fragment>
+    <ErrorBoundary>
       <LoginPage login={props.login} />
-    </React.Fragment>
+    </ErrorBoundary>
   );
 };
 

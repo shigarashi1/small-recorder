@@ -25,16 +25,24 @@ class MainTemplate extends Component<IProps, IState> {
   };
 
   render() {
-    const { isLoggedIn } = this.props;
-    const { hasOpen } = this.state;
     return (
       <div id={styles.template}>
-        <Header isLoggedIn={isLoggedIn} onOpen={this.onChangeSidebar} />
-        <Sidebar hasOpen={hasOpen} onOpenClose={this.onChangeSidebar} />
+        {this.renderUtilities()}
         <div className={styles.container}>
           <AppRouter />
         </div>
       </div>
+    );
+  }
+
+  renderUtilities() {
+    const { isLoggedIn } = this.props;
+    const { hasOpen } = this.state;
+    return (
+      <React.Fragment>
+        <Header isLoggedIn={isLoggedIn} onOpen={this.onChangeSidebar} />
+        <Sidebar hasOpen={hasOpen} onOpenClose={this.onChangeSidebar} />
+      </React.Fragment>
     );
   }
 }

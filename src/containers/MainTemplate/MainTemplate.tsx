@@ -5,6 +5,7 @@ import { AppState } from '../../store';
 
 import MainTemplate from '../../components/templates/MainTemplate/MainTemplate';
 import * as fromUser from '../../store/users';
+import ErrorBoundary from '../../components/molecules/ErrorBoundary/ErrorBoundary';
 
 interface IStateToProps {
   isLoggedIn: boolean;
@@ -17,7 +18,11 @@ interface IDispatchToProps {
 type TProps = IStateToProps & IDispatchToProps;
 
 const MainTemplateContainer: React.FC<TProps> = (props: TProps) => {
-  return <MainTemplate isLoggedIn={props.isLoggedIn} />;
+  return (
+    <ErrorBoundary>
+      <MainTemplate isLoggedIn={props.isLoggedIn} />;
+    </ErrorBoundary>
+  );
 };
 
 function mapStateToProps(state: AppState): IStateToProps {
