@@ -4,9 +4,10 @@ import styles from './SamplePage.module.scss';
 
 import PageTitle from '../../atoms/PageTitle/PageTitle';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+import Grid, { GridSize } from '@material-ui/core/Grid';
 import SampleCard from '../../molecules/SampleCard/SampleCard';
 import { MOLECULES_SAMPLES, ATOMS_SAMPLES } from '../../../samples/Samples';
+import { ObjectIndexes } from '../../../types';
 
 interface IProps {
   prop?: string;
@@ -15,6 +16,13 @@ interface IProps {
 interface IState {
   state?: boolean;
 }
+
+const breakPoint: ObjectIndexes<GridSize> = {
+  xs: 12,
+  sm: 6,
+  md: 4,
+  lg: 3,
+};
 
 class SamplePage extends Component<IProps, IState> {
   constructor(props: IProps) {
@@ -31,7 +39,15 @@ class SamplePage extends Component<IProps, IState> {
           <Grid container={true} spacing={2}>
             {ATOMS_SAMPLES.map((sample, i) => {
               return (
-                <Grid key={i} item={true} xs={4}>
+                <Grid
+                  key={i}
+                  item={true}
+                  xs={breakPoint.xs}
+                  sm={breakPoint.sm}
+                  md={breakPoint.md}
+                  lg={breakPoint.lg}
+                  xl={breakPoint.lg}
+                >
                   <SampleCard {...sample} />
                 </Grid>
               );
@@ -41,7 +57,15 @@ class SamplePage extends Component<IProps, IState> {
           <Grid container={true} spacing={2}>
             {MOLECULES_SAMPLES.map((sample, i) => {
               return (
-                <Grid key={i} item={true} xs={4}>
+                <Grid
+                  key={i}
+                  item={true}
+                  xs={breakPoint.xs}
+                  sm={breakPoint.sm}
+                  md={breakPoint.md}
+                  lg={breakPoint.lg}
+                  xl={breakPoint.lg}
+                >
                   <SampleCard {...sample} />
                 </Grid>
               );
