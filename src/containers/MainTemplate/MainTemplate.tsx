@@ -20,7 +20,7 @@ type TProps = IStateToProps & IDispatchToProps;
 const MainTemplateContainer: React.FC<TProps> = (props: TProps) => {
   return (
     <ErrorBoundary>
-      <MainTemplate isLoggedIn={props.isLoggedIn} />;
+      <MainTemplate isLoggedIn={props.isLoggedIn} />
     </ErrorBoundary>
   );
 };
