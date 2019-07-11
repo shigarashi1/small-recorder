@@ -8,6 +8,7 @@ import Grid, { GridSize } from '@material-ui/core/Grid';
 import SampleCard from '../../molecules/SampleCard/SampleCard';
 import { MOLECULES_SAMPLES, ATOMS_SAMPLES } from '../../../samples/Samples';
 import { ObjectIndexes } from '../../../types';
+import Divider from '@material-ui/core/Divider';
 
 interface IProps {
   prop?: string;
@@ -35,7 +36,7 @@ class SamplePage extends Component<IProps, IState> {
       <div id={styles.container}>
         <PageTitle title="SamplePage" />
         <div className={styles.contents}>
-          <Typography component="h4">Atoms</Typography>
+          <Typography variant="h5">Atoms</Typography>
           <Grid container={true} spacing={2}>
             {ATOMS_SAMPLES.map((sample, i) => {
               return (
@@ -53,7 +54,8 @@ class SamplePage extends Component<IProps, IState> {
               );
             })}
           </Grid>
-          <Typography component="h4">Molecules</Typography>
+          <Divider className={styles.divider} />
+          <Typography variant="h5">Molecules</Typography>
           <Grid container={true} spacing={2}>
             {MOLECULES_SAMPLES.map((sample, i) => {
               return (

@@ -7,8 +7,13 @@
   box-sizing: border-box;
 }
 
-#root {
+// #root {
+//   width: 100vw;
+//   height: 100vh;
+// }
+
+body {
+  background-color: $bg-color;
   width: 100vw;
   height: 100vh;
-  background-color: $bg-color;
 }

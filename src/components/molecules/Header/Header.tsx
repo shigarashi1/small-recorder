@@ -16,7 +16,7 @@ interface IProps {
 
 const Header: React.FC<IProps> = (props: IProps) => {
   const { onOpen, isLoggedIn, isFixed } = props;
-  const className = isFixed ? styles.fixed : '';
+  const position = isFixed ? 'fixed' : 'static';
 
   const renderLeftBlock = () => {
     return (
@@ -41,7 +41,7 @@ const Header: React.FC<IProps> = (props: IProps) => {
   };
 
   return (
-    <AppBar id={styles.container} className={className} position="static">
+    <AppBar id={styles.container} position={position}>
       <Toolbar>{renderLeftBlock()}</Toolbar>
       <Toolbar className={styles.right}>{renderRightBlock()}</Toolbar>
     </AppBar>
