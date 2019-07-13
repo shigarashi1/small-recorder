@@ -5,6 +5,8 @@ import styles from './MainTemplate.module.scss';
 import AppRouter from '../../AppRouter';
 import Sidebar from '../../organisms/Sidebar/Sidebar';
 import Header from '../../molecules/Header/Header';
+import DragDropContext from 'react-dnd';
+import ReactDnDHTML5Backend from 'react-dnd-html5-backend';
 
 interface IProps {
   isLoggedIn: boolean;

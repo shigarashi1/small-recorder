@@ -1,0 +1,25 @@
+// @types
+#container {
+  width: 100%;
+  z-index: 10000;
+  position: absolute;
+  * {
+    width: 100%;
+  }
+  .table {
+    background-color: gray;
+    .row {
+      .data {
+        border: 1px solid #000;
+        width: calc(100% / 4);
+        font-weight: bold;
+        .button {
+          color: #000;
+        }
+        // .zero {
+        //   text-align: left;
+        // }
+      }
+    }
+  }
+}

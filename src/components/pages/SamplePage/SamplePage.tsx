@@ -9,6 +9,10 @@ import SampleCard from '../../molecules/SampleCard/SampleCard';
 import { MOLECULES_SAMPLES, ATOMS_SAMPLES } from '../../../samples/Samples';
 import { ObjectIndexes } from '../../../types';
 import Divider from '@material-ui/core/Divider';
+import InputText from '../../atoms/InputText/InputText';
+import NumberKeyboard from '../../atoms/NumberKeyboard/NumberKeyboard';
+import { ISampleCardProps } from '../../../types/sample-card';
+import Logger from '../../../helpers/logger';
 
 interface IProps {
   prop?: string;
@@ -25,58 +29,111 @@ const breakPoint: ObjectIndexes<GridSize> = {
   lg: 3,
 };
 
-class SamplePage extends Component<IProps, IState> {
+type TState = IState & ObjectIndexes;
+
+class SamplePage extends Component<IProps, TState> {
   constructor(props: IProps) {
     super(props);
-    this.state = { state: false };
+    this.state = {
+      inputText: '',
+      numberKeyboard: '',
+    };
   }
 
   render() {
+    const atomsSamples = this.getAtomsSampleWithState();
     return (
       <div id={styles.container}>
         <PageTitle title="SamplePage" />
         <div className={styles.contents}>
           <Typography variant="h5">Atoms</Typography>
           <Grid container={true} spacing={2}>
+            {atomsSamples.map((sample, i) => {
+              return this.renderSample(sample, i);
+            })}
             {ATOMS_SAMPLES.map((sample, i) => {
-              return (
-                <Grid
-                  key={i}
-                  item={true}
-                  xs={breakPoint.xs}
-                  sm={breakPoint.sm}
-                  md={breakPoint.md}
-                  lg={breakPoint.lg}
-                  xl={breakPoint.lg}
-                >
-                  <SampleCard {...sample} />
-                </Grid>
-              );
+              return this.renderSample(sample, i);
             })}
           </Grid>
           <Divider className={styles.divider} />
           <Typography variant="h5">Molecules</Typography>
           <Grid container={true} spacing={2}>
             {MOLECULES_SAMPLES.map((sample, i) => {
-              return (
-                <Grid
-                  key={i}
-                  item={true}
-                  xs={breakPoint.xs}
-                  sm={breakPoint.sm}
-                  md={breakPoint.md}
-                  lg={breakPoint.lg}
-                  xl={breakPoint.lg}
-                >
-                  <SampleCard {...sample} />
-                </Grid>
-              );
+              return this.renderSample(sample, i);
             })}
           </Grid>
         </div>
       </div>
     );
+  } // Render End
+
+  renderSample(sample: ISampleCardProps, key: number) {
+    return (
+      <Grid
+        key={key}
+        item={true}
+        xs={breakPoint.xs}
+        sm={breakPoint.sm}
+        md={breakPoint.md}
+        lg={breakPoint.lg}
+        xl={breakPoint.lg}
+      >
+        <SampleCard {...sample} />
+      </Grid>
+    );
   }
+
+  getAtomsSampleWithState(): ISampleCardProps[] {
+    return [
+      {
+        title: 'InputText',
+        contexts: 'InputTextだよー',
+        node: this.renderInputText(),
+      },
+      {
+        title: 'NumberKeyboard',
+        contexts: 'NumberKeyboardだよー',
+        node: this.renderNumberKeyboard(),
+      },
+    ];
+  }
+
+  getState<T = any>(key: string, initialValue: T): T {
+    const state = this.state[key];
+    return typeof state === 'undefined' ? initialValue : state;
+  }
+
+  renderInputText() {
+    const value = this.getState('inputText', '');
+    return <InputText value={value} onChange={this.onChangedInputText} />;
+  }
+
+  onChangedInputText = (value: string) => {
+    this.setState({ inputText: value });
+  };
+
+  renderNumberKeyboard() {
+    const value = this.getState('numberKeyboard', '');
+    return (
+      <React.Fragment>
+        <InputText value={value} onChange={this.onChangedNumberKeyboard} />
+        <NumberKeyboard
+          value={value}
+          changedValue={this.onChangedNumberKeyboard}
+          onPush={this.onPushNumberKeyboard}
+          isAbsolute={false}
+        />
+      </React.Fragment>
+    );
+  }
+
+  onChangedNumberKeyboard = (value: string) => {
+    this.setState({ numberKeyboard: value });
+  };
+
+  onPushNumberKeyboard = (value: string) => {
+    Logger.log('pushed', value);
+  };
 }
 
 export default SamplePage;

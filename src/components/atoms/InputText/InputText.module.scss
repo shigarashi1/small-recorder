@@ -1,0 +1,8 @@
+// @types
+#container {
+  width: 100%;
+  > input {
+    border: 1px #000 solid;
+    padding: 2px;
+  }
+}

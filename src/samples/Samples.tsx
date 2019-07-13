@@ -4,13 +4,7 @@ import SampleCard from '../components/molecules/SampleCard/SampleCard';
 import HeaderTitle from '../components/atoms/HeaderTitle/HeaderTitle';
 import PageTitle from '../components/atoms/PageTitle/PageTitle';
 import Header from '../components/molecules/Header/Header';
-
-interface IProps {
-  title?: string;
-  contexts: string;
-  onAction?: () => void;
-  node: React.ReactNode;
-}
+import { ISampleCardProps } from '../types/sample-card';
 
 const brackFunc = (text: string) => {
   return () => {
@@ -18,7 +12,7 @@ const brackFunc = (text: string) => {
   };
 };
 
-export const ATOMS_SAMPLES: IProps[] = [
+export const ATOMS_SAMPLES: ISampleCardProps[] = [
   {
     title: 'HeaderTitle',
     contexts: 'HeaderTitleです。',
@@ -31,7 +25,7 @@ export const ATOMS_SAMPLES: IProps[] = [
   },
 ];
 
-export const MOLECULES_SAMPLES: IProps[] = [
+export const MOLECULES_SAMPLES: ISampleCardProps[] = [
   {
     title: 'Header',
     contexts: 'Headerです。',
