@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import styles from './SamplePage.module.scss';
 
+import * as fromUtility from '../../../store/utility';
+
 import PageTitle from '../../atoms/PageTitle/PageTitle';
 import Typography from '@material-ui/core/Typography';
 import Grid, { GridSize } from '@material-ui/core/Grid';
@@ -17,7 +19,9 @@ import { changeValue } from '../../../helpers/number-keyboard';
 // import Logger from '../../../helpers/logger';
 
 interface IProps {
-  prop?: string;
+  isLoggedIn: boolean;
+  hasOpenKeyboard: boolean;
+  onOpenKeyboard: typeof fromUtility.changeHasOpenKeyboard;
 }
 
 interface IState {
@@ -96,6 +100,12 @@ class SamplePage extends Component<IProps, TState> {
         title: 'NumberKeyboard',
         contexts: 'NumberKeyboardだよー',
         node: this.renderNumberKeyboard(),
+      },
+      {
+        title: 'PopupNumberKeyboard',
+        contexts: 'PopupNumberKeyboardだよー',
+        node: <p>buttonで表示・非表示</p>,
+        onAction: () => this.props.onOpenKeyboard(!this.props.hasOpenKeyboard),
       },
     ];
   }

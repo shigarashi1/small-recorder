@@ -6,31 +6,34 @@ import { ObjectIndexes } from '../../../types/index';
 import { IKeyboardPosition, TKeyboardKey } from '../../../types/number-keyboard';
 import NumberKeyboard from '../../atoms/NumberKeyboard/NumberKeyboard';
 
-interface IProps {
-  isAbsolute: boolean;
-  position: IKeyboardPosition;
+export interface IProps {
+  hasOpen?: boolean;
+  isAbsolute?: boolean;
+  position?: IKeyboardPosition;
   onPush: (value: TKeyboardKey) => void;
 }
 
 const PopupNumberKeyboard: React.FC<IProps> = (props: IProps) => {
-  const { isAbsolute, position, onPush } = props;
+  const { hasOpen, isAbsolute, position, onPush } = props;
 
   return (
-    <div id={styles.container} style={getStyles(position.x, position.y)}>
+    <div id={styles.container} style={getStyles()} draggable={true}>
       <NumberKeyboard onPush={onPush} />
     </div>
   );
 
-  function getStyles(x: number = 0, y: number = 0): ObjectIndexes {
+  function getStyles(): ObjectIndexes {
     return {
+      display: hasOpen ? 'block' : 'none',
       position: isAbsolute ? 'absolute' : 'static',
-      top: x,
-      left: y,
+      top: position ? position.x : 100,
+      left: position ? position.y : 100,
     };
   }
 };
 
 PopupNumberKeyboard.defaultProps = {
+  hasOpen: false,
   isAbsolute: true,
 };
 

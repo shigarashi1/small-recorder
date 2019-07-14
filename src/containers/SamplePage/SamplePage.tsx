@@ -1,17 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { Dispatch, Action } from 'redux';
+import { Dispatch } from 'redux';
 
 import * as fromUser from '../../store/users';
+import * as fromUtility from '../../store/utility';
+
 import { AppState } from '../../store';
 import SamplePage from '../../components/pages/SamplePage/SamplePage';
 
 interface IStateToProps {
   isLoggedIn: boolean;
+  hasOpenKeyboard: boolean;
 }
 
 interface IDispatchToProps {
-  login: typeof fromUser.signIn;
+  onOpenKeyboard: typeof fromUtility.changeHasOpenKeyboard;
 }
 
 type TProps = IStateToProps & IDispatchToProps;
@@ -19,7 +22,7 @@ type TProps = IStateToProps & IDispatchToProps;
 const SamplePageContainer: React.FC<TProps> = (props: TProps) => {
   return (
     <React.Fragment>
-      <SamplePage />
+      <SamplePage {...props} />
     </React.Fragment>
   );
 };
@@ -27,18 +30,17 @@ const SamplePageContainer: React.FC<TProps> = (props: TProps) => {
 function mapStateToProps(state: AppState): IStateToProps {
   return {
     isLoggedIn: fromUser.getIsLoggedIn(state),
+    hasOpenKeyboard: fromUtility.getHasOpenKeyboard(state),
   };
 }
 
-// function mapDispatchToProps(dispatch: Dispatch<AppState>): IDispatchToProps {
-//   return {
-//     login: () => {
-//       return dispatch(fromUser.login());
-//     },
-//   };
-// }
+function mapDispatchToProps(dispatch: Dispatch): IDispatchToProps {
+  return {
+    onOpenKeyboard: (hasOpen: boolean) => dispatch<any>(fromUtility.changeHasOpenKeyboard(hasOpen)),
+  };
+}
 
 export default connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 )(SamplePageContainer);

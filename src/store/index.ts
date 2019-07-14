@@ -2,9 +2,11 @@ import { createStore, combineReducers, applyMiddleware, compose, StoreCreator } 
 import thunk from 'redux-thunk';
 
 import * as fromUser from './users';
+import * as fromUtility from './utility';
 
 const reducers = {
   userFeature: fromUser.reducers,
+  utilityFeature: fromUtility.reducers,
 };
 const rootReducer = combineReducers(reducers);
 export type AppState = ReturnType<typeof rootReducer>;

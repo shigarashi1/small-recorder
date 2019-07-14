@@ -9,3 +9,13 @@ $padding-top: $height-header + 5px;
     padding: $padding-top 5px 5px;
   }
 }
+
+.currentValue {
+  max-width: 300px;
+  top: 70px;
+  right: 30px;
+  position: absolute;
+  word-wrap: break-word;
+  z-index: 10000;
+  background-color: lavender;
+}
