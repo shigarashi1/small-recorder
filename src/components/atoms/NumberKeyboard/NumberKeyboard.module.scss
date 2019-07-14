@@ -1,8 +1,6 @@
 // @types
 #container {
-  width: 100%;
-  z-index: 10000;
-  position: absolute;
+  max-width: 250px;
   * {
     width: 100%;
   }
@@ -16,9 +14,6 @@
         .button {
           color: #000;
         }
-        // .zero {
-        //   text-align: left;
-        // }
       }
     }
   }

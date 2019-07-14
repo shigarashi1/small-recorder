@@ -12,7 +12,9 @@ import Divider from '@material-ui/core/Divider';
 import InputText from '../../atoms/InputText/InputText';
 import NumberKeyboard from '../../atoms/NumberKeyboard/NumberKeyboard';
 import { ISampleCardProps } from '../../../types/sample-card';
-import Logger from '../../../helpers/logger';
+import { TKeyboardKey } from '../../../types/number-keyboard';
+import { changeValue } from '../../../helpers/number-keyboard';
+// import Logger from '../../../helpers/logger';
 
 interface IProps {
   prop?: string;
@@ -117,12 +119,7 @@ class SamplePage extends Component<IProps, TState> {
     return (
       <React.Fragment>
         <InputText value={value} onChange={this.onChangedNumberKeyboard} />
-        <NumberKeyboard
-          value={value}
-          changedValue={this.onChangedNumberKeyboard}
-          onPush={this.onPushNumberKeyboard}
-          isAbsolute={false}
-        />
+        <NumberKeyboard onPush={this.onPushNumberKeyboard} />
       </React.Fragment>
     );
   }
@@ -131,8 +128,10 @@ class SamplePage extends Component<IProps, TState> {
     this.setState({ numberKeyboard: value });
   };
 
-  onPushNumberKeyboard = (value: string) => {
-    Logger.log('pushed', value);
+  onPushNumberKeyboard = (key: TKeyboardKey) => {
+    const stateValue = this.getState('numberKeyboard', '');
+    const value = changeValue(stateValue, key);
+    this.onChangedNumberKeyboard(value);
   };
 }
 

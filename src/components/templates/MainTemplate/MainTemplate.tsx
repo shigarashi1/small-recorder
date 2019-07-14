@@ -5,21 +5,27 @@ import styles from './MainTemplate.module.scss';
 import AppRouter from '../../AppRouter';
 import Sidebar from '../../organisms/Sidebar/Sidebar';
 import Header from '../../molecules/Header/Header';
-import DragDropContext from 'react-dnd';
-import ReactDnDHTML5Backend from 'react-dnd-html5-backend';
 
 interface IProps {
   isLoggedIn: boolean;
 }
 
+type TProps = IProps;
+
 interface IState {
   hasOpen: boolean;
+  text: string;
 }
 
-class MainTemplate extends Component<IProps, IState> {
-  constructor(props: IProps) {
+const initialState: IState = {
+  hasOpen: false,
+  text: '',
+};
+
+class MainTemplate extends Component<TProps, IState> {
+  constructor(props: TProps) {
     super(props);
-    this.state = { hasOpen: false };
+    this.state = initialState;
   }
 
   onChangeSidebar = () => {
@@ -37,6 +43,10 @@ class MainTemplate extends Component<IProps, IState> {
     );
   }
 
+  onPush = (value: string) => {
+    this.setState({ text: value });
+  };
+
   renderUtilities() {
     const { isLoggedIn } = this.props;
     const { hasOpen } = this.state;
@@ -44,6 +54,8 @@ class MainTemplate extends Component<IProps, IState> {
       <React.Fragment>
         <Header isLoggedIn={isLoggedIn} onOpen={this.onChangeSidebar} />
         <Sidebar hasOpen={hasOpen} onOpenClose={this.onChangeSidebar} />
+        {/* <p>{text}</p>
+        <DraggableNumberKeyboard value={text} isAbsolute={true} onPush={this.onPush} /> */}
       </React.Fragment>
     );
   }

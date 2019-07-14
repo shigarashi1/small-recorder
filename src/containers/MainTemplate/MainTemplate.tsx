@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { AppState } from '../../store';
 
-import MainTemplate from '../../components/templates/MainTemplate/MainTemplate';
 import * as fromUser from '../../store/users';
+
+import MainTemplate from '../../components/templates/MainTemplate/MainTemplate';
 import ErrorBoundary from '../../components/molecules/ErrorBoundary/ErrorBoundary';
 
 interface IStateToProps {

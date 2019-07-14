@@ -2,52 +2,23 @@ import React from 'react';
 
 import styles from './NumberKeyboard.module.scss';
 import Logger from '../../../helpers/logger';
-import { ObjectIndexes } from '../../../types';
+import { DISPLAY_KEYS_LIST } from '../../../lookups/number-keyboard';
+import { TKeyboardKey } from '../../../types/number-keyboard';
 
-interface IProps {
-  onPush?: (value: string) => void;
-  isAbsolute?: boolean;
-  // not
-  value?: string;
-  changedValue?: (value: string) => void;
+export interface IProps {
+  onPush: (value: TKeyboardKey) => void;
 }
 
-const DISPLAY_KEYS_LIST = [['7', '8', '9', 'C'], ['4', '5', '6', 'BS'], ['3', '2', '1', 'R'], ['0', '.', '-']];
-
 const NumberKeyboard: React.FC<IProps> = (props: IProps) => {
-  const { value, changedValue, onPush, isAbsolute } = props;
+  const { onPush } = props;
 
-  const onClickHandler = (key: string) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClickHandler = (key: TKeyboardKey) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     Logger.log('numberKeyBoard pushed', key);
-    if (!onPush) {
-      return;
-    }
-
     onPush(key);
-
-    // move to utility store
-    if (!changedValue) {
-      return;
-    }
-
-    switch (key) {
-      case 'C':
-        changedValue('');
-        break;
-
-      case 'BS':
-        changedValue('');
-        break;
-
-      default:
-        const returnValue = value ? value + key : key;
-        changedValue(returnValue);
-        break;
-    }
   };
 
   return (
-    <div id={styles.container} style={getStyles()}>
+    <div id={styles.container}>
       <table className={styles.table}>
         <tbody>
           {/* Header */}
@@ -60,7 +31,7 @@ const NumberKeyboard: React.FC<IProps> = (props: IProps) => {
             return (
               <tr className={styles.row} key={rowIndex}>
                 {displayKeys.map((key, colIndex) => {
-                  if (key === '0') {
+                  if (key === 0) {
                     return renderKey(key, 2, colIndex);
                   }
                   return renderKey(key, 1, colIndex);
@@ -73,28 +44,17 @@ const NumberKeyboard: React.FC<IProps> = (props: IProps) => {
     </div>
   );
 
-  function renderKey(key: string, colSpan: number, index: number) {
-    const buttonClasses = key === '0' ? `${styles.button} ${styles.zero}` : styles.button;
+  function renderKey(key: TKeyboardKey, colSpan: number, index: number) {
+    const buttonClasses = key === 0 ? `${styles.button} ${styles.zero}` : styles.button;
+    const buttonLabel = key === '' ? '　' : key;
     return (
       <td className={styles.data} colSpan={colSpan} key={index}>
         <button className={buttonClasses} onClick={onClickHandler(key)}>
-          {key}
+          {buttonLabel}
         </button>
       </td>
     );
   }
-
-  function getStyles(x: number = 0, y: number = 0): ObjectIndexes {
-    return {
-      position: isAbsolute ? 'absolute' : 'static',
-      top: x,
-      left: y,
-    };
-  }
-};
-
-NumberKeyboard.defaultProps = {
-  isAbsolute: true,
 };
 
 export default NumberKeyboard;
