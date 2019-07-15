@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
 
-import styles from './SamplePage.module.scss';
+import styles from './SampleAtomsPage.module.scss';
 
 import * as fromUtility from '../../../store/utility';
 
-import PageTitle from '../../atoms/PageTitle/PageTitle';
 import Typography from '@material-ui/core/Typography';
-import Grid, { GridSize } from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 import SampleCard from '../../molecules/SampleCard/SampleCard';
-import { MOLECULES_SAMPLES, ATOMS_SAMPLES } from '../../../samples/Samples';
+import { ATOMS_SAMPLES } from '../../../samples/Samples';
 import { ObjectIndexes } from '../../../types';
-import Divider from '@material-ui/core/Divider';
 import InputText from '../../atoms/InputText/InputText';
 import NumberKeyboard from '../../atoms/NumberKeyboard/NumberKeyboard';
 import { ISampleCardProps } from '../../../types/sample-card';
 import { TKeyboardKey } from '../../../types/number-keyboard';
 import { changeValue } from '../../../helpers/number-keyboard';
 import InputNumber from '../../atoms/InputNumber/InputNumber';
-// import Logger from '../../../helpers/logger';
+import { BREAK_POINT } from '../../../lookups/page-layout';
 
 interface IProps {
   isLoggedIn: boolean;
@@ -29,16 +27,9 @@ interface IState {
   state?: boolean;
 }
 
-const breakPoint: ObjectIndexes<GridSize> = {
-  xs: 12,
-  sm: 6,
-  md: 4,
-  lg: 3,
-};
-
 type TState = IState & ObjectIndexes;
 
-class SamplePage extends Component<IProps, TState> {
+class SampleAtomsPage extends Component<IProps, TState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -51,7 +42,6 @@ class SamplePage extends Component<IProps, TState> {
     const atomsSamples = this.getAtomsSampleWithState();
     return (
       <div id={styles.container}>
-        <PageTitle title="SamplePage" />
         <div className={styles.contents}>
           <Typography variant="h5">Atoms</Typography>
           <Grid container={true} spacing={2}>
@@ -59,13 +49,6 @@ class SamplePage extends Component<IProps, TState> {
               return this.renderSample(sample, i);
             })}
             {ATOMS_SAMPLES.map((sample, i) => {
-              return this.renderSample(sample, i);
-            })}
-          </Grid>
-          <Divider className={styles.divider} />
-          <Typography variant="h5">Molecules</Typography>
-          <Grid container={true} spacing={2}>
-            {MOLECULES_SAMPLES.map((sample, i) => {
               return this.renderSample(sample, i);
             })}
           </Grid>
@@ -79,11 +62,11 @@ class SamplePage extends Component<IProps, TState> {
       <Grid
         key={key}
         item={true}
-        xs={breakPoint.xs}
-        sm={breakPoint.sm}
-        md={breakPoint.md}
-        lg={breakPoint.lg}
-        xl={breakPoint.lg}
+        xs={BREAK_POINT.xs}
+        sm={BREAK_POINT.sm}
+        md={BREAK_POINT.md}
+        lg={BREAK_POINT.lg}
+        xl={BREAK_POINT.lg}
       >
         <SampleCard {...sample} />
       </Grid>
@@ -146,4 +129,4 @@ class SamplePage extends Component<IProps, TState> {
   };
 }
 
-export default SamplePage;
+export default SampleAtomsPage;

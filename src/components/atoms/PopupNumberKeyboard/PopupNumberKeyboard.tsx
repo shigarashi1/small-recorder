@@ -26,7 +26,7 @@ const PopupNumberKeyboard: React.FC<IProps> = (props: IProps) => {
     return {
       display: hasOpen ? 'block' : 'none',
       position: isAbsolute ? 'absolute' : 'static',
-      top: position ? position.x : 170,
+      top: position ? position.x : 200,
       left: position ? position.y : 30,
     };
   }

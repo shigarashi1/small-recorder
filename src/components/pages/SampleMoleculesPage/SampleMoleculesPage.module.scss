@@ -1,0 +1,11 @@
+// @types
+#container {
+  width: 100%;
+  padding: 10px;
+  .contents {
+    margin-top: 10px;
+    .divider {
+      margin: 15px 0 10px 0;
+    }
+  }
+}

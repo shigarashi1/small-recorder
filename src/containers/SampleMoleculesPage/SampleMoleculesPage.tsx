@@ -6,7 +6,7 @@ import * as fromUser from '../../store/users';
 import * as fromUtility from '../../store/utility';
 
 import { AppState } from '../../store';
-import SamplePage from '../../components/pages/SamplePage/SamplePage';
+import SampleMoleculesPage from '../../components/pages/SampleMoleculesPage/SampleMoleculesPage';
 
 interface IStateToProps {
   isLoggedIn: boolean;
@@ -19,10 +19,10 @@ interface IDispatchToProps {
 
 type TProps = IStateToProps & IDispatchToProps;
 
-const SamplePageContainer: React.FC<TProps> = (props: TProps) => {
+const SampleMoleculesPageContainer: React.FC<TProps> = (props: TProps) => {
   return (
     <React.Fragment>
-      <SamplePage {...props} />
+      <SampleMoleculesPage {...props} />
     </React.Fragment>
   );
 };
@@ -43,4 +43,4 @@ function mapDispatchToProps(dispatch: Dispatch): IDispatchToProps {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(SamplePageContainer);
+)(SampleMoleculesPageContainer);
