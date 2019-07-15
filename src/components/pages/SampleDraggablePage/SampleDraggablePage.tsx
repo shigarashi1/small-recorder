@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
+import { DndProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import TouchBackend from 'react-dnd-touch-backend';
+import Typography from '@material-ui/core/Typography';
 
 import styles from './SampleDraggablePage.module.scss';
 
 import * as fromUtility from '../../../store/utility';
 
-// import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { ObjectIndexes } from '../../../types';
-// import SampleCard from '../../molecules/SampleCard/SampleCard';
-// import { MOLECULES_SAMPLES, ATOMS_SAMPLES } from '../../../samples/Samples';
-// import Divider from '@material-ui/core/Divider';
-// import InputText from '../../atoms/InputText/InputText';
-// import NumberKeyboard from '../../atoms/NumberKeyboard/NumberKeyboard';
-// import { ISampleCardProps } from '../../../types/sample-card';
-// import { TKeyboardKey } from '../../../types/number-keyboard';
-// import { changeValue } from '../../../helpers/number-keyboard';
-// import InputNumber from '../../atoms/InputNumber/InputNumber';
-// import { BREAK_POINT } from '../../../lookups/page-layout';
+import { isMobile } from '../../../helpers/agent';
+import ExampleCardContent from '../../molecules/ExampleCardContent/ExampleCardContent';
 
 interface IProps {
   isLoggedIn: boolean;
@@ -40,10 +34,17 @@ class SampleDraggablePage extends Component<IProps, TState> {
   }
 
   render() {
+    const backEnd = isMobile ? TouchBackend : HTML5Backend;
+
     return (
       <div id={styles.container}>
-        <div className={styles.contents}>
+        <div className={styles.title}>
           <Typography variant="h5">Draggable Sample</Typography>
+        </div>
+        <div className={styles.contents}>
+          <DndProvider backend={backEnd}>
+            <ExampleCardContent />
+          </DndProvider>
         </div>
       </div>
     );

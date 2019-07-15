@@ -70,4 +70,4 @@ function collect(monitor: DragLayerMonitor) {
   };
 }
 
-export default DragLayer<IProps>(collect)(CustomDragLayer);
+export default DragLayer(collect)(CustomDragLayer);
