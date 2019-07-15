@@ -2,7 +2,14 @@
 #container {
   width: 100%;
   > input {
+    width: 100%;
     border: 1px #000 solid;
     padding: 2px;
+  }
+}
+
+.number {
+  > input {
+    text-align: right;
   }
 }

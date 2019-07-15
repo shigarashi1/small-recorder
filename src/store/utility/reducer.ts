@@ -1,4 +1,3 @@
-import { IInformationDialog } from '../../types/dialog';
 import { UtilitysActions, ActionType } from './action';
 
 export interface IKeyboardState {

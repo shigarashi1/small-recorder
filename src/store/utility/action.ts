@@ -36,14 +36,12 @@ export function changeHasOpenKeyboardSuccess(payload: boolean): ChangeHasOpenKey
     payload,
   };
 }
-
 export function changeKeyboardValueSuccess(payload: string): ChangeKeyboardValueSuccess {
   return {
     type: ActionType.CHANGE_KEYBOARD_VALUE_SUCCESS,
     payload,
   };
 }
-
 export function resetKeyboardValueSuccess(payload: string): ResetKeyboardValueSuccess {
   return {
     type: ActionType.RESET_KEYBOARD_VALUE_SUCCESS,

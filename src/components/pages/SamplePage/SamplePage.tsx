@@ -16,6 +16,7 @@ import NumberKeyboard from '../../atoms/NumberKeyboard/NumberKeyboard';
 import { ISampleCardProps } from '../../../types/sample-card';
 import { TKeyboardKey } from '../../../types/number-keyboard';
 import { changeValue } from '../../../helpers/number-keyboard';
+import InputNumber from '../../atoms/InputNumber/InputNumber';
 // import Logger from '../../../helpers/logger';
 
 interface IProps {
@@ -128,7 +129,7 @@ class SamplePage extends Component<IProps, TState> {
     const value = this.getState('numberKeyboard', '');
     return (
       <React.Fragment>
-        <InputText value={value} onChange={this.onChangedNumberKeyboard} />
+        <InputNumber value={value} />
         <NumberKeyboard onPush={this.onPushNumberKeyboard} />
       </React.Fragment>
     );

@@ -4,7 +4,7 @@ import styles from './PopupNumberKeyboard.module.scss';
 
 import { ObjectIndexes } from '../../../types/index';
 import { IKeyboardPosition, TKeyboardKey } from '../../../types/number-keyboard';
-import NumberKeyboard from '../../atoms/NumberKeyboard/NumberKeyboard';
+import NumberKeyboard from '../NumberKeyboard/NumberKeyboard';
 
 export interface IProps {
   hasOpen?: boolean;
@@ -26,8 +26,8 @@ const PopupNumberKeyboard: React.FC<IProps> = (props: IProps) => {
     return {
       display: hasOpen ? 'block' : 'none',
       position: isAbsolute ? 'absolute' : 'static',
-      top: position ? position.x : 100,
-      left: position ? position.y : 100,
+      top: position ? position.x : 170,
+      left: position ? position.y : 30,
     };
   }
 };

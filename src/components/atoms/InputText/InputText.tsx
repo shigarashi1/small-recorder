@@ -1,18 +1,21 @@
 import React from 'react';
-// import TextField from '@material-ui/core/TextField';
 
 import styles from './InputText.module.scss';
 
-interface IProps {
+export interface IProps {
+  id?: string;
   value?: string;
-  onChange?: (value: string) => void;
+  onChange?: (v: string) => void;
+  // option
+  isNumber?: boolean;
 }
 
 const InputText: React.FC<IProps> = (props: IProps) => {
-  const { value } = props;
+  const { value, isNumber } = props;
+
   return (
     <div id={styles.container}>
-      <input type="text" value={value} onChange={onChange} />
+      <input className={getClassName()} type="text" value={value} onChange={onChange} />
     </div>
   );
 
@@ -26,6 +29,18 @@ const InputText: React.FC<IProps> = (props: IProps) => {
     }
     props.onChange(changedValue);
   }
+
+  function getClassName(): string {
+    const baseClasses = [styles.input];
+    if (isNumber) {
+      baseClasses.push(styles.number);
+    }
+    return baseClasses.join(' ');
+  }
+};
+
+InputText.defaultProps = {
+  isNumber: false,
 };
 
 export default InputText;

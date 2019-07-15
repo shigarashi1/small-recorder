@@ -332,3 +332,7 @@ video {
   color: #000;
   text-shadow: none;
 }
+
+:focus {
+  outline: none;
+}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { DragSource, DropTarget, ConnectDragSource, ConnectDropTarget } from 'react-dnd';
 import { ObjectIndexes } from '../../types';
-import { IProps as IKeyboardProps } from '../../components/molecules/PopupNumberKeyboard/PopupNumberKeyboard';
+import { IProps as IKeyboardProps } from '../../components/atoms/PopupNumberKeyboard/PopupNumberKeyboard';
 
 // interface IProps {
 

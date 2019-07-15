@@ -8,7 +8,7 @@ import * as fromUtility from '../../../store/utility';
 import AppRouter from '../../AppRouter';
 import Sidebar from '../../organisms/Sidebar/Sidebar';
 import Header from '../../molecules/Header/Header';
-import PopupNumberKeyboard from '../../molecules/PopupNumberKeyboard/PopupNumberKeyboard';
+import PopupNumberKeyboard from '../../atoms/PopupNumberKeyboard/PopupNumberKeyboard';
 import { TKeyboardKey } from '../../../types/number-keyboard';
 
 interface IProps {
