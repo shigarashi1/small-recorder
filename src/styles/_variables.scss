@@ -2,3 +2,7 @@ $main-color: #43435c;
 $bg-color: #e0e1e0;
 
 $height-header: 65px;
+
+$width-number-keyboard: calc(200px + 6px);
+$width-number-keyboard-key: calc(#{$width-number-keyboard} / 4);
+$height-number-keyboard-key: $width-number-keyboard-key;

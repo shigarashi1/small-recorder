@@ -1,15 +1,19 @@
+@import '../../../styles/variables';
+
 // @types
 #container {
-  max-width: 250px;
+  width: $width-number-keyboard;
   * {
     width: 100%;
   }
   .table {
+    border-collapse: collapse;
     background-color: gray;
     .row {
       .data {
         border: 1px solid #000;
-        width: calc(100% / 4);
+        width: $width-number-keyboard-key;
+        height: $height-number-keyboard-key;
         font-weight: bold;
         .button {
           color: #000;

@@ -3,10 +3,11 @@ import React from 'react';
 import styles from './NumberKeyboard.module.scss';
 import Logger from '../../../helpers/logger';
 import { DISPLAY_KEYS_LIST } from '../../../lookups/number-keyboard';
-import { TKeyboardKey } from '../../../types/number-keyboard';
+import { TKeyboardKey, IDraggableAction } from '../../../types/number-keyboard';
 
 export interface IProps {
   onPush: (value: TKeyboardKey) => void;
+  action?: IDraggableAction;
 }
 
 const NumberKeyboard: React.FC<IProps> = (props: IProps) => {
@@ -23,7 +24,7 @@ const NumberKeyboard: React.FC<IProps> = (props: IProps) => {
         <tbody>
           {/* Header */}
           <tr className={styles.row} key={99}>
-            {renderKey('', 3, 0)}
+            {renderDraggableKey(0)}
             {renderKey('X', 1, 1)}
           </tr>
           {/* Input */}
@@ -46,12 +47,69 @@ const NumberKeyboard: React.FC<IProps> = (props: IProps) => {
 
   function renderKey(key: TKeyboardKey, colSpan: number, index: number) {
     const buttonClasses = key === 0 ? `${styles.button} ${styles.zero}` : styles.button;
-    const buttonLabel = key === '' ? '　' : key;
     return (
       <td className={styles.data} colSpan={colSpan} key={index}>
         <button className={buttonClasses} onClick={onClickHandler(key)}>
-          {buttonLabel}
+          {key}
         </button>
+      </td>
+    );
+  }
+
+  function renderDraggableKey(index: number) {
+    const { action } = props;
+    if (!action) {
+      return (
+        <td className={styles.data} colSpan={3} key={index}>
+          <p className={styles.button}>{'　'}</p>
+        </td>
+      );
+    }
+
+    const onMouseUp = () => {
+      action.changeCanDrag(false);
+    };
+
+    const onMouseDown = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      const { pageY, pageX } = event;
+      action.onMoveEnd(pageY, pageX);
+    };
+
+    const onMouseMove = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      event.preventDefault();
+      const { pageY, pageX } = event;
+      action.onMove(pageY, pageX);
+    };
+
+    const onTouchStart = () => {
+      action.changeCanDrag(true);
+    };
+
+    const onTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      const { pageY, pageX } = event.changedTouches[0];
+      action.onMove(pageY, pageX);
+    };
+
+    const onTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+      const { pageY, pageX } = event.changedTouches[0];
+      action.onMoveEnd(pageY, pageX);
+    };
+
+    return (
+      <td className={styles.data} colSpan={3} key={index}>
+        <p
+          className={styles.button}
+          onMouseUp={onMouseUp}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseLeave={onMouseUp}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
+          {'　'}
+        </p>
       </td>
     );
   }

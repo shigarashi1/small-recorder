@@ -19,3 +19,25 @@ export function changeValue(value: string, pushedKey: TKeyboardKey, defaultValue
       return value ? value + String(pushedKey) : String(pushedKey);
   }
 }
+
+export function getTopPosition(pageY: number, y: number): number {
+  const min = 70;
+  const result = pageY - y;
+  if (result < min) {
+    return min;
+  }
+  return result;
+}
+
+export function getLeftPosition(pageX: number, x: number): number {
+  const min = 0;
+  const max = window.parent.screen.width - 210;
+  const result = pageX - x;
+  if (result < min) {
+    return min;
+  }
+  if (result > max) {
+    return max;
+  }
+  return result;
+}

@@ -1,4 +1,15 @@
 // @types
 #container {
-  width: 100%;
+  touch-action: none;
+  position: absolute;
+  z-index: 30000;
+  margin: 0;
+}
+
+.display {
+  display: block;
+}
+
+.displayNone {
+  display: none;
 }

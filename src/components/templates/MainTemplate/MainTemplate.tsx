@@ -8,8 +8,8 @@ import * as fromUtility from '../../../store/utility';
 import AppRouter from '../../AppRouter';
 import Sidebar from '../../organisms/Sidebar/Sidebar';
 import Header from '../../molecules/Header/Header';
-import PopupNumberKeyboard from '../../atoms/PopupNumberKeyboard/PopupNumberKeyboard';
 import { TKeyboardKey } from '../../../types/number-keyboard';
+import DraggableNumberKeyboard from '../../molecules/DraggableNumberKeyboard/DraggableNumberKeyboard';
 
 interface IProps {
   isLoggedIn: boolean;
@@ -61,7 +61,7 @@ class MainTemplate extends Component<TProps, IState> {
       <React.Fragment>
         <Header isLoggedIn={isLoggedIn} onOpen={this.onChangeSidebar} />
         <Sidebar hasOpen={hasOpen} onOpenClose={this.onChangeSidebar} />
-        <PopupNumberKeyboard hasOpen={hasOpenKeyboard} onPush={this.onPushKeyboard} />
+        <DraggableNumberKeyboard hasOpen={hasOpenKeyboard} onPush={this.onPushKeyboard} />
         <p className={styles.currentValue}>{currentValue}</p>
       </React.Fragment>
     );

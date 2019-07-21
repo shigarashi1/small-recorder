@@ -23,7 +23,7 @@ class SamplePageTemplate extends Component<{}, IState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      tabIndex: 3,
+      tabIndex: 0,
     };
   }
 
