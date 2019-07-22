@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-import HomePage from '../containers/HomePage/HomePage';
-import ManualPage from '../containers/ManualPage/ManualPage';
-import RecordPage from '../containers/RecordPage/RecordPage';
-import ReportPage from '../containers/ReportPage/ReportPage';
-import SearchPage from '../containers/SearchPage/SearchPage';
-import SettingPage from '../containers/SettingPage/SettingPage';
+import HomePage from '../containers/pages/HomePage/HomePage';
+import ManualPage from '../containers/pages/ManualPage/ManualPage';
+import RecordPage from '../containers/pages/RecordPage/RecordPage';
+import ReportPage from '../containers/pages/ReportPage/ReportPage';
+import SearchPage from '../containers/pages/SearchPage/SearchPage';
+import SettingPage from '../containers/pages/SettingPage/SettingPage';
 import SamplePageTemplate from './templates/SamplePageTemplate/SamplePageTemplate';
 import { EPath } from '../types/index';
 

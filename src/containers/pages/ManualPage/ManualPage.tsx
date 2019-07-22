@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 // import { Dispatch, Action } from 'redux';
 
-import * as fromUser from '../../store/users';
-import { AppState } from '../../store';
-import SearchPage from '../../components/pages/SearchPage/SearchPage';
+import * as fromUser from '../../../store/users';
+import { AppState } from '../../../store';
+import ManualPage from '../../../components/pages/ManualPage/ManualPage';
 
 interface IStateToProps {
   isLoggedIn: boolean;
@@ -16,10 +16,10 @@ interface IDispatchToProps {
 
 type TProps = IStateToProps & IDispatchToProps;
 
-const SearchPageContainer: React.FC<TProps> = (props: TProps) => {
+const ManualPageContainer: React.FC<TProps> = (props: TProps) => {
   return (
     <React.Fragment>
-      <SearchPage />
+      <ManualPage />
     </React.Fragment>
   );
 };
@@ -41,4 +41,4 @@ function mapStateToProps(state: AppState): IStateToProps {
 export default connect(
   mapStateToProps,
   null,
-)(SearchPageContainer);
+)(ManualPageContainer);

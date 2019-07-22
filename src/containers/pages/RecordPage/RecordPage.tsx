@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 // import { Dispatch, Action } from 'redux';
 
-import * as fromUser from '../../store/users';
-import { AppState } from '../../store';
-import RecordPage from '../../components/pages/RecordPage/RecordPage';
+import * as fromUser from '../../../store/users';
+import { AppState } from '../../../store';
+import RecordPage from '../../../components/pages/RecordPage/RecordPage';
 
 interface IStateToProps {
   isLoggedIn: boolean;

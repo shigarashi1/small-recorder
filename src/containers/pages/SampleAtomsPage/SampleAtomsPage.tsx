@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import * as fromUser from '../../store/users';
-import * as fromUtility from '../../store/utility';
+import * as fromUser from '../../../store/users';
+import * as fromUtility from '../../../store/utility';
 
-import { AppState } from '../../store';
-import SampleDraggablePage from '../../components/pages/SampleDraggablePage/SampleDraggablePage';
+import { AppState } from '../../../store';
+import SampleAtomsPage from '../../../components/pages/SampleAtomsPage/SampleAtomsPage';
 
 interface IStateToProps {
   isLoggedIn: boolean;
@@ -19,10 +19,10 @@ interface IDispatchToProps {
 
 type TProps = IStateToProps & IDispatchToProps;
 
-const SampleDraggablePageContainer: React.FC<TProps> = (props: TProps) => {
+const SampleAtomsPageContainer: React.FC<TProps> = (props: TProps) => {
   return (
     <React.Fragment>
-      <SampleDraggablePage {...props} />
+      <SampleAtomsPage {...props} />
     </React.Fragment>
   );
 };
@@ -43,4 +43,4 @@ function mapDispatchToProps(dispatch: Dispatch): IDispatchToProps {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(SampleDraggablePageContainer);
+)(SampleAtomsPageContainer);

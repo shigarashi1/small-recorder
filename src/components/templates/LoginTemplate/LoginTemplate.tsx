@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LoginPageContainer from '../../../containers/LoginPage/LoginPage';
+import LoginPageContainer from '../../../containers/pages/LoginPage/LoginPage';
 
 const LoginPageTemplate: React.FC = () => {
   return (

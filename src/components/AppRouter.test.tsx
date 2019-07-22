@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '../store';
 import AppRouter from './AppRouter';
 
-import SampleAtomsPageContainer from '../containers/SampleAtomsPage/SampleAtomsPage';
+import SampleAtomsPageContainer from '../containers/pages/SampleAtomsPage/SampleAtomsPage';
 import SampleAtomsPage from './pages/SampleAtomsPage/SampleAtomsPage';
 import { EPath } from '../types';
 

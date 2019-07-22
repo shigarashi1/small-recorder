@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import * as fromUser from '../../store/users';
-import { AppState } from '../../store';
+import * as fromUser from '../../../store/users';
+import { AppState } from '../../../store';
 
-import LoginPage from '../../components/pages/LoginPage/LoginPage';
-import ErrorBoundary from '../../components/molecules/ErrorBoundary/ErrorBoundary';
+import LoginPage from '../../../components/pages/LoginPage/LoginPage';
+import ErrorBoundary from '../../../components/molecules/ErrorBoundary/ErrorBoundary';
 
 interface IStateToProps {
   isLoggedIn: boolean;

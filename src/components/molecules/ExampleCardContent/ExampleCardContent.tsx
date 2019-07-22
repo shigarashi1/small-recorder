@@ -8,7 +8,7 @@ import Card from '../../atoms/Card/Card';
 import { ICard } from '../../../types/card';
 import { InitialCards } from '../../../lookups/card';
 import { isMobile } from '../../../helpers/agent';
-import CustomDragLayer from '../../../containers/CustomDragLayer/CustomDragLayer';
+import CustomDragLayer from '../../../containers/others/CustomDragLayer/CustomDragLayeragLayer';
 
 const style = {
   maxWidth: 300,

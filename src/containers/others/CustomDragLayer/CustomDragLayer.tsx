@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DragLayer, XYCoord, DragLayerMonitor } from 'react-dnd';
-import { ObjectIndexes } from '../../types';
+import { ObjectIndexes } from '../../../types/index';
 
 type TOffsetType = XYCoord | null;
 type TItemType = string | symbol | null;

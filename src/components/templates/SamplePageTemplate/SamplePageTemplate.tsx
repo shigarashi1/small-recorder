@@ -5,10 +5,10 @@ import Tab from '@material-ui/core/Tab';
 
 import styles from './SamplePageTemplate.module.scss';
 
-import SampleAtomsPage from '../../../containers/SampleAtomsPage/SampleAtomsPage';
-import SampleMoleculesPage from '../../../containers/SampleMoleculesPage/SampleMoleculesPage';
-import SampleOrganismsPage from '../../../containers/SampleOrganismsPage/SampleOrganismsPage';
-import SampleDraggablePage from '../../../containers/SampleDraggablePage/SampleDraggablePage';
+import SampleAtomsPage from '../../../containers/pages/SampleAtomsPage/SampleAtomsPage';
+import SampleMoleculesPage from '../../../containers/pages/SampleMoleculesPage/SampleMoleculesPage';
+import SampleOrganismsPage from '../../../containers/pages/SampleOrganismsPage/SampleOrganismsPage';
+import SampleDraggablePage from '../../../containers/pages/SampleDraggablePage/SampleDraggablePage';
 import PageTitle from '../../atoms/PageTitle/PageTitle';
 // import SampleRouter from '../../../sub-routers/SampleRouter';
 // import { EPath } from '../../../types';

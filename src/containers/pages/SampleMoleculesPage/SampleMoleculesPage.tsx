@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import * as fromUser from '../../store/users';
-import * as fromUtility from '../../store/utility';
+import * as fromUser from '../../../store/users';
+import * as fromUtility from '../../../store/utility';
 
-import { AppState } from '../../store';
-import SampleOrganismsPage from '../../components/pages/SampleOrganismsPage/SampleOrganismsPage';
+import { AppState } from '../../../store';
+import SampleMoleculesPage from '../../../components/pages/SampleMoleculesPage/SampleMoleculesPage';
 
 interface IStateToProps {
   isLoggedIn: boolean;
@@ -19,10 +19,10 @@ interface IDispatchToProps {
 
 type TProps = IStateToProps & IDispatchToProps;
 
-const SampleOrganismsPageContainer: React.FC<TProps> = (props: TProps) => {
+const SampleMoleculesPageContainer: React.FC<TProps> = (props: TProps) => {
   return (
     <React.Fragment>
-      <SampleOrganismsPage {...props} />
+      <SampleMoleculesPage {...props} />
     </React.Fragment>
   );
 };
@@ -43,4 +43,4 @@ function mapDispatchToProps(dispatch: Dispatch): IDispatchToProps {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(SampleOrganismsPageContainer);
+)(SampleMoleculesPageContainer);
