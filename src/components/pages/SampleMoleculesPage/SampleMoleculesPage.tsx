@@ -7,7 +7,7 @@ import * as fromUtility from '../../../store/utility';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import SampleCard from '../../molecules/SampleCard/SampleCard';
-import { MOLECULES_SAMPLES } from '../../../samples/Samples';
+import { MOLECULES_SAMPLES } from '../../../samples/Molecules';
 import { ObjectIndexes } from '../../../types';
 import { ISampleCardProps } from '../../../types/sample-card';
 import { BREAK_POINT } from '../../../lookups/page-layout';
@@ -27,10 +27,7 @@ type TState = IState & ObjectIndexes;
 class SampleMoleculesPage extends Component<IProps, TState> {
   constructor(props: IProps) {
     super(props);
-    this.state = {
-      inputText: '',
-      numberKeyboard: '',
-    };
+    this.state = {};
   }
 
   render() {
@@ -62,11 +59,6 @@ class SampleMoleculesPage extends Component<IProps, TState> {
         <SampleCard {...sample} />
       </Grid>
     );
-  }
-
-  getState<T = any>(key: string, initialValue: T): T {
-    const state = this.state[key];
-    return typeof state === 'undefined' ? initialValue : state;
   }
 }
 

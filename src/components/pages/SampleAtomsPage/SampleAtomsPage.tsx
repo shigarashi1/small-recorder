@@ -7,16 +7,10 @@ import * as fromUtility from '../../../store/utility';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import SampleCard from '../../molecules/SampleCard/SampleCard';
-import { ATOMS_SAMPLES } from '../../../samples/Samples';
-import { ObjectIndexes, Nullable } from '../../../types';
-import InputText from '../../atoms/InputText/InputText';
-import NumberKeyboard from '../../atoms/NumberKeyboard/NumberKeyboard';
+import { ATOMS_SAMPLES } from '../../../samples/Atoms';
+import { ObjectIndexes } from '../../../types';
 import { ISampleCardProps } from '../../../types/sample-card';
-import { TKeyboardKey } from '../../../types/number-keyboard';
-import { changeValue } from '../../../helpers/number-keyboard';
-import InputNumber from '../../atoms/InputNumber/InputNumber';
 import { BREAK_POINT } from '../../../lookups/page-layout';
-import InputDate from '../../atoms/InputDate/InputDate';
 
 interface IProps {
   isLoggedIn: boolean;
@@ -33,15 +27,11 @@ type TState = IState & ObjectIndexes;
 class SampleAtomsPage extends Component<IProps, TState> {
   constructor(props: IProps) {
     super(props);
-    this.state = {
-      inputText: '',
-      numberKeyboard: '',
-      inputDate: new Date(),
-    };
+    this.state = {};
   }
 
   render() {
-    const atomsSamples = this.getAtomsSampleWithState();
+    const atomsSamples = this.getAtomsSampleWithProps();
     return (
       <div id={styles.container}>
         <div className={styles.contents}>
@@ -75,74 +65,16 @@ class SampleAtomsPage extends Component<IProps, TState> {
     );
   }
 
-  getAtomsSampleWithState(): ISampleCardProps[] {
+  getAtomsSampleWithProps(): ISampleCardProps[] {
     return [
-      {
-        title: 'InputText',
-        contexts: 'InputTextだよー',
-        node: this.renderInputText(),
-      },
-      {
-        title: 'NumberKeyboard',
-        contexts: 'NumberKeyboardだよー',
-        node: this.renderNumberKeyboard(),
-      },
       {
         title: 'PopupNumberKeyboard',
         contexts: 'PopupNumberKeyboardだよー',
         node: <p>buttonで表示・非表示</p>,
         onAction: () => this.props.onOpenKeyboard(!this.props.hasOpenKeyboard),
       },
-      {
-        title: 'InputDate',
-        contexts: 'InputDateです',
-        node: this.renderInputDate(),
-      },
     ];
   }
-
-  getState<T = any>(key: string, initialValue: T): T {
-    const state = this.state[key];
-    return typeof state === 'undefined' ? initialValue : state;
-  }
-
-  renderInputText() {
-    const value = this.getState('inputText', '');
-    return <InputText value={value} onChange={this.onChangedInputText} />;
-  }
-
-  onChangedInputText = (value: string) => {
-    this.setState({ inputText: value });
-  };
-
-  renderNumberKeyboard() {
-    const value = this.getState('numberKeyboard', '');
-    return (
-      <React.Fragment>
-        <InputNumber value={value} />
-        <NumberKeyboard onPush={this.onPushNumberKeyboard} />
-      </React.Fragment>
-    );
-  }
-
-  onChangedNumberKeyboard = (value: string) => {
-    this.setState({ numberKeyboard: value });
-  };
-
-  onPushNumberKeyboard = (key: TKeyboardKey) => {
-    const stateValue = this.getState('numberKeyboard', '');
-    const value = changeValue(stateValue, key);
-    this.onChangedNumberKeyboard(value);
-  };
-
-  renderInputDate() {
-    const value = this.getState('inputDate', new Date());
-    return <InputDate selectedDate={value} onChangeDate={this.onChangeDate} />;
-  }
-
-  onChangeDate = (date: Nullable<Date>) => {
-    this.setState({ inputDate: date });
-  };
 }
 
 export default SampleAtomsPage;

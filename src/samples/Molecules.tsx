@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import Logger from '../helpers/logger';
-import SampleCard from '../components/molecules/SampleCard/SampleCard';
-import HeaderTitle from '../components/atoms/HeaderTitle/HeaderTitle';
-import PageTitle from '../components/atoms/PageTitle/PageTitle';
-import Header from '../components/molecules/Header/Header';
+import { Nullable } from '../types';
 import { ISampleCardProps } from '../types/sample-card';
+
+import Header from '../components/molecules/Header/Header';
+import SampleCard from '../components/molecules/SampleCard/SampleCard';
+import DeteSelector from '../components/molecules/DateSelector/DateSelector';
 
 const brackFunc = (text: string) => {
   return () => {
@@ -12,24 +14,33 @@ const brackFunc = (text: string) => {
   };
 };
 
-export const ATOMS_SAMPLES: ISampleCardProps[] = [
-  {
-    title: 'HeaderTitle',
-    contexts: 'HeaderTitleです。',
-    node: <HeaderTitle title="HeaderTitle" />,
-  },
-  {
-    title: 'PageTitle',
-    contexts: 'PageTitleです。',
-    node: <PageTitle title="PageTitle" />,
-  },
-];
+const DateSelectorComp: React.FC = props => {
+  const initialDate: Nullable<Date> = new Date();
+  const [result, setResult] = useState(initialDate);
+  const onChangeDate = (date: Nullable<Date>) => {
+    if (!date) {
+      return;
+    }
+    setResult(date);
+  };
+
+  return (
+    <React.Fragment>
+      <DeteSelector showToday={true} selectedDate={result} onChangeDate={onChangeDate} />
+    </React.Fragment>
+  );
+};
 
 export const MOLECULES_SAMPLES: ISampleCardProps[] = [
   {
     title: 'Header',
     contexts: 'Headerです。',
     node: <Header isLoggedIn={false} onOpen={brackFunc('Header Open!')} isFixed={false} />,
+  },
+  {
+    title: 'DateSelector',
+    contexts: 'DateSelector',
+    node: <DateSelectorComp />,
   },
   {
     title: 'SampleCard1',

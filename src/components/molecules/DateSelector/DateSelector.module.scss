@@ -1,0 +1,13 @@
+// @types
+#container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  $width-arrow-button: 40px;
+  .arrowButton {
+    width: $width-arrow-button;
+  }
+  .inputDate {
+    width: calc(100% - #{$width-arrow-button} * 2);
+  }
+}
