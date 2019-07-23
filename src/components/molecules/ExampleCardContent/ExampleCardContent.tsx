@@ -7,8 +7,6 @@ import update from 'immutability-helper';
 import Card from '../../atoms/Card/Card';
 import { ICard } from '../../../types/card';
 import { InitialCards } from '../../../lookups/card';
-import { isMobile } from '../../../helpers/agent';
-import CustomDragLayer from '../../../containers/others/CustomDragLayer/CustomDragLayeragLayer';
 
 const style = {
   maxWidth: 300,
@@ -39,7 +37,6 @@ const ExampleCardContent: React.FC = () => {
 
     return (
       <React.Fragment>
-        {isMobile && <CustomDragLayer />}
         <div style={style}>{cards.map((card, i) => renderCard(card, i))}</div>
       </React.Fragment>
     );

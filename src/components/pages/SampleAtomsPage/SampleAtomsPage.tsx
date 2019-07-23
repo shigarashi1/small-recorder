@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import SampleCard from '../../molecules/SampleCard/SampleCard';
 import { ATOMS_SAMPLES } from '../../../samples/Samples';
-import { ObjectIndexes } from '../../../types';
+import { ObjectIndexes, Nullable } from '../../../types';
 import InputText from '../../atoms/InputText/InputText';
 import NumberKeyboard from '../../atoms/NumberKeyboard/NumberKeyboard';
 import { ISampleCardProps } from '../../../types/sample-card';
@@ -16,6 +16,7 @@ import { TKeyboardKey } from '../../../types/number-keyboard';
 import { changeValue } from '../../../helpers/number-keyboard';
 import InputNumber from '../../atoms/InputNumber/InputNumber';
 import { BREAK_POINT } from '../../../lookups/page-layout';
+import InputDate from '../../atoms/InputDate/InputDate';
 
 interface IProps {
   isLoggedIn: boolean;
@@ -35,6 +36,7 @@ class SampleAtomsPage extends Component<IProps, TState> {
     this.state = {
       inputText: '',
       numberKeyboard: '',
+      inputDate: new Date(),
     };
   }
 
@@ -91,6 +93,11 @@ class SampleAtomsPage extends Component<IProps, TState> {
         node: <p>buttonで表示・非表示</p>,
         onAction: () => this.props.onOpenKeyboard(!this.props.hasOpenKeyboard),
       },
+      {
+        title: 'InputDate',
+        contexts: 'InputDateです',
+        node: this.renderInputDate(),
+      },
     ];
   }
 
@@ -126,6 +133,15 @@ class SampleAtomsPage extends Component<IProps, TState> {
     const stateValue = this.getState('numberKeyboard', '');
     const value = changeValue(stateValue, key);
     this.onChangedNumberKeyboard(value);
+  };
+
+  renderInputDate() {
+    const value = this.getState('inputDate', new Date());
+    return <InputDate selectedDate={value} onChangeDate={this.onChangeDate} />;
+  }
+
+  onChangeDate = (date: Nullable<Date>) => {
+    this.setState({ inputDate: date });
   };
 }
 

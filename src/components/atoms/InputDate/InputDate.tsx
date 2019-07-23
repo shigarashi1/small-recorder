@@ -1,5 +1,4 @@
 import React from 'react';
-import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 
@@ -8,7 +7,7 @@ import { Nullable } from '../../../types';
 
 interface IProps {
   selectedDate?: Date;
-  onChangeDate: (date: Nullable<Date>) => Date;
+  onChangeDate: (date: Nullable<Date>) => void;
 }
 
 const InputDate: React.FC<IProps> = (props: IProps) => {
@@ -21,6 +20,7 @@ const InputDate: React.FC<IProps> = (props: IProps) => {
           margin="normal"
           id="mui-pickers-date"
           label="Date picker"
+          format="yyyy/MM/dd"
           value={selectedDate}
           onChange={onChangeDate}
           KeyboardButtonProps={{

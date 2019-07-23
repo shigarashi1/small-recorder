@@ -7,12 +7,12 @@ function canLog(): boolean {
 const Logger = {
   log: (message: string, ...v: any[]) => {
     if (canLog()) {
-      console.log(message, ...v);
+      return console.log(message, ...v);
     }
   },
   error: (message: string, ...v: any[]) => {
     if (canLog()) {
-      console.warn(message, ...v);
+      return console.warn(message, ...v);
     }
   },
 };

@@ -9,7 +9,7 @@ import AppRouter from '../../AppRouter';
 import Sidebar from '../../organisms/Sidebar/Sidebar';
 import Header from '../../molecules/Header/Header';
 import { TKeyboardKey } from '../../../types/number-keyboard';
-import DraggableNumberKeyboard from '../../molecules/DraggableNumberKeyboard/DraggableNumberKeyboard';
+import DraggableNumberKeyboard from '../../atoms/DraggableNumberKeyboard/DraggableNumberKeyboard';
 
 interface IProps {
   isLoggedIn: boolean;
