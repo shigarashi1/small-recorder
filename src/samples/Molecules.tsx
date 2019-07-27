@@ -50,11 +50,27 @@ const DateSelectorComp: React.FC = props => {
   );
 };
 
+const HeaderComp: React.FC = props => {
+  const onOpen = () => {
+    console.log('header onOpen clicked.');
+  };
+
+  const onSignOut = () => {
+    console.log('header signout clicked.');
+  };
+
+  return (
+    <React.Fragment>
+      <Header isLoggedIn={false} onOpen={onOpen} isFixed={false} onSignOut={onSignOut} />
+    </React.Fragment>
+  );
+};
+
 export const MOLECULES_SAMPLES: ISampleCardProps[] = [
   {
     title: 'Header',
     contexts: 'Headerです。',
-    node: <Header isLoggedIn={false} onOpen={brackFunc('Header Open!')} isFixed={false} />,
+    node: <HeaderComp />,
   },
   {
     title: 'DateSelector',

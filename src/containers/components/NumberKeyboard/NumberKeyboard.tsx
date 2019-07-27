@@ -1,39 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { AppState } from '../../store';
+import { AppState } from '../../../store';
 
-import * as fromUser from '../../store/users';
-import * as fromUtility from '../../store/utility';
+import * as fromUtility from '../../../store/utility';
 
-import MainTemplate from '../../components/templates/MainTemplate/MainTemplate';
-import ErrorBoundary from '../../components/molecules/ErrorBoundary/ErrorBoundary';
-import { TKeyboardKey } from '../../types/number-keyboard';
+import { TKeyboardKey } from '../../../types/number-keyboard';
+import DraggableNumberKeyboard from '../../../components/atoms/DraggableNumberKeyboard/DraggableNumberKeyboard';
 
 interface IStateToProps {
-  isLoggedIn: boolean;
   hasOpenKeyboard: boolean;
   currentValue: string;
 }
 
 interface IDispatchToProps {
-  logout: typeof fromUser.signOut;
   pushKeyboard: typeof fromUtility.pushKeyKeyboard;
 }
 
 type TProps = IStateToProps & IDispatchToProps;
 
-const MainTemplateContainer: React.FC<TProps> = (props: TProps) => {
-  return (
-    <ErrorBoundary>
-      <MainTemplate {...props} />
-    </ErrorBoundary>
-  );
+const NumbarKeyboardContainer: React.FC<TProps> = (props: TProps) => {
+  const { hasOpenKeyboard, currentValue } = props;
+
+  const onPushKeyboard = (key: TKeyboardKey) => {
+    props.pushKeyboard(key);
+  };
+
+  // FIXME: CurrentValue
+  console.log(`input keyboard current value is ${currentValue}`);
+
+  return <DraggableNumberKeyboard hasOpen={hasOpenKeyboard} onPush={onPushKeyboard} />;
 };
 
 function mapStateToProps(state: AppState): IStateToProps {
   return {
-    isLoggedIn: fromUser.getIsLoggedIn(state),
     hasOpenKeyboard: fromUtility.getHasOpenKeyboard(state),
     currentValue: fromUtility.getKeyboardCurrentValue(state),
   };
@@ -41,7 +41,6 @@ function mapStateToProps(state: AppState): IStateToProps {
 
 function mapDispatchToProps(dispatch: Dispatch): IDispatchToProps {
   return {
-    logout: () => dispatch<any>(fromUser.signOut()),
     pushKeyboard: (key: TKeyboardKey) => dispatch<any>(fromUtility.pushKeyKeyboard(key)),
   };
 }
@@ -49,4 +48,4 @@ function mapDispatchToProps(dispatch: Dispatch): IDispatchToProps {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(MainTemplateContainer);
+)(NumbarKeyboardContainer);

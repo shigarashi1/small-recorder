@@ -11,7 +11,7 @@ import HeaderTitle from '../../atoms/HeaderTitle/HeaderTitle';
 interface IProps {
   isLoggedIn: boolean;
   isFixed?: boolean;
-  onOpen: (hasOpen: boolean) => void;
+  onOpen: () => void;
   onSignOut: () => void;
 }
 
@@ -20,7 +20,7 @@ const Header: React.FC<IProps> = (props: IProps) => {
   const position = isFixed ? 'fixed' : 'static';
 
   const onOpen = () => {
-    props.onOpen(true);
+    props.onOpen();
   };
 
   const renderLeftBlock = () => {

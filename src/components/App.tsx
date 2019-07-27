@@ -5,9 +5,9 @@ import { Provider } from 'react-redux';
 import { configureStore } from '../store';
 import history from '../helpers/history';
 import AppRouterGuard from './AppRouterGuard';
-import MainTemplateContainer from '../containers/MainTemplate/MainTemplate';
 import LoginPageTemplate from './templates/LoginTemplate/LoginTemplate';
 import { EPath } from '../types/index';
+import MainTemplate from './templates/MainTemplate/MainTemplate';
 
 const store = configureStore({});
 
@@ -19,7 +19,7 @@ class App extends Component {
           <Switch>
             <Route exact={true} path={EPath.Login} component={LoginPageTemplate} />
             <AppRouterGuard>
-              <MainTemplateContainer />
+              <MainTemplate />
             </AppRouterGuard>
             <Redirect from="/" to={EPath.Login} />
           </Switch>

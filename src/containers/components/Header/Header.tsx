@@ -14,13 +14,22 @@ interface IStateToProps {
 
 interface IDispatchToProps {
   onSignOut: typeof fromUser.signOut;
-  onOpen: typeof fromUtility.changeSidebarHasOpen;
+  changeSidebarHasOpen: typeof fromUtility.changeSidebarHasOpen;
 }
 
 type TProps = IStateToProps & IDispatchToProps;
 
 const HeaderContainer: React.FC<TProps> = (props: TProps) => {
-  return <Header {...props} />;
+  const { changeSidebarHasOpen } = props;
+  const onOpen = () => {
+    changeSidebarHasOpen(true);
+  };
+
+  // const onSignOut = () => {
+  //   props.onSignOut();
+  // };
+
+  return <Header {...props} onOpen={onOpen} />;
 };
 
 function mapStateToProps(state: AppState): IStateToProps {
@@ -33,7 +42,7 @@ function mapStateToProps(state: AppState): IStateToProps {
 function mapDispatchToProps(dispatch: Dispatch): IDispatchToProps {
   return {
     onSignOut: () => dispatch<any>(fromUser.signOut()),
-    onOpen: (hasOpen: boolean) => dispatch<any>(fromUtility.changeSidebarHasOpen(hasOpen)),
+    changeSidebarHasOpen: (hasOpen: boolean) => dispatch<any>(fromUtility.changeSidebarHasOpen(hasOpen)),
   };
 }
 

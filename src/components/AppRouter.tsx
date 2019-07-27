@@ -20,7 +20,7 @@ class AppRouter extends Component {
         <Route exact={true} path={EPath.Report} component={ReportPage} />
         <Route exact={true} path={EPath.Search} component={SearchPage} />
         <Route exact={true} path={EPath.Setting} component={SettingPage} />
-        <Route exact={true} path={EPath.Sample} component={SamplePageTemplate} />
+        <Route exact={false} path={EPath.Sample} component={SamplePageTemplate} />
         <Redirect from="/" to={EPath.Home} />
       </Switch>
     );
