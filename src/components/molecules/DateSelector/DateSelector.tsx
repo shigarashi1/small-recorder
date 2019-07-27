@@ -7,12 +7,14 @@ import { addDays } from 'date-fns';
 
 interface IProps {
   showToday: boolean;
+  maltiButtonLabel?: string;
+  onMaltiButtonClick?: () => void;
 }
 
 type TProps = IProps & DateProps;
 
 const DateSelector: React.FC<TProps> = (props: TProps) => {
-  const { selectedDate, onChangeDate } = props;
+  const { selectedDate, onChangeDate, maltiButtonLabel, onMaltiButtonClick } = props;
 
   return (
     <div id={styles.container}>
@@ -25,8 +27,21 @@ const DateSelector: React.FC<TProps> = (props: TProps) => {
       <div className={styles.arrowButton}>
         <Button label={null} onClick={addDay} iconType="right" icon="keyboard_arrow_right" />
       </div>
+      {renderMaltiButton()}
     </div>
   );
+
+  function renderMaltiButton() {
+    if (!maltiButtonLabel || !onMaltiButtonClick) {
+      return null;
+    }
+
+    return (
+      <div className={styles.button}>
+        <Button label={maltiButtonLabel} onClick={onMaltiButtonClick} variant="contained" color="primary" />
+      </div>
+    );
+  }
 
   function addDay() {
     const value = selectedDate ? selectedDate : new Date();
