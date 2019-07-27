@@ -7,7 +7,11 @@ interface IProps {
 }
 
 const SampleComponent: React.FC<IProps> = (props: IProps) => {
-  return <div id={styles.container}>{props.title}</div>;
+  return (
+    <div id={styles.container}>
+      <p>{props.title}</p>
+    </div>
+  );
 };
 
 export default SampleComponent;
