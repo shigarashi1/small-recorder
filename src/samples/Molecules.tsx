@@ -24,9 +24,28 @@ const DateSelectorComp: React.FC = props => {
     setResult(date);
   };
 
+  const onToday = () => {
+    setResult(new Date());
+  };
+
   return (
     <React.Fragment>
-      <DeteSelector showToday={true} selectedDate={result} onChangeDate={onChangeDate} />
+      <DeteSelector
+        showToday={true}
+        selectedDate={result}
+        onChangeDate={onChangeDate}
+        disableFuture={true}
+        maltiButtonLabel="today"
+        onMaltiButtonClick={onToday}
+      />
+      <DeteSelector
+        showToday={true}
+        selectedDate={result}
+        onChangeDate={onChangeDate}
+        disableFuture={true}
+        maltiButtonLabel="今日"
+        onMaltiButtonClick={onToday}
+      />
     </React.Fragment>
   );
 };

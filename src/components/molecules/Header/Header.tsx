@@ -11,12 +11,17 @@ import HeaderTitle from '../../atoms/HeaderTitle/HeaderTitle';
 interface IProps {
   isLoggedIn: boolean;
   isFixed?: boolean;
-  onOpen: () => void;
+  onOpen: (hasOpen: boolean) => void;
+  onSignOut: () => void;
 }
 
 const Header: React.FC<IProps> = (props: IProps) => {
-  const { onOpen, isLoggedIn, isFixed } = props;
+  const { isLoggedIn, isFixed } = props;
   const position = isFixed ? 'fixed' : 'static';
+
+  const onOpen = () => {
+    props.onOpen(true);
+  };
 
   const renderLeftBlock = () => {
     return (

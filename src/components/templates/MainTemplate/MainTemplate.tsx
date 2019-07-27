@@ -7,9 +7,9 @@ import * as fromUtility from '../../../store/utility';
 
 import AppRouter from '../../AppRouter';
 import Sidebar from '../../organisms/Sidebar/Sidebar';
-import Header from '../../molecules/Header/Header';
 import { TKeyboardKey } from '../../../types/number-keyboard';
 import DraggableNumberKeyboard from '../../atoms/DraggableNumberKeyboard/DraggableNumberKeyboard';
+import Header from '../../../containers/components/Header/Header';
 
 interface IProps {
   isLoggedIn: boolean;
@@ -46,6 +46,7 @@ class MainTemplate extends Component<TProps, IState> {
   render() {
     return (
       <div id={styles.template}>
+        <Header />
         {this.renderUtilities()}
         <div className={styles.container}>
           <AppRouter />
@@ -55,11 +56,10 @@ class MainTemplate extends Component<TProps, IState> {
   }
 
   renderUtilities() {
-    const { isLoggedIn, hasOpenKeyboard, currentValue } = this.props;
+    const { hasOpenKeyboard, currentValue } = this.props;
     const { hasOpen } = this.state;
     return (
       <React.Fragment>
-        <Header isLoggedIn={isLoggedIn} onOpen={this.onChangeSidebar} />
         <Sidebar hasOpen={hasOpen} onOpenClose={this.onChangeSidebar} />
         <DraggableNumberKeyboard hasOpen={hasOpenKeyboard} onPush={this.onPushKeyboard} />
         <p className={styles.currentValue}>{currentValue}</p>

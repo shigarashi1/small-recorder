@@ -9,6 +9,8 @@ export enum ActionType {
   CHANGE_HAS_OPEN_KEYBOARD_SUCCESS = '[keyboard] CHANGE_HAS_OPEN_KEYBOARD_SUCCESS',
   CHANGE_KEYBOARD_VALUE_SUCCESS = '[keyboard] CHANGE_KEYBOARD_VALUE_SUCCESS',
   RESET_KEYBOARD_VALUE_SUCCESS = '[keyboard] RESET_KEYBOARD_VALUE_SUCCESS',
+  // sidebar
+  CHANGE_SIDEBAR_HAS_OPEN_SUCCESS = '[Sidebar] CHANGE_SIDEBAR_HASOPEN_SUCCESS',
 }
 
 // ===================================
@@ -25,6 +27,11 @@ export type ChangeKeyboardValueSuccess = {
 export type ResetKeyboardValueSuccess = {
   type: typeof ActionType.RESET_KEYBOARD_VALUE_SUCCESS;
   payload: string;
+};
+// sidebar
+export type ChangeSidebarHasOpenSuccess = {
+  type: typeof ActionType.CHANGE_SIDEBAR_HAS_OPEN_SUCCESS;
+  payload: boolean;
 };
 
 // ===================================
@@ -45,6 +52,12 @@ export function changeKeyboardValueSuccess(payload: string): ChangeKeyboardValue
 export function resetKeyboardValueSuccess(payload: string): ResetKeyboardValueSuccess {
   return {
     type: ActionType.RESET_KEYBOARD_VALUE_SUCCESS,
+    payload,
+  };
+}
+export function ChangeSidebarHasOpenSuccess(payload: boolean): ChangeSidebarHasOpenSuccess {
+  return {
+    type: ActionType.CHANGE_SIDEBAR_HAS_OPEN_SUCCESS,
     payload,
   };
 }
@@ -78,4 +91,15 @@ export function pushKeyKeyboard(key: TKeyboardKey): ThunkAction<void, AppState, 
   };
 }
 
-export type UtilitysActions = ChangeHasOpenKeyboardSuccess | ChangeKeyboardValueSuccess | ResetKeyboardValueSuccess;
+// sidebar
+export function changeSidebarHasOpen(hasOpen: boolean): ThunkAction<void, AppState, null, Action> {
+  return (dispatch: Dispatch) => {
+    dispatch(ChangeSidebarHasOpenSuccess(hasOpen));
+  };
+}
+
+export type UtilitysActions =
+  | ChangeHasOpenKeyboardSuccess
+  | ChangeKeyboardValueSuccess
+  | ResetKeyboardValueSuccess
+  | ChangeSidebarHasOpenSuccess;
