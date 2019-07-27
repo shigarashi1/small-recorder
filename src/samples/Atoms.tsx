@@ -12,6 +12,8 @@ import InputNumber from '../components/atoms/InputNumber/InputNumber';
 import NumberKeyboard from '../components/atoms/NumberKeyboard/NumberKeyboard';
 import InputDate from '../components/atoms/InputDate/InputDate';
 import InputText from '../components/atoms/InputText/InputText';
+import TextField from '../components/atoms/TextField/TextField';
+import { onChangedValue } from '../helpers/text-field';
 
 const ButtonComponent: React.FC = props => {
   const [count, setCount] = useState(0);
@@ -32,6 +34,30 @@ const ButtonComponent: React.FC = props => {
       <Button label="outlined" color="default" variant="outlined" onClick={onClick} />
       <Button label="text" color="secondary" variant="text" onClick={onClick} />
       <Button label="isFullWidth" color="primary" variant="contained" onClick={onClick} isFullWidth={true} />
+    </React.Fragment>
+  );
+};
+
+// const stringArray: string[] = Array.from({ length: 10 }).map((v, i) => String(i));
+
+const TextFieldComp: React.FC = props => {
+  const [result, setResult] = useState('');
+  const setValue = (v: string) => {
+    setResult(v);
+  };
+
+  const onChanged = onChangedValue(result, setValue);
+
+  return (
+    <React.Fragment>
+      <p>{result}</p>
+      <TextField value={result} onChange={onChanged} />
+      <TextField value={result} onChange={onChanged} label={'text field'} />
+      <TextField value={result} onChange={onChanged} margin="dense" />
+      <TextField value={result} onChange={onChanged} fullWidth={true} />
+      <TextField value={result} onChange={onChanged} placeholder="xxxxx-xxxx" />
+      <TextField value={result} onChange={onChanged} variant="filled" />
+      <TextField value={result} onChange={onChanged} variant="outlined" />
     </React.Fragment>
   );
 };
@@ -111,5 +137,10 @@ export const ATOMS_SAMPLES: ISampleCardProps[] = [
     title: 'InputDate',
     contexts: 'InputDateです',
     node: <InputDateComp />,
+  },
+  {
+    title: 'TextField',
+    contexts: 'TextFieldです',
+    node: <TextFieldComp />,
   },
 ];
