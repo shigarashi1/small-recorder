@@ -19,10 +19,10 @@ const TextField: React.FC<TProps> = (props: TProps) => {
   return (
     <div id={styles.container}>
       <MTextField
+        className={styles.input}
         {...props}
         id={getId()}
         label={label}
-        className={styles.input}
         value={value}
         onChange={props.onChange}
       />

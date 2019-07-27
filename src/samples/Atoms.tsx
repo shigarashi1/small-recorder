@@ -52,12 +52,13 @@ const TextFieldComp: React.FC = props => {
     <React.Fragment>
       <p>{result}</p>
       <TextField value={result} onChange={onChanged} />
-      <TextField value={result} onChange={onChanged} label={'text field'} />
+      <TextField value={result} onChange={onChanged} label="text field" />
       <TextField value={result} onChange={onChanged} margin="dense" />
       <TextField value={result} onChange={onChanged} fullWidth={true} />
       <TextField value={result} onChange={onChanged} placeholder="xxxxx-xxxx" />
       <TextField value={result} onChange={onChanged} variant="filled" />
-      <TextField value={result} onChange={onChanged} variant="outlined" />
+      <TextField value={result} onChange={onChanged} label="outlined" variant="outlined" />
+      <TextField value={result} onChange={onChanged} label="outlined & fullWidth" variant="outlined" fullWidth={true} />
     </React.Fragment>
   );
 };
