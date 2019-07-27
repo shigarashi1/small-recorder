@@ -6,10 +6,10 @@ import * as fromUser from '../../../store/users';
 import * as fromUtility from '../../../store/utility';
 
 import AppRouter from '../../AppRouter';
-import Sidebar from '../../organisms/Sidebar/Sidebar';
 import { TKeyboardKey } from '../../../types/number-keyboard';
 import DraggableNumberKeyboard from '../../atoms/DraggableNumberKeyboard/DraggableNumberKeyboard';
 import Header from '../../../containers/components/Header/Header';
+import Sidebar from '../../../containers/components/Sidebar/Sidebar';
 
 interface IProps {
   isLoggedIn: boolean;
@@ -21,51 +21,31 @@ interface IProps {
 
 type TProps = IProps;
 
-interface IState {
-  hasOpen: boolean;
-}
-
-const initialState: IState = {
-  hasOpen: false,
-};
-
-class MainTemplate extends Component<TProps, IState> {
-  constructor(props: TProps) {
-    super(props);
-    this.state = initialState;
-  }
-
-  onChangeSidebar = () => {
-    this.setState({ hasOpen: !this.state.hasOpen });
+const MainTemplate: React.FC<TProps> = (props: TProps) => {
+  const onPushKeyboard = (key: TKeyboardKey) => {
+    props.pushKeyboard(key);
   };
 
-  onPushKeyboard = (key: TKeyboardKey) => {
-    this.props.pushKeyboard(key);
-  };
-
-  render() {
-    return (
-      <div id={styles.template}>
-        <Header />
-        {this.renderUtilities()}
-        <div className={styles.container}>
-          <AppRouter />
-        </div>
+  return (
+    <div id={styles.template}>
+      <Header />
+      <div className={styles.container}>
+        <AppRouter />
       </div>
-    );
-  }
+      {renderUtilities()}
+    </div>
+  );
 
-  renderUtilities() {
-    const { hasOpenKeyboard, currentValue } = this.props;
-    const { hasOpen } = this.state;
+  function renderUtilities() {
+    const { hasOpenKeyboard, currentValue } = props;
     return (
       <React.Fragment>
-        <Sidebar hasOpen={hasOpen} onOpenClose={this.onChangeSidebar} />
-        <DraggableNumberKeyboard hasOpen={hasOpenKeyboard} onPush={this.onPushKeyboard} />
+        <Sidebar />
+        <DraggableNumberKeyboard hasOpen={hasOpenKeyboard} onPush={onPushKeyboard} />
         <p className={styles.currentValue}>{currentValue}</p>
       </React.Fragment>
     );
   }
-}
+};
 
 export default MainTemplate;
