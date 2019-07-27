@@ -1,5 +1,4 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 
 import styles from './SampleComponent.module.scss';
 
@@ -8,11 +7,7 @@ interface IProps {
 }
 
 const SampleComponent: React.FC<IProps> = (props: IProps) => {
-  return (
-    <Typography id={styles.container} variant="h4" color="inherit">
-      {props.title}
-    </Typography>
-  );
+  return <div id={styles.container}>{props.title}</div>;
 };
 
 export default SampleComponent;
