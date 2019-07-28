@@ -1,7 +1,4 @@
-import { ChangeEvent } from 'react';
-
-type TChangeEvent = ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>;
-type TInputType = string | number;
+import { TInputType, TChangeEvent } from '../types/text-field';
 
 export function onChangedValue(value: TInputType, setFunc: (v: any) => void): (event: TChangeEvent) => void {
   return (event: TChangeEvent) => {

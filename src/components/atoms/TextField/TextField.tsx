@@ -9,15 +9,17 @@ interface IProps<T = TInputType> {
   value: T;
   label?: string;
   id?: string | number;
+  isWithLabel?: boolean;
 }
 
-type TProps = TextFieldProps & IProps;
+export type TProps = TextFieldProps & IProps;
 
 const TextField: React.FC<TProps> = (props: TProps) => {
   const { value, label } = props;
 
   return (
     <div id={styles.container}>
+      {/* {renderSideLabel()} */}
       <MTextField
         className={styles.input}
         {...props}
@@ -33,6 +35,13 @@ const TextField: React.FC<TProps> = (props: TProps) => {
     const { id } = props;
     return typeof id === 'string' ? id : String(id);
   }
+
+  // function renderSideLabel() {
+  //   if (!isWithLabel || !label) {
+  //     return null;
+  //   }
+  //   return <Label label={label} styles={['textField']} />;
+  // }
 };
 
 TextField.defaultProps = {

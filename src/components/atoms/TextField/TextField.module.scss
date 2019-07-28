@@ -1,6 +1,13 @@
 // @types
 #container {
+  // display: flex;
+  // align-items: center;
+  // justify-content: flex-start;
   .input {
-    margin: 10px;
+    // out-line
+    // margin: 10px 0;
+    input {
+      padding: 6px 5px;
+    }
   }
 }

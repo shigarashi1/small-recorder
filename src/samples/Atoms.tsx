@@ -53,6 +53,7 @@ const TextFieldComp: React.FC = props => {
       <p>{result}</p>
       <TextField value={result} onChange={onChanged} />
       <TextField value={result} onChange={onChanged} label="text field" />
+      <TextField value={result} onChange={onChanged} label="width label" />
       <TextField value={result} onChange={onChanged} margin="dense" />
       <TextField value={result} onChange={onChanged} fullWidth={true} />
       <TextField value={result} onChange={onChanged} placeholder="xxxxx-xxxx" />
