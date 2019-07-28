@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Logger from '../helpers/logger';
 import { Nullable } from '../types';
-import { ISampleCardProps } from '../types/sample-card';
+import { ISampleCardProps } from '../types/components/sample-card';
 
 import Header from '../components/molecules/Header/Header';
 import SampleCard from '../components/molecules/SampleCard/SampleCard';

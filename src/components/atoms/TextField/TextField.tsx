@@ -2,8 +2,7 @@ import React from 'react';
 import MTextField, { TextFieldProps } from '@material-ui/core/TextField';
 
 import styles from './TextField.module.scss';
-
-type TInputType = string | number;
+import { TInputType } from '../../../types/components/text-field';
 
 interface IProps<T = TInputType> {
   value: T;

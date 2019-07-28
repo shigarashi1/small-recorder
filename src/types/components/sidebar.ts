@@ -1,4 +1,4 @@
-import { EPath } from './index';
+import { EPath } from '../index';
 
 export interface IListItem {
   text: string;

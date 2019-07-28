@@ -13,7 +13,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import styles from './Sidebar.module.scss';
 
 import history from '../../../helpers/history';
-import { IListItem } from '../../../types/sidebar';
+import { IListItem } from '../../../types/components/sidebar';
 import { SIDEBAR_LIST } from '../../../lookups/sidebar';
 import { EPath } from '../../../types';
 

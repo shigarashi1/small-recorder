@@ -1,4 +1,4 @@
-import { IListItem } from '../types/sidebar';
+import { IListItem } from '../types/components/sidebar';
 import { EPath } from '../types';
 
 export const SIDEBAR_LIST: IListItem[][] = [

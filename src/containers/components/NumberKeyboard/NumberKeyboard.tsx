@@ -5,7 +5,7 @@ import { AppState } from '../../../store';
 
 import * as fromUtility from '../../../store/utility';
 
-import { TKeyboardKey } from '../../../types/number-keyboard';
+import { TKeyboardKey } from '../../../types/components/number-keyboard';
 import DraggableNumberKeyboard from '../../../components/atoms/DraggableNumberKeyboard/DraggableNumberKeyboard';
 
 interface IStateToProps {

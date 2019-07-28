@@ -1,4 +1,4 @@
-import { ICard } from '../types/card';
+import { ICard } from '../types/components/card';
 
 // lookups
 export const DraggableItemType = {

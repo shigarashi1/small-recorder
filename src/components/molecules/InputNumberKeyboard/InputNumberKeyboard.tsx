@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './InputNumberKeyboard.module.scss';
 import InputText, { IProps as ITextProps } from '../../atoms/InputText/InputText';
 import NumberKeyboard, { IProps as IKeyboardProps } from '../../atoms/NumberKeyboard/NumberKeyboard';
-import { TKeyboardKey } from '../../../types/number-keyboard';
+import { TKeyboardKey } from '../../../types/components/number-keyboard';
 import Logger from '../../../helpers/logger';
 
 interface IProps {

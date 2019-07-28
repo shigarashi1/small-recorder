@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
-import { IDragItem } from '../../../types/card';
+import { IDragItem } from '../../../types/components/card';
 import { DraggableItemType } from '../../../lookups/card';
 
 const style = {

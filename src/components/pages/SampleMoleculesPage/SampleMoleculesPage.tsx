@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import SampleCard from '../../molecules/SampleCard/SampleCard';
 import { MOLECULES_SAMPLES } from '../../../samples/Molecules';
 import { ObjectIndexes } from '../../../types';
-import { ISampleCardProps } from '../../../types/sample-card';
+import { ISampleCardProps } from '../../../types/components/sample-card';
 import { BREAK_POINT } from '../../../lookups/page-layout';
 
 interface IProps {

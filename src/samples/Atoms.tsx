@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { ISampleCardProps } from '../types/sample-card';
+import { ISampleCardProps } from '../types/components/sample-card';
 import { changeValue } from '../helpers/number-keyboard';
-import { TKeyboardKey } from '../types/number-keyboard';
+import { TKeyboardKey } from '../types/components/number-keyboard';
 import { Nullable } from '../types';
 
 import HeaderTitle from '../components/atoms/HeaderTitle/HeaderTitle';

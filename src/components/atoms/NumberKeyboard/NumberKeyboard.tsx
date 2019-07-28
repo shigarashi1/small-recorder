@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './NumberKeyboard.module.scss';
 import Logger from '../../../helpers/logger';
 import { DISPLAY_KEYS_LIST } from '../../../lookups/number-keyboard';
-import { TKeyboardKey, IDraggableAction } from '../../../types/number-keyboard';
+import { TKeyboardKey, IDraggableAction } from '../../../types/components/number-keyboard';
 
 export interface IProps {
   onPush: (value: TKeyboardKey) => void;

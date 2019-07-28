@@ -5,7 +5,7 @@ import React, { useState, useCallback } from 'react';
 import update from 'immutability-helper';
 
 import Card from '../../atoms/Card/Card';
-import { ICard } from '../../../types/card';
+import { ICard } from '../../../types/components/card';
 import { InitialCards } from '../../../lookups/card';
 
 const style = {

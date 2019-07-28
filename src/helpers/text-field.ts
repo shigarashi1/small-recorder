@@ -1,4 +1,4 @@
-import { TInputType, TChangeEvent } from '../types/text-field';
+import { TInputType, TChangeEvent } from '../types/components/text-field';
 
 export function onChangedValue(value: TInputType, setFunc: (v: any) => void): (event: TChangeEvent) => void {
   return (event: TChangeEvent) => {

@@ -2,7 +2,7 @@ import { Dispatch, Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
 import { AppState } from '../index';
-import { TKeyboardKey } from '../../types/number-keyboard';
+import { TKeyboardKey } from '../../types/components/number-keyboard';
 import { changeValue } from '../../helpers/number-keyboard';
 
 export enum ActionType {

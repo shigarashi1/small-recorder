@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './DraggableNumberKeyboard.module.scss';
 import NumberKeyboard, { IProps as NumberKeyboardProps } from '../NumberKeyboard/NumberKeyboard';
 import { Nullable } from '../../../types';
-import { IPosition, IDraggableAction } from '../../../types/number-keyboard';
+import { IPosition, IDraggableAction } from '../../../types/components/number-keyboard';
 import { getTopPosition, getLeftPosition } from '../../../helpers/number-keyboard';
 
 interface IProps {
