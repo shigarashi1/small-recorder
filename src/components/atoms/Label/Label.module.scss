@@ -1,0 +1,14 @@
+@import '../../../styles/_variables';
+
+// @types
+.base {
+  > p {
+    font-size: 15px;
+  }
+}
+
+.textField {
+  padding: 5px;
+  color: #fff;
+  background-color: $accent-color;
+}
