@@ -1,0 +1,20 @@
+@import '../../../styles/_variables';
+
+// @types
+#container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: inherit;
+  .label {
+    width: 150px;
+  }
+  .text {
+    border: 1px solid $accent-color;
+    margin-right: 5px;
+    display: flex;
+    align-items: flex-end;
+    height: inherit;
+  }
+}
