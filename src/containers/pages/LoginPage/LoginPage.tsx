@@ -13,7 +13,7 @@ interface IStateToProps {
 }
 
 interface IDispatchToProps {
-  login: typeof fromUser.signIn;
+  onSignIn: typeof fromUser.signIn;
 }
 
 type TProps = IStateToProps & IDispatchToProps;
@@ -21,7 +21,7 @@ type TProps = IStateToProps & IDispatchToProps;
 const LoginPageContainer: React.FC<TProps> = (props: TProps) => {
   return (
     <ErrorBoundary>
-      <LoginPage login={props.login} />
+      <LoginPage onSignIn={props.onSignIn} />
     </ErrorBoundary>
   );
 };
@@ -34,7 +34,7 @@ function mapStateToProps(state: AppState): IStateToProps {
 
 function mapDispatchToProps(dispatch: Dispatch): IDispatchToProps {
   return {
-    login: () => dispatch<any>(fromUser.signIn()),
+    onSignIn: () => dispatch<any>(fromUser.signIn()),
   };
 }
 

@@ -3,6 +3,7 @@ import { TApiError } from '../../types/api';
 import { IPageBase } from '../../types/page-base';
 import { ILogin } from '../../types/login-page';
 import { IUser } from '../../types/firebase';
+import config from '../../configuration/config';
 
 export interface IUserState extends IPageBase {
   user: IUser;
@@ -26,7 +27,7 @@ export type TUserErrorState = TApiError[];
 export type TLoginState = ILogin;
 
 const initialLoginState: TLoginState = {
-  isLoggedIn: true,
+  isLoggedIn: config.isDev ? true : false,
   isLoggingIn: false,
   additionalInfo: null,
 };

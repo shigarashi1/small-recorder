@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
+// import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Tabs from '@material-ui/core/Tabs';
@@ -13,22 +13,24 @@ import { onChangedValue } from '../../../helpers/text-field';
 import Button from '../../atoms/Button/Button';
 import SignInForm from '../../molecules/SignInForm/SignInForm';
 import SignUpForm from '../../molecules/SignUpForm/SignUpForm';
+import AppBar from '@material-ui/core/AppBar';
+import PageTitle from '../../atoms/PageTitle/PageTitle';
 
 interface IProps {
   isSignUp: boolean;
   onChangeTab: () => void;
-  onSingIn: () => void;
-  onSingUp: () => void;
+  onSignIn: () => void;
+  onSignUp: () => void;
   onCancel: () => void;
   // form
   username: string;
   email: string;
   password: string;
-  passwordConfirm: string;
+  passwordConfirmation: string;
   onChangedUsername: ReturnType<typeof onChangedValue>;
   onChangedEmail: ReturnType<typeof onChangedValue>;
   onChangedPassword: ReturnType<typeof onChangedValue>;
-  onChangedPasswordConfirm: ReturnType<typeof onChangedValue>;
+  onChangedConfirmation: ReturnType<typeof onChangedValue>;
 }
 
 const LABEL = {
@@ -41,9 +43,10 @@ const SignInUpCard: React.FC<IProps> = (props: IProps) => {
   return (
     <div id={styles.container}>
       <Card className={styles.card}>
-        <CardHeader className={styles.header}>Small Recorder</CardHeader>
         <CardContent className={styles.card}>
-          <div className={styles.tab}>{renderTab()}</div>
+          <PageTitle title="Small Recorder" />
+          {/* <CardHeader className={styles.header} title="Small Recorder" /> */}
+          <div className={styles.tabGroup}>{renderTab()}</div>
           <div className={styles.form}>{renderForm()}</div>
         </CardContent>
         <CardActions className={styles.action}>
@@ -58,11 +61,13 @@ const SignInUpCard: React.FC<IProps> = (props: IProps) => {
     const { onChangeTab } = props;
     const tabIndex = isSignUp ? 1 : 0;
     return (
-      <Tabs value={tabIndex} onChange={onChangeTab}>
-        {[LABEL.signIn, LABEL.signUp].map((v, i) => (
-          <Tab key={i} label={v} />
-        ))}
-      </Tabs>
+      <AppBar position="static">
+        <Tabs value={tabIndex} onChange={onChangeTab} variant="fullWidth">
+          {[LABEL.signIn, LABEL.signUp].map((v, i) => (
+            <Tab key={i} label={v} />
+          ))}
+        </Tabs>
+      </AppBar>
     );
   }
 
@@ -71,11 +76,11 @@ const SignInUpCard: React.FC<IProps> = (props: IProps) => {
       username,
       email,
       password,
-      passwordConfirm,
+      passwordConfirmation,
       onChangedUsername,
       onChangedEmail,
       onChangedPassword,
-      onChangedPasswordConfirm,
+      onChangedConfirmation,
     } = props;
 
     if (!isSignUp) {
@@ -94,17 +99,17 @@ const SignInUpCard: React.FC<IProps> = (props: IProps) => {
         username={username}
         email={email}
         password={password}
-        passwordConfirm={passwordConfirm}
+        passwordConfirm={passwordConfirmation}
         onChangedUsername={onChangedUsername}
         onChangedEmail={onChangedEmail}
         onChangedPassword={onChangedPassword}
-        onChangedPasswordConfirm={onChangedPasswordConfirm}
+        onChangedPasswordConfirm={onChangedConfirmation}
       />
     );
   }
 
   function renderActionButton() {
-    const { onSingIn, onSingUp } = props;
+    const { onSignIn: onSingIn, onSignUp: onSingUp } = props;
     const label = isSignUp ? LABEL.signUp : LABEL.signIn;
     const onClick = isSignUp ? onSingUp : onSingIn;
     return <Button label={label} onClick={onClick} />;

@@ -20,4 +20,4 @@ export interface ILoginAddtionalInfo {
   email: string;
 }
 
-export type ISignInForm = ILoginFormBase;
+export type TSignInForm = ILoginFormBase;
