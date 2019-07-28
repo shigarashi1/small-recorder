@@ -1,0 +1,11 @@
+// @types
+$height-text: 28px;
+#container {
+  width: 100%;
+  > div {
+    margin: 10px;
+  }
+  .passwordConfirm {
+    height: calc(#{$height-text} * 2);
+  }
+}
