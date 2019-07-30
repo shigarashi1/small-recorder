@@ -1,11 +1,15 @@
 // @types
-$height-text: 28px;
 #container {
-  width: 100%;
-  > div {
-    margin: 10px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  .formGroup {
+    width: 100%;
+    > div {
+      display: flex;
+      justify-content: space-around;
+      max-width: 100%;
+      margin: 10px;
+    }
   }
-  // .passwordConfirm {
-  //   height: calc(#{$height-text} * 2);
-  // }
 }

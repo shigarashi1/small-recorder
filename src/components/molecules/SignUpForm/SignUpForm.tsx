@@ -1,9 +1,9 @@
 import React from 'react';
 
 import styles from './SignUpForm.module.scss';
-import TextWithLabel from '../TextWithLabel/TextWithLabel';
 
 import { onChangedValue } from '../../../helpers/text-field';
+import TextField from '../../atoms/TextField/TextField';
 
 interface IProps {
   username: string;
@@ -30,17 +30,19 @@ const SignUpForm: React.FC<IProps> = (props: IProps) => {
 
   return (
     <div id={styles.container}>
-      <div className={styles.username}>
-        <TextWithLabel label="Username" value={username} onChange={onChangedUsername} />
-      </div>
-      <div className={styles.email}>
-        <TextWithLabel label="Email" value={email} onChange={onChangedEmail} />
-      </div>
-      <div className={styles.password}>
-        <TextWithLabel label="Password" value={password} onChange={onChangedPassword} />
-      </div>
-      <div className={styles.passwordConfirm}>
-        <TextWithLabel label="Password Confirm" value={passwordConfirm} onChange={onChangedPasswordConfirm} />
+      <div className={styles.formGroup}>
+        <div className={styles.username}>
+          <TextField label="Username" value={username} onChange={onChangedUsername} />
+        </div>
+        <div className={styles.email}>
+          <TextField label="Email" value={email} onChange={onChangedEmail} />
+        </div>
+        <div className={styles.password}>
+          <TextField label="Password" value={password} onChange={onChangedPassword} />
+        </div>
+        <div className={styles.passwordConfirm}>
+          <TextField label="Password Confirm" value={passwordConfirm} onChange={onChangedPasswordConfirm} />
+        </div>
       </div>
     </div>
   );

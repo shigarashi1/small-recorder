@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
-// import styles from './LoginPage.module.scss';
+import styles from './LoginPage.module.scss';
 
 import * as fromUser from '../../../store/users';
 
 import SignInUpCard from '../../organisms/SignInUpCard/SignInUpCard';
 import { ISignUpForm } from '../../../types/login-page';
 import { onChangedValue } from '../../../helpers/text-field';
+import Grid from '@material-ui/core/Grid';
+import { BREAK_POINT } from '../../../lookups/page-layout';
 
 interface IProps {
   onSignIn: typeof fromUser.signIn;
@@ -51,22 +53,26 @@ class LoginPage extends Component<IProps, TState> {
     const onChangedConfirmation = onChangedValue(this.state.username, changeConfirmation);
 
     return (
-      <div className="sample-page">
-        <SignInUpCard
-          onChangeTab={onChangeTab}
-          isSignUp={isSignUp}
-          username={username}
-          onSignIn={onSignIn}
-          onSignUp={onSignUp}
-          onCancel={onCancel}
-          email={email}
-          password={password}
-          passwordConfirmation={confirmation}
-          onChangedUsername={onChangedUsername}
-          onChangedEmail={onChangedEmail}
-          onChangedPassword={onChangedPassword}
-          onChangedConfirmation={onChangedConfirmation}
-        />
+      <div id={styles.container} style={{ height: window.innerHeight }}>
+        <Grid container={true} spacing={2} alignContent="space-around" justify="center">
+          <Grid item={true} xs={11} sm={8} md={BREAK_POINT.sm} lg={BREAK_POINT.sm} xl={BREAK_POINT.md}>
+            <SignInUpCard
+              onChangeTab={onChangeTab}
+              isSignUp={isSignUp}
+              username={username}
+              onSignIn={onSignIn}
+              onSignUp={onSignUp}
+              onCancel={onCancel}
+              email={email}
+              password={password}
+              passwordConfirmation={confirmation}
+              onChangedUsername={onChangedUsername}
+              onChangedEmail={onChangedEmail}
+              onChangedPassword={onChangedPassword}
+              onChangedConfirmation={onChangedConfirmation}
+            />
+          </Grid>
+        </Grid>
       </div>
     );
   }

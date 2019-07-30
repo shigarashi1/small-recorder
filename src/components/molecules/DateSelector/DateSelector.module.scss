@@ -1,6 +1,6 @@
 $width-input-date: 160px;
 $width-arrow-button: 60px;
-$width-button: calc(100% - #{$width-arrow-button} * 2 - $width-input-date);
+$width-button: calc(100% - #{$width-arrow-button} * 2 - #{$width-input-date});
 
 // @types
 #container {

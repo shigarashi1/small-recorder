@@ -50,7 +50,7 @@ const SignInUpCard: React.FC<IProps> = (props: IProps) => {
           <div className={styles.form}>{renderForm()}</div>
         </CardContent>
         <CardActions className={styles.action}>
-          <Button label="Cancel" onClick={onCancel} />
+          <Button label="Cancel" onClick={onCancel} variant="contained" />
           {renderActionButton()}
         </CardActions>
       </Card>
@@ -112,7 +112,7 @@ const SignInUpCard: React.FC<IProps> = (props: IProps) => {
     const { onSignIn: onSingIn, onSignUp: onSingUp } = props;
     const label = isSignUp ? LABEL.signUp : LABEL.signIn;
     const onClick = isSignUp ? onSingUp : onSingIn;
-    return <Button label={label} onClick={onClick} />;
+    return <Button label={label} onClick={onClick} variant="contained" color="primary" />;
   }
 };
 

@@ -1,9 +1,9 @@
 import React from 'react';
 
 import styles from './SignInForm.module.scss';
-import TextWithLabel from '../TextWithLabel/TextWithLabel';
 
 import { onChangedValue } from '../../../helpers/text-field';
+import TextField from '../../atoms/TextField/TextField';
 
 interface IProps {
   email: string;
@@ -16,11 +16,13 @@ const SignInForm: React.FC<IProps> = (props: IProps) => {
   const { email, password, onChangedEmail, onChangedPassword } = props;
   return (
     <div id={styles.container}>
-      <div className={styles.email}>
-        <TextWithLabel label="Email" value={email} onChange={onChangedEmail} />
-      </div>
-      <div className={styles.password}>
-        <TextWithLabel label="Password" value={password} onChange={onChangedPassword} />
+      <div className={styles.formGroup}>
+        <div className={styles.email}>
+          <TextField label="Email" value={email} onChange={onChangedEmail} />
+        </div>
+        <div className={styles.password}>
+          <TextField label="Password" value={password} onChange={onChangedPassword} />
+        </div>
       </div>
     </div>
   );
