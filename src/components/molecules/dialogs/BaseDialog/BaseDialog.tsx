@@ -31,8 +31,8 @@ const BaseDialog: React.FC<IProps> = props => {
       aria-describedby="dialog"
     >
       {renderTitle()}
-      <DialogContent>{renderContent()}</DialogContent>
-      <DialogActions>{renderActions()}</DialogActions>
+      <DialogContent className={styles.content}>{renderContent()}</DialogContent>
+      <DialogActions className={styles.actions}>{renderActions()}</DialogActions>
     </Dialog>
   );
 
@@ -66,7 +66,11 @@ const BaseDialog: React.FC<IProps> = props => {
       onClose();
     };
 
-    return <Button key={key} {...buttonProps} onClick={onClick} autoFocus={isRight} />;
+    return (
+      <div className={styles.buttonWrapper} key={key}>
+        <Button {...buttonProps} onClick={onClick} autoFocus={isRight} />
+      </div>
+    );
   }
 };
 

@@ -3,6 +3,7 @@ import React from 'react';
 import styles from './SelectionDialog.module.scss';
 
 import BaseDialog from '../BaseDialog/BaseDialog';
+import { createButtonProps } from '../../../../helpers/components/dialog';
 
 interface IProps {
   hasOpen: boolean;
@@ -16,14 +17,8 @@ interface IProps {
 const SelectionDialog: React.FC<IProps> = (props: IProps) => {
   const { hasOpen, onClose, title, content, onYes, onNo } = props;
   const buttons = {
-    left: {
-      label: 'いいえ',
-      onClick: onNo,
-    },
-    right: {
-      label: 'はい',
-      onClick: onYes,
-    },
+    left: createButtonProps('いいえ', onNo),
+    right: createButtonProps('はい', onYes, 'primary'),
   };
 
   return (

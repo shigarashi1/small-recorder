@@ -3,6 +3,7 @@ import React from 'react';
 import styles from './OkCancelDialog.module.scss';
 
 import BaseDialog from '../BaseDialog/BaseDialog';
+import { createButtonProps } from '../../../../helpers/components/dialog';
 
 interface IProps {
   hasOpen: boolean;
@@ -16,14 +17,8 @@ interface IProps {
 const OkCancelDialog: React.FC<IProps> = (props: IProps) => {
   const { hasOpen, onClose, title, content, onOk, onCancel } = props;
   const buttons = {
-    left: {
-      label: 'キャンセル',
-      onClick: onCancel,
-    },
-    right: {
-      label: 'OK',
-      onClick: onOk,
-    },
+    left: createButtonProps('キャンセル', onCancel),
+    right: createButtonProps('OK', onOk, 'primary'),
   };
 
   return (
