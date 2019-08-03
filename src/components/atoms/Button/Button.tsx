@@ -57,7 +57,7 @@ Button.defaultProps = {
   color: 'default',
   isFullWidth: false,
   size: 'medium',
-  variant: 'text',
+  variant: 'contained',
   autoFocus: false,
 };
 
