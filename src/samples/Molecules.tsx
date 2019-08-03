@@ -11,6 +11,8 @@ import { onChangedValue } from '../helpers/text-field';
 import TextWithLabel from '../components/molecules/TextWithLabel/TextWithLabel';
 import SignInForm from '../components/molecules/SignInForm/SignInForm';
 import SignUpForm from '../components/molecules/SignUpForm/SignUpForm';
+import InformationDialog from '../components/molecules/dialogs/InformationDialog/InformationDialog';
+import Button from '../components/atoms/Button/Button';
 
 const brackFunc = (text: string) => {
   return () => {
@@ -145,7 +147,32 @@ const SignUpFormComp: React.FC = props => {
   );
 };
 
+const InformationDialogComp: React.FC = props => {
+  const [hasOpen, setHasOpen] = useState(false);
+  const information = '確認しろ！確認しろ！確認しろ！確認しろ！確認しろ！確認しろ！確認しろ！';
+
+  const onClose = () => {
+    setHasOpen(false);
+  };
+
+  const show = () => {
+    setHasOpen(true);
+  };
+
+  return (
+    <React.Fragment>
+      <Button label="open" onClick={show} />
+      <InformationDialog hasOpen={hasOpen} title="確認" onClose={onClose} information={information} />
+    </React.Fragment>
+  );
+};
+
 export const MOLECULES_SAMPLES: ISampleCardProps[] = [
+  {
+    title: 'InformationDialog',
+    contexts: 'InformationDialog',
+    node: <InformationDialogComp />,
+  },
   {
     title: 'Header',
     contexts: 'Headerです。',
