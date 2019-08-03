@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './InformationDialog.module.scss';
 
 import BaseDialog from '../BaseDialog/BaseDialog';
-import Logger from '../../../../helpers/logger';
+import { voidFunc } from '../../../../helpers/components/dialog';
 
 interface IProps {
   hasOpen: boolean;
@@ -12,18 +12,12 @@ interface IProps {
   information: string;
 }
 
-function onVoidFunc() {
-  return () => {
-    Logger.log('void func');
-  };
-}
-
 const InformationDialog: React.FC<IProps> = (props: IProps) => {
   const { hasOpen, onClose, title, information } = props;
   const buttons = {
     right: {
       label: '閉じる',
-      onClick: onVoidFunc(),
+      onClick: voidFunc(),
     },
   };
   return (

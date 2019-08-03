@@ -13,6 +13,8 @@ import SignInForm from '../components/molecules/SignInForm/SignInForm';
 import SignUpForm from '../components/molecules/SignUpForm/SignUpForm';
 import InformationDialog from '../components/molecules/dialogs/InformationDialog/InformationDialog';
 import Button from '../components/atoms/Button/Button';
+import OkCancelDialog from '../components/molecules/dialogs/OkCancelDialog/OkCancelDialog';
+import SelectionDialog from '../components/molecules/dialogs/SelectionDialog/SelectionDialog';
 
 const brackFunc = (text: string) => {
   return () => {
@@ -167,7 +169,87 @@ const InformationDialogComp: React.FC = props => {
   );
 };
 
+const OkCancelDialogComp: React.FC = props => {
+  const [hasOpen, setHasOpen] = useState(false);
+  const information = 'OkCancelOkCancelOkCancelOkCancelOkCancelOkCancel';
+
+  const onClose = () => {
+    setHasOpen(false);
+  };
+
+  const onOk = () => {
+    window.alert('OK');
+  };
+
+  const onCancel = () => {
+    window.alert('Cancle');
+  };
+
+  const show = () => {
+    setHasOpen(true);
+  };
+
+  return (
+    <React.Fragment>
+      <Button label="open" onClick={show} />
+      <OkCancelDialog
+        hasOpen={hasOpen}
+        title="確認"
+        onClose={onClose}
+        onOk={onOk}
+        onCancel={onCancel}
+        content={information}
+      />
+    </React.Fragment>
+  );
+};
+
+const SelectionDialogComp: React.FC = props => {
+  const [hasOpen, setHasOpen] = useState(false);
+  const information = 'SelectionDialogSelectionDialogSelectionDialogSelectionDialogSelectionDialog';
+
+  const onClose = () => {
+    setHasOpen(false);
+  };
+
+  const onOk = () => {
+    window.alert('Yes');
+  };
+
+  const onCancel = () => {
+    window.alert('No');
+  };
+
+  const show = () => {
+    setHasOpen(true);
+  };
+
+  return (
+    <React.Fragment>
+      <Button label="open" onClick={show} />
+      <SelectionDialog
+        hasOpen={hasOpen}
+        title="確認"
+        onClose={onClose}
+        onYes={onOk}
+        onNo={onCancel}
+        content={information}
+      />
+    </React.Fragment>
+  );
+};
+
 export const MOLECULES_SAMPLES: ISampleCardProps[] = [
+  {
+    title: 'SelectionDialog',
+    contexts: 'SelectionDialog',
+    node: <SelectionDialogComp />,
+  },
+  {
+    title: 'OkCancelDialog',
+    contexts: 'OkCancelDialog',
+    node: <OkCancelDialogComp />,
+  },
   {
     title: 'InformationDialog',
     contexts: 'InformationDialog',
