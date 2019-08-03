@@ -8,7 +8,7 @@ import { Nullable } from '../../../types';
 
 type TIconType = 'right' | 'left' | 'none';
 
-interface IProps {
+export interface IProps {
   label: Nullable<string>;
   onClick: () => void;
   iconType?: TIconType;
@@ -18,10 +18,11 @@ interface IProps {
   isFullWidth?: boolean;
   size?: 'small' | 'medium' | 'large';
   variant?: 'text' | 'outlined' | 'contained';
+  autoFocus?: boolean;
 }
 
 const Button: React.FC<IProps> = (props: IProps) => {
-  const { label, onClick, iconType, icon, disabled, color, isFullWidth, size, variant } = props;
+  const { label, onClick, iconType, icon, disabled, color, isFullWidth, size, variant, autoFocus } = props;
   return (
     <div id={styles.container}>
       <MButton
@@ -32,6 +33,7 @@ const Button: React.FC<IProps> = (props: IProps) => {
         fullWidth={isFullWidth}
         size={size}
         variant={variant}
+        autoFocus={autoFocus}
       >
         {renderIcon('left')}
         {label}
@@ -56,6 +58,7 @@ Button.defaultProps = {
   isFullWidth: false,
   size: 'medium',
   variant: 'text',
+  autoFocus: false,
 };
 
 export default Button;
