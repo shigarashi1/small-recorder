@@ -1,22 +1,20 @@
 import { Nullable } from '../types';
 
-type TStorageKey = 'category' | 'target' | 'record' | 'user';
+export type TStorageKey = 'category' | 'target' | 'record' | 'user';
 
-function set<T>(key: TStorageKey, data: T) {
+export function getStorageKey<T>(): TStorageKey {
+  const data = {} as T;
+  return 'category';
+}
+
+export function setStorage<T>(key: TStorageKey, data: T) {
   localStorage.setItem(key, JSON.stringify(data));
 }
 
-function get<T>(key: TStorageKey): Nullable<T> {
+export function getStorage<T>(key: TStorageKey): Nullable<T[]> {
   const data = localStorage.getItem(key);
   if (!data) {
-    return null;
+    return [];
   }
-  return JSON.parse(data) as T;
+  return JSON.parse(data) as T[];
 }
-
-const storage = {
-  set,
-  get,
-};
-
-export default storage;
