@@ -5,12 +5,14 @@ import React, { Component } from 'react';
 import PageTitle from '../../atoms/PageTitle/PageTitle';
 import { TPageProps } from '../../../containers/pages/SettingPage';
 
+type TProps = TPageProps;
+
 interface IState {
   state?: boolean;
 }
 
-class SettingPage extends Component<TPageProps, IState> {
-  constructor(props: TPageProps) {
+class SettingPage extends Component<TProps, IState> {
+  constructor(props: TProps) {
     super(props);
     this.state = { state: false };
   }

@@ -2,19 +2,17 @@ import React, { Component } from 'react';
 
 // import styles from './HomePage.module.scss';
 
-import * as fromUser from '../../../store/users';
 import PageTitle from '../../atoms/PageTitle/PageTitle';
-
-interface IProps {
-  logout: typeof fromUser.signOut;
-}
+import { TPageProps } from '../../../containers/pages/HomePage';
 
 interface IState {
   state?: boolean;
 }
 
-class HomePage extends Component<IProps, IState> {
-  constructor(props: IProps) {
+type TProps = TPageProps;
+
+class HomePage extends Component<TProps, IState> {
+  constructor(props: TProps) {
     super(props);
     this.state = { state: false };
   }

@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
+import Grid from '@material-ui/core/Grid';
 
 import styles from './LoginPage.module.scss';
 
-import * as fromUser from '../../../store/users';
-
 import SignInUpCard from '../../organisms/SignInUpCard/SignInUpCard';
+import { TPageProps } from '../../../containers/pages/LoginPage';
 import { ISignUpForm } from '../../../types/login-page';
 import { onChangedValue } from '../../../helpers/text-field';
-import Grid from '@material-ui/core/Grid';
 import { BREAK_POINT } from '../../../lookups/page-layout';
 
-interface IProps {
-  onSignIn: typeof fromUser.signIn;
-}
+type TProps = TPageProps;
 
 interface IState {
   isSignUp: boolean;
@@ -28,8 +25,8 @@ const initialState: TState = {
   confirmation: '',
 };
 
-class LoginPage extends Component<IProps, TState> {
-  constructor(props: IProps) {
+class LoginPage extends Component<TProps, TState> {
+  constructor(props: TProps) {
     super(props);
     this.state = initialState;
   }

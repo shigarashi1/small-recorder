@@ -3,17 +3,16 @@ import React, { Component } from 'react';
 // import styles from './RecordPage.module.scss';
 
 import PageTitle from '../../atoms/PageTitle/PageTitle';
+import { TPageProps } from '../../../containers/pages/RecordPage';
 
-interface IProps {
-  prop?: string;
-}
+type TProps = TPageProps;
 
 interface IState {
   state?: boolean;
 }
 
-class RecordPage extends Component<IProps, IState> {
-  constructor(props: IProps) {
+class RecordPage extends Component<TProps, IState> {
+  constructor(props: TProps) {
     super(props);
     this.state = { state: false };
   }

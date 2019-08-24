@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -6,7 +5,7 @@ import * as fromUser from '../../../store/users';
 import * as fromUtility from '../../../store/utility';
 
 import { AppState } from '../../../store';
-import SampleOrganismsPage from '../../../components/pages/SampleOrganismsPage/SampleOrganismsPage';
+import SampleOrganismsPage from '../../../components/pages/samples/SampleOrganismsPage/SampleOrganismsPage';
 
 function mapStateToProps(state: AppState) {
   return {

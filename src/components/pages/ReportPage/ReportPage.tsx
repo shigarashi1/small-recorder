@@ -3,17 +3,16 @@ import React, { Component } from 'react';
 // import styles from './ReportPage.module.scss';
 
 import PageTitle from '../../atoms/PageTitle/PageTitle';
+import { TPageProps } from '../../../containers/pages/ReportPage';
 
-interface IProps {
-  prop?: string;
-}
+type TProps = TPageProps;
 
 interface IState {
   state?: boolean;
 }
 
-class ReportPage extends Component<IProps, IState> {
-  constructor(props: IProps) {
+class ReportPage extends Component<TProps, IState> {
+  constructor(props: TProps) {
     super(props);
     this.state = { state: false };
   }

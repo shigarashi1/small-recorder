@@ -3,17 +3,16 @@ import React, { Component } from 'react';
 // import styles from './ManualPage.module.scss';
 
 import PageTitle from '../../atoms/PageTitle/PageTitle';
+import { TPageProps } from '../../../containers/pages/ManualPage';
 
-interface IProps {
-  prop?: string;
-}
+type TProps = TPageProps;
 
 interface IState {
   state?: boolean;
 }
 
-class ManualPage extends Component<IProps, IState> {
-  constructor(props: IProps) {
+class ManualPage extends Component<TProps, IState> {
+  constructor(props: TProps) {
     super(props);
     this.state = { state: false };
   }

@@ -6,13 +6,16 @@ import AppRouter from '../../../routers/AppRouter';
 import Header from '../../../containers/components/Header/Header';
 import Sidebar from '../../../containers/components/Sidebar/Sidebar';
 import NumberKeyboard from '../../../containers/components/NumberKeyboard/NumberKeyboard';
+import ErrorBoundary from '../../molecules/ErrorBoundary/ErrorBoundary';
 
 const MainTemplate: React.FC<{}> = props => {
   return (
     <div id={styles.template}>
       <Header />
       <div className={styles.container}>
-        <AppRouter />
+        <ErrorBoundary>
+          <AppRouter />
+        </ErrorBoundary>
       </div>
       {renderUtilities()}
     </div>

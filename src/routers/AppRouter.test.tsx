@@ -7,7 +7,7 @@ import { configureStore } from '../store';
 import AppRouter from './AppRouter';
 
 import SampleAtomsPageContainer from '../containers/pages/samples/SampleAtomsPage';
-import SampleAtomsPage from '../components/pages/SampleAtomsPage/SampleAtomsPage';
+import SampleAtomsPage from '../components/pages/samples/SampleAtomsPage/SampleAtomsPage';
 import { EPath } from '../types';
 
 const store = configureStore({});

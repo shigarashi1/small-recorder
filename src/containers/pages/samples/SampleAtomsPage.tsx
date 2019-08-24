@@ -5,7 +5,7 @@ import * as fromUser from '../../../store/users';
 import * as fromUtility from '../../../store/utility';
 
 import { AppState } from '../../../store';
-import SampleAtomsPage from '../../../components/pages/SampleAtomsPage/SampleAtomsPage';
+import SampleAtomsPage from '../../../components/pages/samples/SampleAtomsPage/SampleAtomsPage';
 
 function mapStateToProps(state: AppState) {
   return {

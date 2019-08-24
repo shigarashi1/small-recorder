@@ -3,17 +3,16 @@ import React, { Component } from 'react';
 // import styles from './SearchPage.module.scss';
 
 import PageTitle from '../../atoms/PageTitle/PageTitle';
+import { TPageProps } from '../../../containers/pages/SearchPage';
 
-interface IProps {
-  prop?: string;
-}
+type TProps = TPageProps;
 
 interface IState {
   state?: boolean;
 }
 
-class SearchPage extends Component<IProps, IState> {
-  constructor(props: IProps) {
+class SearchPage extends Component<TProps, IState> {
+  constructor(props: TProps) {
     super(props);
     this.state = { state: false };
   }

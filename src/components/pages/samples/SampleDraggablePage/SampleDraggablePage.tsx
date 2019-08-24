@@ -6,17 +6,12 @@ import Typography from '@material-ui/core/Typography';
 
 import styles from './SampleDraggablePage.module.scss';
 
-import * as fromUtility from '../../../store/utility';
+import { ObjectIndexes } from '../../../../types';
+import { isMobile } from '../../../../helpers/agent';
+import ExampleCardContent from '../../../molecules/ExampleCardContent/ExampleCardContent';
+import { TPageProps } from '../../../../containers/pages/samples/SampleDraggablePage';
 
-import { ObjectIndexes } from '../../../types';
-import { isMobile } from '../../../helpers/agent';
-import ExampleCardContent from '../../molecules/ExampleCardContent/ExampleCardContent';
-
-interface IProps {
-  isLoggedIn: boolean;
-  hasOpenKeyboard: boolean;
-  onOpenKeyboard: typeof fromUtility.changeHasOpenKeyboard;
-}
+type TProps = TPageProps;
 
 interface IState {
   state?: boolean;
@@ -24,8 +19,8 @@ interface IState {
 
 type TState = IState & ObjectIndexes;
 
-class SampleDraggablePage extends Component<IProps, TState> {
-  constructor(props: IProps) {
+class SampleDraggablePage extends Component<TProps, TState> {
+  constructor(props: TProps) {
     super(props);
     this.state = {
       inputText: '',

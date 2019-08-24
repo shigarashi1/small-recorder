@@ -2,21 +2,16 @@ import React, { Component } from 'react';
 
 import styles from './SampleMoleculesPage.module.scss';
 
-import * as fromUtility from '../../../store/utility';
-
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import SampleCard from '../../molecules/SampleCard/SampleCard';
-import { MOLECULES_SAMPLES } from '../../../samples/Molecules';
-import { ObjectIndexes } from '../../../types';
-import { ISampleCardProps } from '../../../types/components/sample-card';
-import { BREAK_POINT } from '../../../lookups/page-layout';
+import SampleCard from '../../../molecules/SampleCard/SampleCard';
+import { MOLECULES_SAMPLES } from '../../../../samples/Molecules';
+import { ObjectIndexes } from '../../../../types';
+import { ISampleCardProps } from '../../../../types/components/sample-card';
+import { BREAK_POINT } from '../../../../lookups/page-layout';
+import { TPageProps } from '../../../../containers/pages/samples/SampleMoleculesPage';
 
-interface IProps {
-  isLoggedIn: boolean;
-  hasOpenKeyboard: boolean;
-  onOpenKeyboard: typeof fromUtility.changeHasOpenKeyboard;
-}
+type TProps = TPageProps;
 
 interface IState {
   state?: boolean;
@@ -24,8 +19,8 @@ interface IState {
 
 type TState = IState & ObjectIndexes;
 
-class SampleMoleculesPage extends Component<IProps, TState> {
-  constructor(props: IProps) {
+class SampleMoleculesPage extends Component<TProps, TState> {
+  constructor(props: TProps) {
     super(props);
     this.state = {};
   }
