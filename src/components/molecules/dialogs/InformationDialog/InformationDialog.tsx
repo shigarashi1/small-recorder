@@ -3,27 +3,24 @@ import React from 'react';
 import styles from './InformationDialog.module.scss';
 
 import BaseDialog from '../BaseDialog/BaseDialog';
-import { voidFunc } from '../../../../helpers/components/dialog';
+import { voidFunc, createButtonProps } from '../../../../helpers/components/dialog';
 
 interface IProps {
   hasOpen: boolean;
   onClose: () => void;
   title: string;
-  information: string;
+  context: string;
 }
 
 const InformationDialog: React.FC<IProps> = (props: IProps) => {
-  const { hasOpen, onClose, title, information } = props;
+  const { hasOpen, onClose, title, context } = props;
   const buttons = {
-    right: {
-      label: '閉じる',
-      onClick: voidFunc(),
-    },
+    right: createButtonProps('Close', voidFunc),
   };
   return (
     <div id={styles.container}>
       <BaseDialog hasOpen={hasOpen} onClose={onClose} buttons={buttons} title={title}>
-        <p>{information}</p>
+        <p>{context}</p>
       </BaseDialog>
     </div>
   );

@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 import { configureStore } from '../store';
 import history from '../helpers/history';
-import AppRouterGuard from './AppRouterGuard';
+import AppRouterGuard from '../guards/AppRouterGuard';
 import LoginPageTemplate from './templates/LoginTemplate/LoginTemplate';
 import { EPath } from '../types/index';
 import MainTemplate from './templates/MainTemplate/MainTemplate';

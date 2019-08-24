@@ -8,7 +8,7 @@ import Tab from '@material-ui/core/Tab';
 import styles from './SamplePageTemplate.module.scss';
 
 import PageTitle from '../../atoms/PageTitle/PageTitle';
-import SampleRouter from '../../../sub-routers/SampleRouter';
+import SampleRouter from '../../../routers/sub/SampleRouter';
 import { EPath } from '../../../types';
 
 interface IState {

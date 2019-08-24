@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './MainTemplate.module.scss';
 
-import AppRouter from '../../AppRouter';
+import AppRouter from '../../../routers/AppRouter';
 import Header from '../../../containers/components/Header/Header';
 import Sidebar from '../../../containers/components/Sidebar/Sidebar';
 import NumberKeyboard from '../../../containers/components/NumberKeyboard/NumberKeyboard';

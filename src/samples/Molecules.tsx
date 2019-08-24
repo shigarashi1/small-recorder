@@ -164,7 +164,7 @@ const InformationDialogComp: React.FC = props => {
   return (
     <React.Fragment>
       <Button label="open" onClick={show} />
-      <InformationDialog hasOpen={hasOpen} title="確認" onClose={onClose} information={information} />
+      <InformationDialog hasOpen={hasOpen} title="確認" onClose={onClose} context={information} />
     </React.Fragment>
   );
 };

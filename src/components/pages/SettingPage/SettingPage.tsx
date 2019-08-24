@@ -3,17 +3,14 @@ import React, { Component } from 'react';
 // import styles from './SettingPage.module.scss';
 
 import PageTitle from '../../atoms/PageTitle/PageTitle';
-
-interface IProps {
-  prop?: string;
-}
+import { TPageProps } from '../../../containers/pages/SettingPage';
 
 interface IState {
   state?: boolean;
 }
 
-class SettingPage extends Component<IProps, IState> {
-  constructor(props: IProps) {
+class SettingPage extends Component<TPageProps, IState> {
+  constructor(props: TPageProps) {
     super(props);
     this.state = { state: false };
   }

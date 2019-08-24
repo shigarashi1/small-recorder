@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-import { EPath } from '../types/index';
-import SampleAtomsPage from '../containers/pages/SampleAtomsPage/SampleAtomsPage';
-import SampleMoleculesPage from '../containers/pages/SampleMoleculesPage/SampleMoleculesPage';
-import SampleOrganismsPage from '../containers/pages/SampleOrganismsPage/SampleOrganismsPage';
-import SampleDraggablePage from '../containers/pages/SampleDraggablePage/SampleDraggablePage';
+import { EPath } from '../../types/index';
+import SampleAtomsPage from '../../containers/pages/samples/SampleAtomsPage';
+import SampleMoleculesPage from '../../containers/pages/samples/SampleMoleculesPage';
+import SampleOrganismsPage from '../../containers/pages/samples/SampleOrganismsPage';
+import SampleDraggablePage from '../../containers/pages/samples/SampleDraggablePage';
 
 class SampleRouter extends Component {
   render() {
