@@ -1,7 +1,7 @@
 import { ActionType, UsersActions } from './action';
 import { TApiError } from '../../types/api';
-import { IPageBase } from '../../types/page-base';
-import { ILogin } from '../../types/login-page';
+import { IPageBase } from '../../types/pages/page-base';
+import { ILogin } from '../../types/pages/login-page';
 import { IUser } from '../../types/firebase';
 import config from '../../configuration/config';
 

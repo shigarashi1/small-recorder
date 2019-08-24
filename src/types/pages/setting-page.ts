@@ -1,4 +1,4 @@
-import { IRecordCategory, IRecordTarget } from './firebase';
+import { IRecordCategory, IRecordTarget } from '../firebase';
 
 export type TEditType = 'category' | 'target';
 export type TDialogType = 'none' | 'create' | 'edit' | 'delete';

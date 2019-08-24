@@ -1,4 +1,4 @@
-import { Nullable } from './index';
+import { Nullable } from '../index';
 
 export interface ILoginFormBase {
   email: string;

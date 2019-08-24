@@ -1,4 +1,4 @@
-import { IRecordCategory } from './firebase';
+import { IRecordCategory } from '../firebase';
 
 export type TSort = 'date' | 'category' | 'record';
 
