@@ -7,7 +7,7 @@ import { ISampleCardProps } from '../types/components/sample-card';
 import Header from '../components/molecules/Header/Header';
 import SampleCard from '../components/molecules/SampleCard/SampleCard';
 import DeteSelector from '../components/molecules/DateSelector/DateSelector';
-import { onChangedValue } from '../helpers/text-field';
+import { onChangedValue } from '../helpers/components/text-field';
 import TextWithLabel from '../components/molecules/TextWithLabel/TextWithLabel';
 import SignInForm from '../components/molecules/SignInForm/SignInForm';
 import SignUpForm from '../components/molecules/SignUpForm/SignUpForm';

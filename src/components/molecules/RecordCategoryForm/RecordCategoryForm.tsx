@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './RecordCategoryForm.module.scss';
 import TextField from '../../atoms/TextField/TextField';
-import { onChangedValue } from '../../../helpers/text-field';
+import { onChangedValue } from '../../../helpers/components/text-field';
 
 interface IProps {
   category: string;

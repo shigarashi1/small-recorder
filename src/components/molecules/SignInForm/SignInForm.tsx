@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './SignInForm.module.scss';
 
-import { onChangedValue } from '../../../helpers/text-field';
+import { onChangedValue } from '../../../helpers/components/text-field';
 import TextField from '../../atoms/TextField/TextField';
 
 interface IProps {

@@ -6,7 +6,7 @@ import BaseDialog from '../../molecules/dialogs/BaseDialog/BaseDialog';
 import { voidFunc, createButtonProps } from '../../../helpers/components/dialog';
 import { IRecordCategory } from '../../../types/firebase';
 import RecordCategoryForm from '../../molecules/RecordCategoryForm/RecordCategoryForm';
-import { onChangedValue } from '../../../helpers/text-field';
+import { onChangedValue } from '../../../helpers/components/text-field';
 
 interface IProps {
   hasOpen: boolean;

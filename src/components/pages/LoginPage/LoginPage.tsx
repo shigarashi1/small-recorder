@@ -6,7 +6,7 @@ import styles from './LoginPage.module.scss';
 import SignInUpCard from '../../organisms/SignInUpCard/SignInUpCard';
 import { TPageProps } from '../../../containers/pages/LoginPage';
 import { ISignUpForm } from '../../../types/pages/login-page';
-import { onChangedValue } from '../../../helpers/text-field';
+import { onChangedValue } from '../../../helpers/components/text-field';
 import { BREAK_POINT } from '../../../lookups/page-layout';
 
 type TProps = TPageProps;

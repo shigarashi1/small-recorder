@@ -1,4 +1,4 @@
-import { TKeyboardKey } from '../types/components/number-keyboard';
+import { TKeyboardKey } from '../../types/components/number-keyboard';
 
 export function changeValue(value: string, pushedKey: TKeyboardKey, defaultValue: string = ''): string {
   switch (pushedKey) {

@@ -25,6 +25,8 @@ export interface IRecordCategory extends IFirebaseBase {
   hasDeleted: boolean;
 }
 
+export type TRecordCategory = Pick<IRecordCategory, '_id' | 'name'>;
+
 export type TTargetTerm = 'day' | 'week' | 'month';
 
 export interface IRecordTarget extends IFirebaseBase {

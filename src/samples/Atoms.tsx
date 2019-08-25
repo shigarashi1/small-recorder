@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ISampleCardProps } from '../types/components/sample-card';
-import { changeValue } from '../helpers/number-keyboard';
+import { changeValue } from '../helpers/components/number-keyboard';
 import { TKeyboardKey } from '../types/components/number-keyboard';
 import { Nullable } from '../types';
 
@@ -13,7 +13,7 @@ import NumberKeyboard from '../components/atoms/NumberKeyboard/NumberKeyboard';
 import InputDate from '../components/atoms/InputDate/InputDate';
 import InputText from '../components/atoms/InputText/InputText';
 import TextField from '../components/atoms/TextField/TextField';
-import { onChangedValue } from '../helpers/text-field';
+import { onChangedValue } from '../helpers/components/text-field';
 
 const ButtonComponent: React.FC = props => {
   const [count, setCount] = useState(0);

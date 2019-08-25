@@ -9,7 +9,7 @@ import Tab from '@material-ui/core/Tab';
 
 import styles from './SignInUpCard.module.scss';
 
-import { onChangedValue } from '../../../helpers/text-field';
+import { onChangedValue } from '../../../helpers/components/text-field';
 import Button from '../../atoms/Button/Button';
 import SignInForm from '../../molecules/SignInForm/SignInForm';
 import SignUpForm from '../../molecules/SignUpForm/SignUpForm';

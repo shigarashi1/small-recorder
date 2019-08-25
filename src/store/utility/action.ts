@@ -3,7 +3,7 @@ import { ThunkAction } from 'redux-thunk';
 
 import { AppState } from '../index';
 import { TKeyboardKey } from '../../types/components/number-keyboard';
-import { changeValue } from '../../helpers/number-keyboard';
+import { changeValue } from '../../helpers/components/number-keyboard';
 
 export enum ActionType {
   CHANGE_HAS_OPEN_KEYBOARD_SUCCESS = '[keyboard] CHANGE_HAS_OPEN_KEYBOARD_SUCCESS',
