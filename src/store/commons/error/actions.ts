@@ -1,4 +1,4 @@
-import * as TPayload from './payload-type';
+import { IError } from '../../../types/error';
 
 // actionType
 export enum ActionType {
@@ -6,13 +6,16 @@ export enum ActionType {
   CLEAR = '[error] CLEAR',
 }
 
+export type TPayloadSet = IError;
+export type TPayloadClear = void;
+
 // actionCreater
-type Set = { type: typeof ActionType.SET; payload: TPayload.TPayloadSet };
-type Clear = { type: typeof ActionType.CLEAR; payload: TPayload.TPayloadClear };
+type Set = { type: typeof ActionType.SET; payload: TPayloadSet };
+type Clear = { type: typeof ActionType.CLEAR; payload: TPayloadClear };
 
 // actions
-const set = (payload: TPayload.TPayloadSet): Set => ({ type: ActionType.SET, payload });
-const clear = (payload: TPayload.TPayloadClear): Clear => ({ type: ActionType.CLEAR, payload });
+const set = (payload: TPayloadSet): Set => ({ type: ActionType.SET, payload });
+const clear = (payload: TPayloadClear): Clear => ({ type: ActionType.CLEAR, payload });
 
 export type TErrorActions = Set | Clear;
 export const errorActions = { set, clear };

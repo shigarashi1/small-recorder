@@ -3,7 +3,7 @@ import { ThunkAction } from 'redux-thunk';
 
 import { AppState } from '../index';
 
-import Logger from '../../helpers/logger';
+import Logger from '../../helpers/generals/logger';
 import history from '../../helpers/history';
 import { EPath } from '../../types';
 import { IError } from '../../types/error';

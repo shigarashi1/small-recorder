@@ -3,7 +3,8 @@ private
 
 # setting
 node_modules
-/__sample
+_sample
+config
 
 # tmp
 .DS_Store

@@ -1,6 +1,6 @@
-import { TMessageType } from '../types/error';
-import { IMessage } from '../types/message';
-import { INFO_MESSAGES, WARN_MESSAGES, ERROR_MESSAGES } from '../lookups/message';
+import { TMessageType } from '../../types/error';
+import { IMessage } from '../../types/message';
+import { INFO_MESSAGES, WARN_MESSAGES, ERROR_MESSAGES } from '../../lookups/message';
 
 export function getMessage(type: TMessageType, code: string, value: string[]): string {
   const messageList = getMessageList(type);

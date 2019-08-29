@@ -84,7 +84,7 @@ class LoginPage extends Component<TProps, TState> {
     // FIXME:
     const { email, password } = this.state;
     console.log('sign in', { email, password });
-    onSignIn();
+    onSignIn({});
   };
 
   onSignUp = () => {

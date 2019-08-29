@@ -1,5 +1,3 @@
-import * as TPayload from './payload-type';
-
 // actionType
 export enum ActionType {
   OPEN = '[keyboard] OPEN',
@@ -9,25 +7,31 @@ export enum ActionType {
   RESET = '[keyboard] RESET',
 }
 
+export type TPayloadOpen = void;
+export type TPayloadClose = void;
+export type TPayloadChangeValue = void;
+export type TPayloadChangePosition = void;
+export type TPayloadReset = void;
+
 // actionCreater
-type Open = { type: typeof ActionType.OPEN; payload: TPayload.TPayloadOpen };
-type Close = { type: typeof ActionType.CLOSE; payload: TPayload.TPayloadClose };
-type ChangeValue = { type: typeof ActionType.CHANGE_VALUE; payload: TPayload.TPayloadChangeValue };
-type ChangePosition = { type: typeof ActionType.CHANGE_POSITION; payload: TPayload.TPayloadChangePosition };
-type Reset = { type: typeof ActionType.RESET; payload: TPayload.TPayloadReset };
+type Open = { type: typeof ActionType.OPEN; payload: TPayloadOpen };
+type Close = { type: typeof ActionType.CLOSE; payload: TPayloadClose };
+type ChangeValue = { type: typeof ActionType.CHANGE_VALUE; payload: TPayloadChangeValue };
+type ChangePosition = { type: typeof ActionType.CHANGE_POSITION; payload: TPayloadChangePosition };
+type Reset = { type: typeof ActionType.RESET; payload: TPayloadReset };
 
 // actions
-const open = (payload: TPayload.TPayloadOpen): Open => ({ type: ActionType.OPEN, payload });
-const close = (payload: TPayload.TPayloadClose): Close => ({ type: ActionType.CLOSE, payload });
-const changeValue = (payload: TPayload.TPayloadChangeValue): ChangeValue => ({
+const open = (payload: TPayloadOpen): Open => ({ type: ActionType.OPEN, payload });
+const close = (payload: TPayloadClose): Close => ({ type: ActionType.CLOSE, payload });
+const changeValue = (payload: TPayloadChangeValue): ChangeValue => ({
   type: ActionType.CHANGE_VALUE,
   payload,
 });
-const changePosition = (payload: TPayload.TPayloadChangePosition): ChangePosition => ({
+const changePosition = (payload: TPayloadChangePosition): ChangePosition => ({
   type: ActionType.CHANGE_POSITION,
   payload,
 });
-const reset = (payload: TPayload.TPayloadReset): Reset => ({ type: ActionType.RESET, payload });
+const reset = (payload: TPayloadReset): Reset => ({ type: ActionType.RESET, payload });
 
 export type TKeyboardActions = Open | Close | ChangeValue | ChangePosition | Reset;
 export const keyboardActions = { open, close, changeValue, changePosition, reset };

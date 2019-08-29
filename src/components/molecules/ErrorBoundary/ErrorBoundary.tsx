@@ -2,7 +2,7 @@ import React, { ErrorInfo } from 'react';
 import Typography from '@material-ui/core/Typography';
 
 import styles from './ErrorBoundary.module.scss';
-import { sendStackTraceToServer } from '../../../helpers/error-handler';
+import { sendStackTraceToServer } from '../../../helpers/generals/error-handler';
 import config from '../../../configuration/config';
 import { Button } from '@material-ui/core';
 

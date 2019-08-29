@@ -5,6 +5,7 @@ import * as fromUser from '../../store/users';
 import { AppState } from '../../store';
 
 import LoginPage from '../../components/pages/LoginPage/LoginPage';
+import { loginPageActions, TSignIn } from '../../store/actions/pages/login';
 
 function mapStateToProps(state: AppState) {
   return {
@@ -14,7 +15,7 @@ function mapStateToProps(state: AppState) {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    onSignIn: () => dispatch<any>(fromUser.signIn()),
+    onSignIn: (param: TSignIn) => dispatch<any>(loginPageActions.signIn(param)),
   };
 }
 

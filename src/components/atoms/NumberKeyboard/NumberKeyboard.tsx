@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styles from './NumberKeyboard.module.scss';
-import Logger from '../../../helpers/logger';
+import Logger from '../../../helpers/generals/logger';
 import { DISPLAY_KEYS_LIST } from '../../../lookups/number-keyboard';
 import { TKeyboardKey, IDraggableAction } from '../../../types/components/number-keyboard';
 

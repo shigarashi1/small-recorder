@@ -2,39 +2,38 @@ import { ThunkAction } from 'redux-thunk';
 import { AppState } from '../..';
 import { Action, Dispatch } from 'redux';
 
-import Logger from '../../../helpers/logger';
+import Logger from '../../../helpers/generals/logger';
 import history from '../../../helpers/history';
 import { EPath } from '../../../types';
+import { delayFunction } from '../../../helpers/generals';
 
-function signIn(): ThunkAction<void, AppState, null, Action> {
-  Logger.log('[Store] login');
+export type TSignIn = {};
+function signIn(payload: TSignIn): ThunkAction<void, AppState, null, Action> {
+  Logger.log('[Store] signIn');
   return async (dispatch: Dispatch) => {
     try {
-      setTimeout(() => {
-        // dispatch(signInRequestSuccess({}));
-        history.push(EPath.Home);
-      }, 300);
+      const login = () => history.push(EPath.Home);
+      await delayFunction(login, 500);
     } catch (error) {
       console.error(error);
     }
   };
 }
 
-function signOut(): ThunkAction<void, AppState, null, Action> {
-  Logger.log('[Store] logout');
+export type TSignOut = {};
+function signOut(payload: TSignOut): ThunkAction<void, AppState, null, Action> {
+  Logger.log('[Store] signOut');
   return async (dispatch: Dispatch) => {
     try {
-      setTimeout(() => {
-        // dispatch(signInRequestSuccess({}));
-        history.push(EPath.Login);
-      }, 300);
+      const logout = () => history.push(EPath.Login);
+      await delayFunction(logout, 500);
     } catch (error) {
       console.error(error);
     }
   };
 }
 
-export const loginPageAction = {
+export const loginPageActions = {
   signIn,
   signOut,
 };

@@ -3,7 +3,7 @@ import NumberFormat from 'react-number-format';
 
 import styles from '../InputText/InputText.module.scss';
 import { IProps as ITextProps } from '../InputText/InputText';
-import { isIOS } from '../../../helpers/agent';
+import { isIOS } from '../../../helpers/generals/agent';
 
 interface IProps {
   prefix?: string;

@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import styles from './SampleDraggablePage.module.scss';
 
 import { ObjectIndexes } from '../../../../types';
-import { isMobile } from '../../../../helpers/agent';
+import { isMobile } from '../../../../helpers/generals/agent';
 import ExampleCardContent from '../../../molecules/ExampleCardContent/ExampleCardContent';
 import { TPageProps } from '../../../../containers/pages/samples/SampleDraggablePage';
 

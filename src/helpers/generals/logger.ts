@@ -1,4 +1,4 @@
-import config from '../configuration/config';
+import config from '../../configuration/config';
 
 function canLog(): boolean {
   return (config.isDev && !config.isTest) || config.isTest;
