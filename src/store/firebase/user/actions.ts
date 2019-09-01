@@ -7,7 +7,7 @@ export enum ActionType {
 }
 
 export type TPayloadCreate = void;
-export type TPayloadRead = void;
+export type TPayloadRead = any;
 export type TPayloadUpdate = void;
 export type TPayloadDel = void;
 

@@ -4,7 +4,7 @@ private
 # setting
 node_modules
 _sample
-config
+*/lib/**/config.ts
 
 # tmp
 .DS_Store

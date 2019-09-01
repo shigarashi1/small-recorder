@@ -6,6 +6,12 @@ import Logger from '../../../helpers/generals/logger';
 import history from '../../../helpers/history';
 import { EPath } from '../../../types';
 import { delayFunction } from '../../../helpers/generals';
+import { db, dbPath } from '../../../lib/firebase';
+import { userActions } from '../../firebase/user/actions';
+import { IError } from '../../../types/error';
+import { errorActions } from '../../commons/error/actions';
+
+const dbUserCollection = dbPath + '/users';
 
 export type TSignIn = {};
 function signIn(payload: TSignIn): ThunkAction<void, AppState, null, Action> {
@@ -14,6 +20,12 @@ function signIn(payload: TSignIn): ThunkAction<void, AppState, null, Action> {
     try {
       const login = () => history.push(EPath.Home);
       await delayFunction(login, 500);
+      const userSnapShot = await db.collection(dbUserCollection).get();
+      userSnapShot.docs.forEach(document => {
+        const id = document.id;
+        const data = document.data();
+        console.log(id, data);
+      });
     } catch (error) {
       console.error(error);
     }

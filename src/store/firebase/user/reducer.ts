@@ -7,6 +7,8 @@ export function userReducer(state: TUserState = INITIAL_USER_STATE, action: TUse
       return { ...state };
 
     case ActionType.READ:
+      const val = action.payload.val();
+      console.log(val);
       return { ...state };
 
     case ActionType.UPDATE:
