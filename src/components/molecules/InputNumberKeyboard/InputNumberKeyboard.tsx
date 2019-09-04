@@ -21,7 +21,7 @@ const InputNumberKeyboard: React.FC<TProps> = (props: TProps) => {
     <div id={styles.container}>
       <InputText {...props} />
       <div className={keyboardStyle}>
-        <NumberKeyboard {...props} onPush={onPush} />
+        <NumberKeyboard {...props} onPushKey={onPush} />
       </div>
     </div>
   );

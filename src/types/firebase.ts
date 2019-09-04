@@ -42,3 +42,5 @@ export interface IRecord extends IFirebaseBase {
   date: number;
   record: string;
 }
+
+export type TFirebaseQuery = firebase.firestore.QueryDocumentSnapshot;

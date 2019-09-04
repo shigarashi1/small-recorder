@@ -7,9 +7,9 @@ import history from '../../../helpers/history';
 import { EPath } from '../../../types';
 import { delayFunction } from '../../../helpers/generals';
 import { db, dbPath } from '../../../lib/firebase';
-import { userActions } from '../../firebase/user/actions';
-import { IError } from '../../../types/error';
-import { errorActions } from '../../commons/error/actions';
+// import { userActions } from '../../firebase/user/actions';
+// import { IError } from '../../../types/error';
+// import { errorActions } from '../../commons/error/actions';
 
 const dbUserCollection = dbPath + '/users';
 

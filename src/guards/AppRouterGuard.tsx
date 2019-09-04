@@ -1,33 +1,35 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 
-import * as fromUser from '../store/users';
+import LoginPageTemplate from '../components/templates/LoginTemplate/LoginTemplate';
+
 import { AppState } from '../store';
-
 import { EPath } from '../types/index';
+import { getCommon } from '../store/selector/commons';
 
-interface IStateToProps {
-  isLoggedIn: boolean;
+function mapStateToProps(state: AppState) {
+  return {
+    isSignedIn: getCommon.auth.signedIn(state),
+  };
 }
 
-type TProps = IStateToProps;
+type TProps = ReturnType<typeof mapStateToProps>;
 
 class AppRouterGuard extends Component<TProps> {
   render() {
     const children = this.props.children ? this.props.children : null;
 
-    if (!this.props.isLoggedIn) {
-      return <Redirect to={EPath.Login} />;
+    if (!this.props.isSignedIn) {
+      return (
+        <React.Fragment>
+          <Route exact={true} path={EPath.Login} component={LoginPageTemplate} />
+          <Redirect from="/" to={EPath.Login} />
+        </React.Fragment>
+      );
     }
     return <React.Fragment>{children}</React.Fragment>;
   }
-}
-
-function mapStateToProps(state: AppState): IStateToProps {
-  return {
-    isLoggedIn: fromUser.getIsLoggedIn(state),
-  };
 }
 
 export default connect(

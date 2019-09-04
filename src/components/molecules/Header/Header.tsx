@@ -8,19 +8,18 @@ import styles from './Header.module.scss';
 
 import HeaderTitle from '../../atoms/HeaderTitle/HeaderTitle';
 
-interface IProps {
-  isLoggedIn: boolean;
-  isFixed?: boolean;
-  onOpen: () => void;
-  onSignOut: () => void;
-}
+import { THeaderProps } from '../../../containers/components/Header';
 
-const Header: React.FC<IProps> = (props: IProps) => {
-  const { isLoggedIn, isFixed } = props;
+type TProps = THeaderProps & {
+  isFixed?: boolean;
+};
+
+const Header: React.FC<TProps> = (props: TProps) => {
+  const { isSignedIn, isFixed } = props;
   const position = isFixed ? 'fixed' : 'static';
 
   const onOpen = () => {
-    props.onOpen();
+    props.onTogleSidebar();
   };
 
   const renderLeftBlock = () => {
@@ -35,7 +34,7 @@ const Header: React.FC<IProps> = (props: IProps) => {
   };
 
   const renderRightBlock = () => {
-    if (!isLoggedIn) {
+    if (!isSignedIn) {
       return null;
     }
     return (

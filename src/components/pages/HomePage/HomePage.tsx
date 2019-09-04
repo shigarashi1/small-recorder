@@ -18,11 +18,11 @@ class HomePage extends Component<TProps, IState> {
   }
 
   render() {
-    const { logout } = this.props;
+    const { onSignOut } = this.props;
     return (
       <div className="sample-page">
         <PageTitle title="HomePage" />
-        <button onClick={logout}>Logout</button>
+        <button onClick={onSignOut}>Signout</button>
       </div>
     );
   }

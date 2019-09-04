@@ -5,6 +5,7 @@ import NumberKeyboard, { IProps as NumberKeyboardProps } from '../NumberKeyboard
 import { Nullable } from '../../../types';
 import { IPosition, IDraggableAction } from '../../../types/components/number-keyboard';
 import { getTopPosition, getLeftPosition } from '../../../helpers/components/number-keyboard';
+import { TKeyboardProps } from '../../../containers/components/NumberKeyboard';
 
 interface IProps {
   hasOpen: boolean;
@@ -25,7 +26,7 @@ const initialState: IState = {
   },
 };
 
-type TProps = IProps & NumberKeyboardProps;
+type TProps = TKeyboardProps & NumberKeyboardProps;
 
 class DraggableNumberKeyboard extends React.Component<TProps, IState> {
   private _node: Nullable<HTMLDivElement>;

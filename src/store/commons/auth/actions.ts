@@ -1,7 +1,7 @@
 // actionType
 export enum ActionType {
   CHANGE_LOGGEDIN = '[auth] CHANGE_LOGGEDIN',
-  SIGN_OUT = '[login] SIGN_OUT',
+  SIGN_OUT = '[auth] SIGN_OUT',
 }
 
 export type TPayloadChangeLoggedIn = boolean;

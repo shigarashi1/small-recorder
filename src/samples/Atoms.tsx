@@ -75,7 +75,7 @@ const NumberKeyboardComp: React.FC = props => {
   return (
     <React.Fragment>
       <InputNumber value={result} />
-      <NumberKeyboard onPush={onPushNumberKeyboard} />
+      <NumberKeyboard onPushKey={onPushNumberKeyboard} />
     </React.Fragment>
   );
 };

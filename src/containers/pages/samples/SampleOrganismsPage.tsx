@@ -1,22 +1,20 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import * as fromUser from '../../../store/users';
-import * as fromUtility from '../../../store/utility';
+import { getCommon } from '../../../store/selector/commons';
 
 import { AppState } from '../../../store';
 import SampleOrganismsPage from '../../../components/pages/samples/SampleOrganismsPage/SampleOrganismsPage';
 
 function mapStateToProps(state: AppState) {
   return {
-    isLoggedIn: fromUser.getIsLoggedIn(state),
-    hasOpenKeyboard: fromUtility.getHasOpenKeyboard(state),
+    isSignedIn: getCommon.auth.signedIn(state),
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    onOpenKeyboard: (hasOpen: boolean) => dispatch<any>(fromUtility.changeHasOpenKeyboard(hasOpen)),
+    onOpenKeyboard: (hasOpen: boolean) => console.log('未実装'),
   };
 }
 

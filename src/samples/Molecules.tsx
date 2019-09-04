@@ -4,7 +4,6 @@ import Logger from '../helpers/generals/logger';
 import { Nullable } from '../types';
 import { ISampleCardProps } from '../types/components/sample-card';
 
-import Header from '../components/molecules/Header/Header';
 import SampleCard from '../components/molecules/SampleCard/SampleCard';
 import DeteSelector from '../components/molecules/DateSelector/DateSelector';
 import { onChangedValue } from '../helpers/components/text-field';
@@ -54,22 +53,6 @@ const DateSelectorComp: React.FC = props => {
         maltiButtonLabel="今日"
         onMaltiButtonClick={onToday}
       />
-    </React.Fragment>
-  );
-};
-
-const HeaderComp: React.FC = props => {
-  const onOpen = () => {
-    console.log('header onOpen clicked.');
-  };
-
-  const onSignOut = () => {
-    console.log('header signout clicked.');
-  };
-
-  return (
-    <React.Fragment>
-      <Header isLoggedIn={false} onOpen={onOpen} isFixed={false} onSignOut={onSignOut} />
     </React.Fragment>
   );
 };
@@ -254,11 +237,6 @@ export const MOLECULES_SAMPLES: ISampleCardProps[] = [
     title: 'InformationDialog',
     contexts: 'InformationDialog',
     node: <InformationDialogComp />,
-  },
-  {
-    title: 'Header',
-    contexts: 'Headerです。',
-    node: <HeaderComp />,
   },
   {
     title: 'DateSelector',

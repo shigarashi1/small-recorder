@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import * as fromUser from '../../store/users';
+import { getCommon } from '../../store/selector/commons';
 import { AppState } from '../../store';
 
 import LoginPage from '../../components/pages/LoginPage/LoginPage';
@@ -9,7 +9,7 @@ import { loginPageActions, TSignIn } from '../../store/actions/pages/login';
 
 function mapStateToProps(state: AppState) {
   return {
-    isLoggedIn: fromUser.getIsLoggedIn(state),
+    isSignedIn: getCommon.auth.signedIn(state),
   };
 }
 

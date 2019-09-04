@@ -1,4 +1,5 @@
 import React from 'react';
+import { RouteComponentProps, withRouter } from 'react-router';
 
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
@@ -12,17 +13,20 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 import styles from './Sidebar.module.scss';
 
-import history from '../../../helpers/history';
 import { IListItem } from '../../../types/components/sidebar';
 import { SIDEBAR_LIST } from '../../../lookups/sidebar';
 import { EPath } from '../../../types';
+import { TSidebarProps } from '../../../containers/components/Sidebar';
 
-interface IProps {
-  hasOpen: boolean;
-  onOpenClose: () => void;
-}
+type TProps = RouteComponentProps & TSidebarProps;
 
-const Sidebar: React.FC<IProps> = (props: IProps) => {
+const Sidebar: React.FC<TProps> = (props: TProps) => {
+  const { history, hasOpen } = props;
+
+  const togleHasOpen = () => {
+    props.onTogleSidebar();
+  };
+
   const activeRoute = (path: EPath): boolean => {
     const pathname = window.location.pathname;
     return pathname === path ? true : false;
@@ -38,7 +42,7 @@ const Sidebar: React.FC<IProps> = (props: IProps) => {
       return;
     }
     history.push(path);
-    props.onOpenClose();
+    togleHasOpen();
   };
 
   const renderListItem = (menuList: IListItem[]) => {
@@ -56,7 +60,7 @@ const Sidebar: React.FC<IProps> = (props: IProps) => {
     return (
       <div className={styles.list}>
         <Toolbar>
-          <IconButton onClick={props.onOpenClose}>
+          <IconButton onClick={togleHasOpen}>
             <Icon>chevron_right_icon</Icon>
           </IconButton>
         </Toolbar>
@@ -94,7 +98,7 @@ const Sidebar: React.FC<IProps> = (props: IProps) => {
 
   const renderSidebarUnder = () => {
     return (
-      <Drawer variant="temporary" anchor="right" open={props.hasOpen} onClose={props.onOpenClose}>
+      <Drawer variant="temporary" anchor="right" open={hasOpen} onClose={togleHasOpen}>
         {renderSidebarContent()}
       </Drawer>
     );
@@ -113,4 +117,4 @@ const Sidebar: React.FC<IProps> = (props: IProps) => {
   );
 };
 
-export default Sidebar;
+export default withRouter(Sidebar);

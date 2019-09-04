@@ -1,14 +1,12 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import * as fromUser from '../../store/users';
 import { AppState } from '../../store';
+
 import ManualPage from '../../components/pages/ManualPage/ManualPage';
 
 function mapStateToProps(state: AppState) {
-  return {
-    isLoggedIn: fromUser.getIsLoggedIn(state),
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {

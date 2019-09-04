@@ -3,9 +3,9 @@ import React from 'react';
 import styles from './MainTemplate.module.scss';
 
 import AppRouter from '../../../routers/AppRouter';
-import Header from '../../../containers/components/Header/Header';
-import Sidebar from '../../../containers/components/Sidebar/Sidebar';
-import NumberKeyboard from '../../../containers/components/NumberKeyboard/NumberKeyboard';
+import Header from '../../../containers/components/Header';
+import Sidebar from '../../../containers/components/Sidebar';
+import NumberKeyboard from '../../../containers/components/NumberKeyboard';
 import ErrorBoundary from '../../molecules/ErrorBoundary/ErrorBoundary';
 
 const MainTemplate: React.FC<{}> = props => {

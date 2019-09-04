@@ -1,16 +1,14 @@
 import { createStore, combineReducers, applyMiddleware, compose, StoreCreator } from 'redux';
 import thunk from 'redux-thunk';
 
-import * as fromUser from './users';
-import * as fromUtility from './utility';
 import { commonReducers } from './commons';
 import { firebaseReducers } from './firebase';
+import { utilsFeatureReducers } from './utilities';
 
 const reducers = {
   common: commonReducers,
   firebase: firebaseReducers,
-  userFeature: fromUser.reducers,
-  utilityFeature: fromUtility.reducers,
+  utils: utilsFeatureReducers,
 };
 const rootReducer = combineReducers(reducers);
 export type AppState = ReturnType<typeof rootReducer>;
