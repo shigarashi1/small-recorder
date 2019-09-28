@@ -8,8 +8,8 @@ import styles from './SettingPage.module.scss';
 import PageTitle from '../../atoms/PageTitle/PageTitle';
 import { TPageProps } from '../../../containers/pages/SettingPage';
 import Button from '../../atoms/Button/Button';
-import { TRecordCategory } from '../../../types/firebase';
 import SettingTable from '../../organisms/SettingTable/SettingTable';
+import { TCategory } from '../../../types/redux';
 
 type TProps = TPageProps;
 
@@ -19,22 +19,30 @@ interface IState {
 
 const LABELS = ['Record Title', 'Record Target'];
 
-const ROWS: TRecordCategory[] = [
+const ROWS: TCategory[] = [
   {
-    _id: '1',
+    id: '1',
     name: 'aaaaaa',
+    user: '',
+    hasDeleted: false,
   },
   {
-    _id: '2',
+    id: '2',
     name: 'bbbb',
+    user: '',
+    hasDeleted: false,
   },
   {
-    _id: '3',
+    id: '3',
     name: 'cccc',
+    user: '',
+    hasDeleted: false,
   },
   {
-    _id: '4',
+    id: '4',
     name: 'dddd',
+    user: '',
+    hasDeleted: false,
   },
 ];
 

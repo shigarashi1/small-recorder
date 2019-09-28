@@ -1,46 +1,46 @@
-import firebase from 'firebase';
+import { DocRef, ServerTimestamp } from '../lib/firebase';
 import { Nullable } from './index';
+import { TUser, TCategory, TTarget, TAuth, TRecord, TBase } from './redux';
 
-type timeStamp = ReturnType<typeof firebase.firestore.FieldValue.serverTimestamp>;
+export type TFirebaseBase = {
+  _ref: string;
+  createdAt: Nullable<ServerTimestamp>;
+  updatedAt: Nullable<ServerTimestamp>;
+};
 
-export interface IFirebaseBase {
-  _id: Nullable<string>;
-  createdAt: Nullable<timeStamp>;
-  updatedAt: Nullable<timeStamp>;
-}
+type OmitStoreType = keyof TBase | 'category' | 'user' | 'auth';
+type OmitDocObj<T> = Omit<T, OmitStoreType>;
+export type TFirebase<T, U> = OmitDocObj<T> & TFirebaseBase & U;
 
-export interface IAuth extends IFirebaseBase {
-  isAdmin: boolean;
-}
+// とりあえず作ってみた
+export type FirebaseAuth = TFirebase<TAuth, {}>;
 
-export interface IUser extends IFirebaseBase {
-  uid: string;
-  username: string;
-  auth: Nullable<IAuth>;
-}
+export type FirestoreUser = TFirebase<
+  TUser,
+  {
+    auth: Nullable<DocRef>;
+  }
+>;
 
-export interface IRecordCategory extends IFirebaseBase {
-  user: IUser;
-  name: string;
-  hasDeleted: boolean;
-}
+export type FirestoreCategory = TFirebase<
+  TCategory,
+  {
+    user: DocRef;
+  }
+>;
 
-export type TRecordCategory = Pick<IRecordCategory, '_id' | 'name'>;
+export type FirestoreTarget = TFirebase<
+  TTarget,
+  {
+    user: DocRef;
+    category: DocRef;
+  }
+>;
 
-export type TTargetTerm = 'day' | 'week' | 'month';
-
-export interface IRecordTarget extends IFirebaseBase {
-  user: IUser;
-  category: IRecordCategory;
-  count: number;
-  term: TTargetTerm;
-}
-
-export interface IRecord extends IFirebaseBase {
-  user: IUser;
-  category: IRecordCategory;
-  date: number;
-  record: string;
-}
-
-export type TFirebaseQuery = firebase.firestore.QueryDocumentSnapshot;
+export type FirestoreRecord = TFirebase<
+  TRecord,
+  {
+    user: DocRef;
+    category: DocRef;
+  }
+>;

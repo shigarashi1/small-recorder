@@ -4,13 +4,13 @@ import styles from './InformationDialog.module.scss';
 
 import BaseDialog from '../../molecules/dialogs/BaseDialog/BaseDialog';
 import { voidFunc, createButtonProps } from '../../../helpers/components/dialog';
-import { IRecordCategory } from '../../../types/firebase';
 import RecordCategoryForm from '../../molecules/RecordCategoryForm/RecordCategoryForm';
 import { onChangedValue } from '../../../helpers/components/text-field';
+import { TCategory } from '../../../types/redux';
 
 interface IProps {
   hasOpen: boolean;
-  category: IRecordCategory;
+  category: TCategory;
   onClose: () => void;
   onAction: () => void;
   mode: 'create' | 'update';

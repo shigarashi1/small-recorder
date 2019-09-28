@@ -65,7 +65,9 @@
     "redux": "4.0.1",
     "redux-thunk": "2.3.0",
     "reselect": "4.0.0",
-    "typescript": "3.4.2"
+    "typescript": "3.4.2",
+    "typescript-fsa": "^3.0.0",
+    "typescript-fsa-redux-observable": "^0.18.0"
   },
   "devDependencies": {
     "@types/date-fns": "^2.6.0",

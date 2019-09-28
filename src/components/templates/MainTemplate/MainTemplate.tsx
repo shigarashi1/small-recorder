@@ -7,6 +7,7 @@ import Header from '../../../containers/components/Header';
 import Sidebar from '../../../containers/components/Sidebar';
 import NumberKeyboard from '../../../containers/components/NumberKeyboard';
 import ErrorBoundary from '../../molecules/ErrorBoundary/ErrorBoundary';
+import BackgroundComponent from '../../../containers/others/Background';
 
 const MainTemplate: React.FC<{}> = props => {
   return (
@@ -26,6 +27,7 @@ const MainTemplate: React.FC<{}> = props => {
       <React.Fragment>
         <Sidebar />
         <NumberKeyboard />
+        <BackgroundComponent />
       </React.Fragment>
     );
   }
