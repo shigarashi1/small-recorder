@@ -1,46 +1,43 @@
-import { DocRef, ServerTimestamp } from '../lib/firebase';
+import { ServerTimestamp } from '../lib/firebase';
 import { Nullable } from './index';
-import { TUser, TCategory, TTarget, TAuth, TRecord, TBase } from './redux';
 
-export type TFirebaseBase = {
-  _ref: string;
-  createdAt: Nullable<ServerTimestamp>;
-  updatedAt: Nullable<ServerTimestamp>;
+export type TFirestoreBase = {
+  createdAt?: Nullable<ServerTimestamp>;
+  updatedAt?: Nullable<ServerTimestamp>;
 };
 
-type OmitStoreType = keyof TBase | 'category' | 'user' | 'auth';
-type OmitDocObj<T> = Omit<T, OmitStoreType>;
-export type TFirebase<T, U> = OmitDocObj<T> & TFirebaseBase & U;
+type TTargetTerm = 'day' | 'week' | 'month';
+export type Firestore<T> = Omit<T, 'id'> & TFirestoreBase;
 
-// とりあえず作ってみた
-export type FirebaseAuth = TFirebase<TAuth, {}>;
+export type TBase = {
+  id: Nullable<string>;
+};
 
-export type FirestoreUser = TFirebase<
-  TUser,
-  {
-    auth: Nullable<DocRef>;
-  }
->;
+export type TUser = TBase & {
+  uid: string;
+  username: string;
+};
+export type FirebaseUser = Firestore<TUser>;
 
-export type FirestoreCategory = TFirebase<
-  TCategory,
-  {
-    user: DocRef;
-  }
->;
+export type TCategory = TBase & {
+  user: string;
+  name: string;
+  hasDeleted: boolean;
+};
+export type FirebaseCategory = Firestore<TCategory>;
 
-export type FirestoreTarget = TFirebase<
-  TTarget,
-  {
-    user: DocRef;
-    category: DocRef;
-  }
->;
+export type TTarget = TBase & {
+  user: string;
+  category: string;
+  count: number;
+  term: TTargetTerm;
+};
+export type FirebaseTarget = Firestore<TTarget>;
 
-export type FirestoreRecord = TFirebase<
-  TRecord,
-  {
-    user: DocRef;
-    category: DocRef;
-  }
->;
+export type TRecord = TBase & {
+  user: string;
+  category: string;
+  date: string;
+  record: string;
+};
+export type FirebaseRecord = Firestore<TRecord>;

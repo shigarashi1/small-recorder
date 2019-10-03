@@ -9,7 +9,7 @@ import PageTitle from '../../atoms/PageTitle/PageTitle';
 import { TPageProps } from '../../../containers/pages/SettingPage';
 import Button from '../../atoms/Button/Button';
 import SettingTable from '../../organisms/SettingTable/SettingTable';
-import { TCategory } from '../../../types/redux';
+import { TCategory } from '../../../types/firebase';
 
 type TProps = TPageProps;
 

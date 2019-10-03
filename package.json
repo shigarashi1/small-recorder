@@ -68,7 +68,7 @@
     "redux-thunk": "2.3.0",
     "reselect": "4.0.0",
     "rxjs": "^6.5.3",
-    "typescript": "3.4.2",
+    "typescript": "^3.6.3",
     "typescript-fsa": "^3.0.0",
     "typescript-fsa-reducers": "^1.2.1",
     "typescript-fsa-redux-observable": "^0.18.0",

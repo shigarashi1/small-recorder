@@ -1,5 +1,5 @@
 import { isCategoryType } from './type-guard';
-import { TBase } from '../types/redux';
+import { TBase } from '../types/firebase';
 
 export const getMaxId = <T extends TBase>(arr: T[]): string => {
   if (arr.length === 0) {

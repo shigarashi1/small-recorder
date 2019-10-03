@@ -16,7 +16,7 @@ class App extends Component {
       <Provider store={store}>
         <Router history={history}>
           <Switch>
-            <AppRouterGuard>
+            <AppRouterGuard isSignedIn={false}>
               <MainTemplate />
             </AppRouterGuard>
           </Switch>

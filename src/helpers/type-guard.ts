@@ -1,4 +1,4 @@
-import { TCategory, TRecord, TTarget, TUser } from '../types/redux';
+import { TCategory, TTarget, TRecord, TUser } from '../types/firebase';
 
 export function isCategoryType(v: any): v is TCategory {
   return v.name !== undefined && v.hasDeleted !== undefined;

@@ -2,12 +2,10 @@ import { createStore, combineReducers, applyMiddleware, compose, StoreCreator } 
 import thunk from 'redux-thunk';
 
 import { commonReducers } from './commons';
-import { firebaseReducers } from './firebase';
 import { utilsFeatureReducers } from './utilities';
 
 const reducers = {
   common: commonReducers,
-  firebase: firebaseReducers,
   utils: utilsFeatureReducers,
 };
 const rootReducer = combineReducers(reducers);

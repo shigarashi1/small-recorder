@@ -10,7 +10,7 @@ export const getServerTime = (): ServerTimestamp => firebase.firestore.FieldValu
 export const toDateTimeStamp = (seconds: number, nanoseconds: number): Date =>
   new firebase.firestore.Timestamp(seconds, nanoseconds).toDate();
 
-const c = db.collection(dbPath);
+const c = db.collection('docs');
 export type QueryListener = ReturnType<typeof c.onSnapshot>;
 export type ServerTimestamp = ReturnType<typeof firebase.firestore.FieldValue.serverTimestamp>;
 export type QueryDocSnapshot = firebase.firestore.QueryDocumentSnapshot;

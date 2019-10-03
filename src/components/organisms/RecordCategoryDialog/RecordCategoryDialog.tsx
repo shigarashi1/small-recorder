@@ -6,7 +6,7 @@ import BaseDialog from '../../molecules/dialogs/BaseDialog/BaseDialog';
 import { voidFunc, createButtonProps } from '../../../helpers/components/dialog';
 import RecordCategoryForm from '../../molecules/RecordCategoryForm/RecordCategoryForm';
 import { onChangedValue } from '../../../helpers/components/text-field';
-import { TCategory } from '../../../types/redux';
+import { TCategory } from '../../../types/firebase';
 
 interface IProps {
   hasOpen: boolean;

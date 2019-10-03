@@ -1,7 +1,8 @@
 export type ObjectIndexes<T = any> = { [key: string]: T };
 export type Nullable<T> = T | null;
-export type KeyExtract<T, U extends keyof T> = { [K in Extract<keyof T, U>]: T[K] };
-export type KeyExclude<T, U extends keyof T> = { [K in Exclude<keyof T, U>]: T[K] };
+export type NestedPartial<T> = {
+  [K in keyof T]?: T[K] extends Array<infer R> ? Array<NestedPartial<R>> : NestedPartial<T[K]>;
+};
 
 export enum EPath {
   Home = '/',

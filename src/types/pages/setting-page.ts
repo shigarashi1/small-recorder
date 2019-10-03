@@ -1,6 +1,6 @@
-import { IRecordCategory, IRecordTarget } from '../firebase';
+import { TCategory, TTarget } from '../firebase';
 
 export type TEditType = 'category' | 'target';
 export type TDialogType = 'none' | 'create' | 'edit' | 'delete';
-export type TEditData = IRecordCategory | IRecordTarget;
-export type TListData = IRecordCategory[] | IRecordTarget[];
+export type TEditData = TCategory | TTarget;
+export type TListData = TCategory[] | TTarget[];

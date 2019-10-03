@@ -6,7 +6,7 @@ import { AppState } from '../../store';
 
 import Logger from '../../helpers/generals/logger';
 import { firestoreService } from '../../models/firestore';
-import { TUser } from '../../types/redux';
+import { TUser } from '../../types/firebase';
 
 function mapStateToProps(state: AppState) {
   return {
@@ -25,6 +25,15 @@ interface IState {
   user: TUser;
 }
 
+const initialState: IState = {
+  uid: '',
+  user: {
+    id: null,
+    uid: '',
+    username: '',
+  },
+};
+
 class Background extends Component<TProps, IState> {
   static getDerivedStateFromProps(nextProps: TProps, prevState: IState) {
     if (nextProps.uid !== prevState.uid) {
@@ -35,6 +44,7 @@ class Background extends Component<TProps, IState> {
 
   constructor(props: TProps) {
     super(props);
+    this.state = { ...initialState, user: { ...initialState.user } };
   }
 
   componentDidMount() {

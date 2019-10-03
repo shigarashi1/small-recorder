@@ -1,8 +1,7 @@
-import { TFirebaseBase } from '../../types/firebase';
+import { TFirestoreBase, TBase } from '../../types/firebase';
 import { db, dbPath, getServerTime, QueryDocSnapshot, CollectionRef } from '../../lib/firebase';
-import { TBase } from '../../types/redux';
 
-export abstract class FirestoreServiceBase<T extends TBase, U extends TFirebaseBase> {
+export abstract class FirestoreServiceBase<T extends TBase, U extends TFirestoreBase> {
   private _collectionPath: string;
   private _subscription: any;
 
@@ -75,6 +74,7 @@ export abstract class FirestoreServiceBase<T extends TBase, U extends TFirebaseB
    * db.collectionを生成し、返却する
    */
   protected get collection(): CollectionRef {
+    console.log(this._collectionPath);
     return db.collection(this._collectionPath);
   }
 }

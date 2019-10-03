@@ -1,10 +1,9 @@
 import { FirestoreServiceBase } from './base';
 import { Nullable } from '../../types';
-import { FirestoreUser } from '../../types/firebase';
-import { TUser } from '../../types/redux';
 import { QueryDocSnapshot, QuerySnapshot } from '../../lib/firebase';
+import { TUser, FirebaseUser } from '../../types/firebase';
 
-export class UserService extends FirestoreServiceBase<TUser, FirestoreUser> {
+export class UserService extends FirestoreServiceBase<TUser, FirebaseUser> {
   private _user: Nullable<TUser> = null;
 
   constructor() {
@@ -26,7 +25,7 @@ export class UserService extends FirestoreServiceBase<TUser, FirestoreUser> {
   }
 
   protected toFirebaseDataFormat(data: TUser) {
-    return { _ref: data.id, ...data } as FirestoreUser;
+    return { _ref: data.id, ...data } as FirebaseUser;
   }
 
   private setData = (onChange: (user: TUser) => void, uid: string) => (q: QuerySnapshot) => {

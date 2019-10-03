@@ -7,6 +7,7 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 //
 import { sampleReducers, sampleEpics } from './_sample';
 import history from '../helpers/history';
+import { utilityReducers } from './utilities';
 
 // actions
 const ac = actionCreatorFactory('[---- root]');
@@ -17,6 +18,8 @@ const actions = {
 // reducer
 const reducers = combineReducers({
   router: connectRouter(history),
+  utility: utilityReducers,
+  // sample
   sample: sampleReducers,
 });
 
