@@ -15,6 +15,10 @@ export class UserService extends FirestoreServiceBase<TUser, FirebaseUser> {
   }
 
   subscribe(onChange: (user: TUser) => void, uid: string): void {
+    this.collection
+      .where('uid', '==', uid)
+      .get()
+      .then(v => v.docs.map(vv => console.log(vv.data)));
     this.subscriber = this.collection.where('uid', '==', uid).onSnapshot(this.setData(onChange, uid));
   }
 

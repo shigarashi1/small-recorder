@@ -49,12 +49,12 @@ class Background extends Component<TProps, IState> {
 
   componentDidMount() {
     Logger.log('Background didMound');
-    firestoreService.user.subscribe(this.listenUser, '11111');
+    // firestoreService.user.subscribe(this.listenUser, '11111');
   }
 
   componentWillUnmount() {
     Logger.log('Background willUnmount');
-    firestoreService.user.unsubscribe();
+    // firestoreService.user.unsubscribe();
   }
 
   render() {
