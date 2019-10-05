@@ -36,7 +36,6 @@ const initialState: IState = {
 };
 
 class Background extends Component<TProps, IState> {
-
   private get user(): Nullable<TUser> {
     return this.users.find(v => v.uid === this.state.uid) || null;
   }
@@ -46,14 +45,18 @@ class Background extends Component<TProps, IState> {
     if (nextProps.uid !== prevState.uid) {
       Logger.log('update uid', nextProps.uid);
     }
+    // TODO: lookups(category&target)
+    // TODO: tasks
     return null;
   }
   private users: TUser[] = [];
   private intervalTimer: any;
+  private userSubscription: () => void;
 
   constructor(props: TProps) {
     super(props);
     this.state = { ...initialState, user: { ...initialState.user } };
+    this.userSubscription = () => Logger.log('not set');
   }
 
   componentDidMount() {
@@ -61,6 +64,8 @@ class Background extends Component<TProps, IState> {
     // TODO: stateが変わった時に実行する
     this.userSubscription = getCollection('users')
       .where('uid', '==', this.state.uid)
+      // .orderBy('updatedAt', 'desc') // indexを貼る必要がある
+      .limit(3)
       .onSnapshot(next => this.listenUser(next), error => Logger.error('listen user error', error));
     this.intervalTimer = setInterval(() => {
       Logger.log('user', this.user);
@@ -78,10 +83,9 @@ class Background extends Component<TProps, IState> {
   }
 
   listenUser = (query: QuerySnapshot) => {
-    Logger.log('onChanged Users', this.users);
     this.users = query.docs.map(v => ({ id: v.id, ...(v.data() as TUser) }));
+    Logger.log('onChanged Users', this.users);
   };
-  private userSubscription: () => void = () => Logger.log('not set');
 }
 
 export default connect(

@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { Dispatch, bindActionCreators } from 'redux';
 
 import { getCommon } from '../../store/selector/commons';
 import { AppState } from '../../store';
 
 import LoginPage from '../../components/pages/LoginPage/LoginPage';
-import { loginPageActions, TSignIn } from '../../store/actions/pages/login';
+import { loginPageActions } from '../../store-observable/events/login-page';
+import { commonPageActions } from '../../store-observable/events/common-page';
 
 function mapStateToProps(state: AppState) {
   return {
@@ -15,7 +16,8 @@ function mapStateToProps(state: AppState) {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    onSignIn: (param: TSignIn) => dispatch<any>(loginPageActions.signIn(param)),
+    ...bindActionCreators(commonPageActions, dispatch),
+    ...bindActionCreators(loginPageActions, dispatch),
   };
 }
 

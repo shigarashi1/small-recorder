@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Router, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-
-import { configureStore } from '../store';
-
+//
+import { configureStore } from '../store-observable';
+//
 import history from '../helpers/history';
 import AppRouterGuard from '../guards/AppRouterGuard';
 import MainTemplate from './templates/MainTemplate/MainTemplate';

@@ -8,32 +8,35 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { sampleReducers, sampleEpics } from './_sample';
 import history from '../helpers/history';
 import { utilityReducers } from './utilities';
+import { eventListenerEpics } from './events';
+import { authReducers } from './auth';
 
 // actions
 const ac = actionCreatorFactory('[---- root]');
 const actions = {
-  allClear: ac<void>('allClear'),
+  clearAllState: ac<void>('clearAllState'),
 };
 
 // reducer
 const reducers = combineReducers({
   router: connectRouter(history),
   utility: utilityReducers,
-  // sample
+  auth: authReducers,
+  // sample(not use)
   sample: sampleReducers,
 });
 
 export type AppState = ReturnType<typeof reducers>;
 
 const rootReducer = (state: any, action: any) => {
-  if (action.type === actions.allClear.type) {
+  if (action.type === actions.clearAllState.type) {
     return undefined;
   }
   return reducers;
 };
 
 // epic
-const rootEpic = combineEpics(sampleEpics);
+const rootEpic = combineEpics(sampleEpics, eventListenerEpics);
 const epicMiddleware = createEpicMiddleware<AnyAction, AnyAction, AppState>();
 
 // enhance
