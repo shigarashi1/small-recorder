@@ -5,8 +5,8 @@ import { combineReducers, compose, applyMiddleware, StoreCreator, createStore, A
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 
 //
-import { sampleReducers, sampleEpics } from './_sample';
 import history from '../helpers/history';
+import { sampleReducers, sampleEpics } from './_sample-src';
 import { utilityReducers } from './utilities';
 import { eventListenerEpics } from './events';
 import { authReducers } from './auth';
