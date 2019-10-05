@@ -3,13 +3,10 @@ import firebase from './import';
 import { firebaseConfig } from './config';
 
 const instance = firebase.initializeApp(firebaseConfig);
-
 export const db = firebase.firestore(instance);
 export const dbPath = 'api/v1';
-export const getServerTime = (): ServerTimestamp => firebase.firestore.FieldValue.serverTimestamp();
-export const toDateTimeStamp = (seconds: number, nanoseconds: number): Date =>
-  new firebase.firestore.Timestamp(seconds, nanoseconds).toDate();
 
+// types
 const c = db.collection('docs');
 export type QueryListener = ReturnType<typeof c.onSnapshot>;
 export type ServerTimestamp = ReturnType<typeof firebase.firestore.FieldValue.serverTimestamp>;
@@ -23,3 +20,9 @@ export type TDocRefColumn = {
   opStr: firebase.firestore.WhereFilterOp;
   ref: DocRef;
 };
+
+// functions
+export const getCollection = (collectionName: string): CollectionRef => db.collection(`${dbPath}/${collectionName}`);
+export const getServerTime = (): ServerTimestamp => firebase.firestore.FieldValue.serverTimestamp();
+export const toDateTimeStamp = (seconds: number, nanoseconds: number): Date =>
+  new firebase.firestore.Timestamp(seconds, nanoseconds).toDate();

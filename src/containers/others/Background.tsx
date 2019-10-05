@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import { AppState } from '../../store';
 
 import Logger from '../../helpers/generals/logger';
-import { firestoreService } from '../../models/firestore';
 import { TUser } from '../../types/firebase';
+import { getCollection, QuerySnapshot } from '../../lib/firebase';
+import { Nullable } from '../../types';
 
 function mapStateToProps(state: AppState) {
   return {
@@ -26,21 +27,29 @@ interface IState {
 }
 
 const initialState: IState = {
-  uid: '',
+  uid: '11111',
   user: {
     id: null,
-    uid: '',
+    uid: '11111',
     username: '',
   },
 };
 
 class Background extends Component<TProps, IState> {
+
+  private get user(): Nullable<TUser> {
+    return this.users.find(v => v.uid === this.state.uid) || null;
+  }
+
   static getDerivedStateFromProps(nextProps: TProps, prevState: IState) {
+    Logger.log('getDerivedStateFromProps called');
     if (nextProps.uid !== prevState.uid) {
       Logger.log('update uid', nextProps.uid);
     }
     return null;
   }
+  private users: TUser[] = [];
+  private intervalTimer: any;
 
   constructor(props: TProps) {
     super(props);
@@ -49,21 +58,30 @@ class Background extends Component<TProps, IState> {
 
   componentDidMount() {
     Logger.log('Background didMound');
-    // firestoreService.user.subscribe(this.listenUser, '11111');
+    // TODO: stateが変わった時に実行する
+    this.userSubscription = getCollection('users')
+      .where('uid', '==', this.state.uid)
+      .onSnapshot(next => this.listenUser(next), error => Logger.error('listen user error', error));
+    this.intervalTimer = setInterval(() => {
+      Logger.log('user', this.user);
+    }, 5000);
   }
 
   componentWillUnmount() {
     Logger.log('Background willUnmount');
-    // firestoreService.user.unsubscribe();
+    this.userSubscription();
+    clearInterval(this.intervalTimer);
   }
 
   render() {
     return <React.Fragment />;
   }
 
-  listenUser = (user: TUser) => {
-    Logger.log('user snapshot', user);
+  listenUser = (query: QuerySnapshot) => {
+    Logger.log('onChanged Users', this.users);
+    this.users = query.docs.map(v => ({ id: v.id, ...(v.data() as TUser) }));
   };
+  private userSubscription: () => void = () => Logger.log('not set');
 }
 
 export default connect(
