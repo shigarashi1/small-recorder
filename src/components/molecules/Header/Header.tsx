@@ -19,7 +19,7 @@ const Header: React.FC<TProps> = (props: TProps) => {
   const position = isFixed ? 'fixed' : 'static';
 
   const onOpen = () => {
-    props.onTogleSidebar();
+    props.onToggleSidebar();
   };
 
   const renderLeftBlock = () => {

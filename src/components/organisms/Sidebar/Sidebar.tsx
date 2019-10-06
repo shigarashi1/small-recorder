@@ -24,7 +24,7 @@ const Sidebar: React.FC<TProps> = (props: TProps) => {
   const { history, hasOpen } = props;
 
   const togleHasOpen = () => {
-    props.onTogleSidebar();
+    props.onToggleSidebar();
   };
 
   const activeRoute = (path: EPath): boolean => {

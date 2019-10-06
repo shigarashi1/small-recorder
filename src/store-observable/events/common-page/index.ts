@@ -3,14 +3,16 @@ import { Epic, combineEpics } from 'redux-observable';
 import { ofAction } from 'typescript-fsa-redux-observable-of-action';
 import { mergeMap, delay } from 'rxjs/operators';
 import { AppState } from '../../../store';
+import { TKeyboardKey } from '../../../types/components/number-keyboard';
 
 // actions
 const ac = actionCreatorFactory('[listener-commonPage]');
 
 // ===== common page =====
 export const commonPageActions = {
-  onSignOut: ac('onSignIn'),
-  onPushKeyboard: ac('onPushKeyboard'),
+  onSignOut: ac('onSignOut'),
+  onPushKeyboard: ac<TKeyboardKey>('onPushKeyboard'),
+  onToggleSidebar: ac('onToggleSidebar'),
 };
 
 // onSignOut
@@ -21,7 +23,7 @@ const onSignOut: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
     mergeMap(action => []),
   );
 
-// onToggleSidebar
+//
 // onShowInfoDialog
 // onShowOkCancelDialog
 // onShowYesNoDialog

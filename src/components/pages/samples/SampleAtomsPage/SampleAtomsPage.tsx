@@ -5,7 +5,6 @@ import styles from './SampleAtomsPage.module.scss';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import SampleCard from '../../../molecules/SampleCard/SampleCard';
-import { ATOMS_SAMPLES } from '../../../../samples/Atoms';
 import { ObjectIndexes } from '../../../../types';
 import { ISampleCardProps } from '../../../../types/components/sample-card';
 import { BREAK_POINT } from '../../../../lookups/page-layout';
@@ -35,9 +34,9 @@ class SampleAtomsPage extends Component<TProps, TState> {
             {atomsSamples.map((sample, i) => {
               return this.renderSample(sample, i);
             })}
-            {ATOMS_SAMPLES.map((sample, i) => {
+            {/* {ATOMS_SAMPLES.map((sample, i) => {
               return this.renderSample(sample, i);
-            })}
+            })} */}
           </Grid>
         </div>
       </div>

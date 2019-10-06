@@ -5,7 +5,6 @@ import styles from './SampleMoleculesPage.module.scss';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import SampleCard from '../../../molecules/SampleCard/SampleCard';
-import { MOLECULES_SAMPLES } from '../../../../samples/Molecules';
 import { ObjectIndexes } from '../../../../types';
 import { ISampleCardProps } from '../../../../types/components/sample-card';
 import { BREAK_POINT } from '../../../../lookups/page-layout';
@@ -31,9 +30,9 @@ class SampleMoleculesPage extends Component<TProps, TState> {
         <div className={styles.contents}>
           <Typography variant="h5">Molecules</Typography>
           <Grid container={true} spacing={2}>
-            {MOLECULES_SAMPLES.map((sample, i) => {
+            {/* {MOLECULES_SAMPLES.map((sample, i) => {
               return this.renderSample(sample, i);
-            })}
+            })} */}
           </Grid>
         </div>
       </div>

@@ -6,16 +6,16 @@ import { DISPLAY_KEYS_LIST } from '../../../lookups/number-keyboard';
 import { TKeyboardKey, IDraggableAction } from '../../../types/components/number-keyboard';
 
 export interface IProps {
-  onPushKey: (value: TKeyboardKey) => void;
+  onPushKeyboard: (value: TKeyboardKey) => void;
   action?: IDraggableAction;
 }
 
 const NumberKeyboard: React.FC<IProps> = (props: IProps) => {
-  const { onPushKey } = props;
+  const { onPushKeyboard } = props;
 
   const onClickHandler = (key: TKeyboardKey) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     Logger.log('numberKeyBoard pushed', key);
-    onPushKey(key);
+    onPushKeyboard(key);
   };
 
   return (
