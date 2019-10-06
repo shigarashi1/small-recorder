@@ -1,11 +1,11 @@
-import actionCreatorFactory, { Action, AnyAction } from 'typescript-fsa';
+import { actionCreatorFactory, Action, AnyAction } from 'typescript-fsa';
 import { Epic, combineEpics } from 'redux-observable';
 import { ofAction } from 'typescript-fsa-redux-observable-of-action';
-import { mergeMap, delay, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 //
 import { TSignIn, TSignUp } from '../../types';
 import { AppState } from '../../../store';
-import Logger from '../../../helpers/generals/logger';
+import { authActions } from '../../auth';
 
 // actions
 const ac = actionCreatorFactory('[listener-loginPage]');
@@ -16,19 +16,22 @@ export const loginPageActions = {
   onSignUp: ac<TSignUp>('onSignUp'),
 };
 
-const onSignIn: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+const onSignIn: Epic<AnyAction, Action<Parameters<typeof authActions.signIn.started>[0]>, AppState> = (
+  action$,
+  store,
+) =>
   action$.pipe(
     ofAction(loginPageActions.onSignIn),
-    tap(x => Logger.log('signIn', x.type)),
-    delay(300),
-    mergeMap(action => []),
+    map(({ payload }) => authActions.signIn.started({ ...payload })),
   );
 
-const onSignUp: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+const onSignUp: Epic<AnyAction, Action<Parameters<typeof authActions.signUp.started>[0]>, AppState> = (
+  action$,
+  store,
+) =>
   action$.pipe(
     ofAction(loginPageActions.onSignUp),
-    delay(300),
-    mergeMap(action => []),
+    map(({ payload }) => authActions.signUp.started({ ...payload })),
   );
 
 export const loginPageEpics = combineEpics(onSignIn, onSignUp);

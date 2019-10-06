@@ -1,7 +1,7 @@
 import actionCreatorFactory, { Action, AnyAction } from 'typescript-fsa';
 import { Epic, combineEpics } from 'redux-observable';
 import { ofAction } from 'typescript-fsa-redux-observable-of-action';
-import { mergeMap, delay } from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
 import { AppState } from '../../../store';
 import { TKeyboardKey } from '../../../types/components/number-keyboard';
 
@@ -19,7 +19,6 @@ export const commonPageActions = {
 const onSignOut: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(commonPageActions.onSignOut),
-    delay(300),
     mergeMap(action => []),
   );
 

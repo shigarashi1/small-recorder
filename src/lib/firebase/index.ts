@@ -21,6 +21,8 @@ export type TDocRefColumn = {
   opStr: firebase.firestore.WhereFilterOp;
   ref: DocRef;
 };
+// auth
+export type TUserCredential = firebase.auth.UserCredential;
 
 // functions
 export const getCollection = (collectionName: string): CollectionRef => db.collection(`${dbPath}/${collectionName}`);

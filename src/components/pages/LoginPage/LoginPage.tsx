@@ -81,16 +81,14 @@ class LoginPage extends Component<TProps, TState> {
 
   onSignIn = () => {
     const { onSignIn } = this.props;
-    // FIXME:
     const { email, password } = this.state;
-    console.log('sign in', { email, password });
-    onSignIn({});
+    onSignIn({ email, password });
   };
 
   onSignUp = () => {
-    // FIXME:
+    const { onSignUp } = this.props;
     const { username, email, password, confirmation } = this.state;
-    console.log('sign up', { username, email, password, confirmation });
+    onSignUp({ email, password, username, confirmation });
   };
 
   onCancel = () => {

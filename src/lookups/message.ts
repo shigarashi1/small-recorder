@@ -9,6 +9,18 @@ export const ERROR_MESSAGES: IMessage[] = [
     code: '0001',
     message: 'System Error. message: {0}',
   },
+  {
+    code: '0002',
+    message: 'ログインに失敗しました.',
+  },
+  {
+    code: '0003',
+    message: 'ユーザーの作成に失敗しました.',
+  },
+  {
+    code: '0004',
+    message: 'ログアウトに失敗しました.',
+  },
 ];
 
 export const WARN_MESSAGES: IMessage[] = [

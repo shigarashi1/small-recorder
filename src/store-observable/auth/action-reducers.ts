@@ -1,11 +1,12 @@
 import { actionCreatorFactory } from 'typescript-fsa';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
+import { TSignIn, TSignUp } from '../types';
 
 // actions
 const ac = actionCreatorFactory('[---auth Actions]');
 const actions = {
-  signIn: ac.async<{}, {}, {}>('signIn'),
-  signUp: ac.async<{}, {}, {}>('signUp'),
+  signIn: ac.async<TSignIn, {}, {}>('signIn'),
+  signUp: ac.async<TSignUp, {}, {}>('signUp'),
   signOut: ac.async<{}, {}, {}>('signOut'),
 };
 export const authActions = actions;
