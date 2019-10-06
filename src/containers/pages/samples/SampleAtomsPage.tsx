@@ -1,21 +1,20 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-
-import { AppState } from '../../../store';
-import { getCommon } from '../../../store/selector/commons';
+import { Dispatch, bindActionCreators } from 'redux';
 
 import SampleAtomsPage from '../../../components/pages/samples/SampleAtomsPage/SampleAtomsPage';
-import { getKeyboard } from '../../../store/selector/components/keyboard';
+import { AppState } from '../../../store';
+import { commonPageActions } from '../../../store-observable/events/common-page';
 
 function mapStateToProps(state: AppState) {
   return {
-    isSignedIn: getCommon.auth.signedIn(state),
-    hasOpenKeyboard: getKeyboard.hasOpen(state),
+    isSignedIn: false,
+    hasOpenKeyboard: false,
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
+    ...bindActionCreators(commonPageActions, dispatch),
     onOpenKeyboard: (hasOpen: boolean) => console.log(hasOpen),
   };
 }

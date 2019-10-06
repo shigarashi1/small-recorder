@@ -2,7 +2,7 @@ import actionCreatorFactory, { Action, AnyAction } from 'typescript-fsa';
 import { Epic, combineEpics } from 'redux-observable';
 import { ofAction } from 'typescript-fsa-redux-observable-of-action';
 import { mergeMap, delay } from 'rxjs/operators';
-import { AppState } from '../..';
+import { AppState } from '../../../store';
 
 // actions
 const ac = actionCreatorFactory('[listener-commonPage]');
@@ -10,6 +10,7 @@ const ac = actionCreatorFactory('[listener-commonPage]');
 // ===== common page =====
 export const commonPageActions = {
   onSignOut: ac('onSignIn'),
+  onPushKeyboard: ac('onPushKeyboard'),
 };
 
 // onSignOut

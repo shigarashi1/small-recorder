@@ -1,20 +1,20 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { AppState } from '../../store';
+import { Dispatch, bindActionCreators } from 'redux';
 
 import Sidebar from '../../components/organisms/Sidebar/Sidebar';
-import { utilActions } from '../../store/actions/utils';
-import { getSidebar } from '../../store/selector/components/sidebar';
+
+import { AppState } from '../../store';
+import { commonPageActions } from '../../store-observable/events/common-page';
 
 function mapStateToProps(state: AppState) {
   return {
-    hasOpen: getSidebar.hasOpen(state),
+    hasOpen: false,
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    onTogleSidebar: () => dispatch<any>(utilActions.sidebar.togle()),
+    ...bindActionCreators(commonPageActions, dispatch),
   };
 }
 

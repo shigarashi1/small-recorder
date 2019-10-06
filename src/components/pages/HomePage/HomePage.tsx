@@ -18,7 +18,7 @@ class HomePage extends Component<TProps, IState> {
   }
 
   render() {
-    const { onSignOut } = this.props;
+    const { onSignOut } = this;
     return (
       <div className="sample-page">
         <PageTitle title="HomePage" />
@@ -26,6 +26,10 @@ class HomePage extends Component<TProps, IState> {
       </div>
     );
   }
+
+  onSignOut = () => {
+    this.props.onSignOut();
+  };
 }
 
 export default HomePage;

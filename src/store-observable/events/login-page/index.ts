@@ -4,7 +4,7 @@ import { ofAction } from 'typescript-fsa-redux-observable-of-action';
 import { mergeMap, delay, tap } from 'rxjs/operators';
 //
 import { TSignIn, TSignUp } from '../../types';
-import { AppState } from '../..';
+import { AppState } from '../../../store';
 import Logger from '../../../helpers/generals/logger';
 
 // actions

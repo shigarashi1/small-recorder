@@ -1,14 +1,12 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { AppState } from '../../store';
-import { getCommon } from '../../store/selector/commons';
-
 import RecordPage from '../../components/pages/RecordPage/RecordPage';
+import { AppState } from '../../store';
 
 function mapStateToProps(state: AppState) {
   return {
-    isSignedIn: getCommon.auth.signedIn(state),
+    isSignedIn: false,
   };
 }
 

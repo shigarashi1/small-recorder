@@ -6,11 +6,10 @@ import LoginPageTemplate from '../components/templates/LoginTemplate/LoginTempla
 
 import { AppState } from '../store';
 import { EPath } from '../types/index';
-import { getCommon } from '../store/selector/commons';
 
 function mapStateToProps(state: AppState) {
   return {
-    isSignedIn: getCommon.auth.signedIn(state),
+    isSignedIn: false,
   };
 }
 

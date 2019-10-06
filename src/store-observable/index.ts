@@ -9,7 +9,8 @@ import history from '../helpers/history';
 import { sampleReducers, sampleEpics } from './_sample-src';
 import { utilityReducers } from './utilities';
 import { eventListenerEpics } from './events';
-import { authReducers } from './auth';
+import { authReducers, authEpics } from './auth';
+import { AppState } from '../store';
 
 // actions
 const ac = actionCreatorFactory('[---- root]');
@@ -18,15 +19,13 @@ const actions = {
 };
 
 // reducer
-const reducers = combineReducers({
+export const reducers = combineReducers({
   router: connectRouter(history),
   utility: utilityReducers,
   auth: authReducers,
-  // sample(not use)
+  // sample is not used
   sample: sampleReducers,
 });
-
-export type AppState = ReturnType<typeof reducers>;
 
 const rootReducer = (state: any, action: any) => {
   if (action.type === actions.clearAllState.type) {
@@ -36,7 +35,7 @@ const rootReducer = (state: any, action: any) => {
 };
 
 // epic
-const rootEpic = combineEpics(sampleEpics, eventListenerEpics);
+const rootEpic = combineEpics(sampleEpics, eventListenerEpics, authEpics);
 const epicMiddleware = createEpicMiddleware<AnyAction, AnyAction, AppState>();
 
 // enhance
@@ -48,6 +47,7 @@ const enhancers = compose(
 );
 
 export const configureStore = (initialState: any) => {
+  const store = createStore(rootReducer, initialState, enhancers);
   epicMiddleware.run(rootEpic);
-  return createStore(rootReducer, initialState, enhancers);
+  return store;
 };

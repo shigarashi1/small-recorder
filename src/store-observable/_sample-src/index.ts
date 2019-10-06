@@ -3,7 +3,7 @@ import { Epic, combineEpics } from 'redux-observable';
 import { ofAction } from 'typescript-fsa-redux-observable-of-action';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 import { mergeMap, delay } from 'rxjs/operators';
-import { AppState } from '..';
+import { AppState } from '../../store';
 
 // actions
 const ac = actionCreatorFactory('[---samples]');

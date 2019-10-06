@@ -1,22 +1,20 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { AppState } from '../../store';
+import { Dispatch, bindActionCreators } from 'redux';
 
 import Header from '../../components/molecules/Header/Header';
-import { getCommon } from '../../store/selector/commons';
-import { utilActions } from '../../store/actions/utils';
-import { loginPageActions } from '../../store/actions/pages/login';
+import { AppState } from '../../store';
+import { commonPageActions } from '../../store-observable/events/common-page';
+import { getState } from '../../store-observable/state-selector';
 
 function mapStateToProps(state: AppState) {
   return {
-    isSignedIn: getCommon.auth.signedIn(state),
+    isSignedIn: getState,
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    onSignOut: () => dispatch<any>(loginPageActions.signOut({})),
-    onTogleSidebar: () => dispatch<any>(utilActions.sidebar.togle()),
+    ...bindActionCreators(commonPageActions, dispatch),
   };
 }
 
