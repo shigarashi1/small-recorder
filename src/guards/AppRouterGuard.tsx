@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
 import LoginPageTemplate from '../components/templates/LoginTemplate/LoginTemplate';
 
-import { AppState } from '../store';
 import { EPath } from '../types/index';
+import { TRouterGuardProps } from '../containers/others/AppRouterGuard';
 
-function mapStateToProps(state: AppState) {
-  return {
-    isSignedIn: false,
-  };
-}
-
-type TProps = ReturnType<typeof mapStateToProps>;
+type TProps = TRouterGuardProps;
 
 class AppRouterGuard extends Component<TProps> {
   render() {
@@ -31,7 +24,4 @@ class AppRouterGuard extends Component<TProps> {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  null,
-)(AppRouterGuard);
+export default AppRouterGuard;

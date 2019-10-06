@@ -6,8 +6,9 @@ import { AppState } from '../../store';
 
 import Logger from '../../helpers/generals/logger';
 import { TUser } from '../../types/firebase';
-import { getCollection, QuerySnapshot } from '../../lib/firebase';
+import { getCollection, QuerySnapshot, TFirebaseUser } from '../../lib/firebase';
 import { Nullable } from '../../types';
+import { AuthenticationService } from '../../services/auth';
 
 function mapStateToProps(state: AppState) {
   return {
@@ -61,12 +62,20 @@ class Background extends Component<TProps, IState> {
 
   componentDidMount() {
     Logger.log('Background didMound');
-    // TODO: stateが変わった時に実行する
-    this.userSubscription = getCollection('users')
-      .where('uid', '==', this.state.uid)
-      // .orderBy('updatedAt', 'desc') // indexを貼る必要がある
-      .limit(3)
-      .onSnapshot(next => this.listenUser(next), error => Logger.error('listen user error', error));
+    const getUid = (user: TFirebaseUser | null) => {
+      const firebaseUser = user ? user.uid : '';
+      // TODO: stateが変わった時に実行する
+      this.userSubscription = getCollection('users')
+        .where('uid', '==', firebaseUser)
+        // .orderBy('updatedAt', 'desc') // indexを貼る必要がある
+        .limit(3)
+        .onSnapshot(next => this.listenUser(next), error => Logger.error('listen user error', error));
+    };
+
+    this.userSubscription = AuthenticationService.getSubscriptionAuthStateChanged(getUid, err => {
+      Logger.error('listen user error', err);
+    });
+
     this.intervalTimer = setInterval(() => {
       Logger.log('user', this.user);
     }, 5000);

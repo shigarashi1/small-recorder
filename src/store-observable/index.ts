@@ -29,9 +29,9 @@ export const reducers = combineReducers({
 
 const rootReducer = (state: any, action: any) => {
   if (action.type === actions.clearAllState.type) {
-    return undefined;
+    state = undefined;
   }
-  return reducers;
+  return reducers(state, action);
 };
 
 // epic

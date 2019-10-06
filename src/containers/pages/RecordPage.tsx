@@ -5,9 +5,7 @@ import RecordPage from '../../components/pages/RecordPage/RecordPage';
 import { AppState } from '../../store';
 
 function mapStateToProps(state: AppState) {
-  return {
-    isSignedIn: false,
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {

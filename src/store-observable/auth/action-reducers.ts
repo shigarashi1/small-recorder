@@ -17,10 +17,11 @@ export type TAuthState = {
 };
 
 const initialState: TAuthState = {
-  isSignedIn: true,
+  isSignedIn: false,
 };
 
 const reducers = reducerWithInitialState(initialState)
   .case(actions.signIn.started, (state, payload) => ({ ...state }))
+  .case(actions.signIn.done, (state, payload) => ({ ...state, isSignedIn: true }))
   .case(actions.signOut.started, (state, payload) => ({ ...state }));
 export const authReducers = reducers;

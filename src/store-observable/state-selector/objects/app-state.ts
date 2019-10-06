@@ -1,5 +1,4 @@
 import { AppState } from '../../../store';
-import Logger from '../../../helpers/generals/logger';
 
 export const appStateSelector = (state: AppState) => new AppStateSelector(state);
 
@@ -11,12 +10,11 @@ class AppStateSelector {
   }
 
   get currentPath() {
-    Logger.log('currentPath', this.state.router.location.pathname);
     return this.state.router.location.pathname;
   }
 
   get isSignedIn() {
-    return this.state.auth.isSignedIn;
+    return this.state.auth.isSignedIn || false;
   }
 
   get infoDialog() {

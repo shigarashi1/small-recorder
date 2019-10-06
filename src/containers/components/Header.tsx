@@ -8,7 +8,7 @@ import { getState } from '../../store-observable/state-selector';
 
 function mapStateToProps(state: AppState) {
   return {
-    isSignedIn: getState,
+    isSignedIn: getState.auth.isSignedIn(state),
   };
 }
 

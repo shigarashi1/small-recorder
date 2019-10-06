@@ -23,6 +23,7 @@ export type TDocRefColumn = {
 };
 // auth
 export type TUserCredential = firebase.auth.UserCredential;
+export type TFirebaseUser = firebase.User;
 
 // functions
 export const getCollection = (collectionName: string): CollectionRef => db.collection(`${dbPath}/${collectionName}`);

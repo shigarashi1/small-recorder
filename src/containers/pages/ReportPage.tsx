@@ -5,9 +5,7 @@ import ReportPage from '../../components/pages/ReportPage/ReportPage';
 import { AppState } from '../../store';
 
 function mapStateToProps(state: AppState) {
-  return {
-    isSignedIn: false,
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {

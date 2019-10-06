@@ -5,9 +5,7 @@ import { AppState } from '../../../store';
 import SampleMoleculesPage from '../../../components/pages/samples/SampleMoleculesPage/SampleMoleculesPage';
 
 function mapStateToProps(state: AppState) {
-  return {
-    isSignedIn: false,
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {

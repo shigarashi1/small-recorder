@@ -7,19 +7,28 @@ import { authActions } from '.';
 import { AuthenticationService } from '../../services/auth';
 import { ApiError } from '../../models/ApiError';
 import Logger from '../../helpers/generals/logger';
+import { replace, CallHistoryMethodAction } from 'connected-react-router';
+import { EPath } from '../../types';
 
-const signIn: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+const signIn: Epic<
+  AnyAction,
+  Action<void> | Action<Parameters<typeof authActions.signIn.done>[0]> | CallHistoryMethodAction,
+  AppState
+> = (action$, store) =>
   action$.pipe(
     ofAction(authActions.signIn.started),
-    mergeMap(({ payload }) => AuthenticationService.signIn(payload.email, payload.password)),
-    mergeMap(res => {
+    mergeMap(async ({ payload }) => {
+      const res = await AuthenticationService.signIn(payload.email, payload.password);
+      return { payload, res };
+    }),
+    mergeMap(({ payload, res }) => {
       if (res instanceof ApiError) {
         return [];
       }
       const uid = res.user ? res.user.uid : '';
       Logger.log('signIn uid', uid);
       // userの取得に進む
-      return [];
+      return [authActions.signIn.done({ params: payload, result: {} }), replace(EPath.Home)];
     }),
   );
 

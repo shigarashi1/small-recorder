@@ -5,9 +5,7 @@ import { AppState } from '../../store';
 import SettingPage from '../../components/pages/SettingPage/SettingPage';
 
 function mapStateToProps(state: AppState) {
-  return {
-    isSignedIn: false,
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {

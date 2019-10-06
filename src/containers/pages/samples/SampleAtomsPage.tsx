@@ -4,10 +4,11 @@ import { Dispatch, bindActionCreators } from 'redux';
 import SampleAtomsPage from '../../../components/pages/samples/SampleAtomsPage/SampleAtomsPage';
 import { AppState } from '../../../store';
 import { commonPageActions } from '../../../store-observable/events/common-page';
+import { getState } from '../../../store-observable/state-selector';
 
 function mapStateToProps(state: AppState) {
   return {
-    isSignedIn: false,
+    isSignedIn: getState.auth.isSignedIn(state),
     hasOpenKeyboard: false,
   };
 }
