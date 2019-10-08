@@ -23,12 +23,12 @@ const signIn: Epic<
     }),
     mergeMap(({ payload, res }) => {
       if (res instanceof ApiError) {
+        // TODO: errorの実装
         return [];
       }
-      const uid = res.user ? res.user.uid : '';
-      Logger.log('signIn uid', uid);
-      // userの取得に進む
-      return [authActions.signIn.done({ params: payload, result: {} }), replace(EPath.Home)];
+      const { user } = res;
+      // TODO: userの取得に進む
+      return [authActions.signIn.done({ params: payload, result: { user } }), replace(EPath.Home)];
     }),
   );
 
@@ -40,17 +40,24 @@ const signUp: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
       // TODO: emailのフォーマット確認
       if (password !== confirmation) {
         // FIXME: business error classを用意する
-        return new ApiError({ code: '0000', error: 'パスワードが一致しません.' });
+        const businessError = new ApiError({ code: '0000', error: 'パスワードが一致しません.' });
+        return { payload, res: businessError };
       }
-      return await AuthenticationService.signUp(email, password);
+      const res = await AuthenticationService.signUp(email, password);
+      return { payload, res };
     }),
-    mergeMap(res => {
+    mergeMap(({ payload, res }) => {
+      // FIXME: business error
+
       if (res instanceof ApiError) {
+        // TODO: errorHandling
         return [];
       }
-      const uid = res.user ? res.user.uid : '';
-      Logger.log('signUp uid', uid);
-      // TODO: 未定
+
+      const { user } = res;
+      const { username } = payload;
+      Logger.log('signUp', { user, username });
+      // TODO: ユーザーを登録する
       return [];
     }),
   );

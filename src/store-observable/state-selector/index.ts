@@ -7,6 +7,10 @@ export const getState = {
       appStateSelector,
       selector => selector.isSignedIn,
     ),
+    uid: createSelector(
+      appStateSelector,
+      selector => selector.uid,
+    ),
   },
   router: {
     currentPath: createSelector(

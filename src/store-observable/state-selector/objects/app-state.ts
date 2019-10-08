@@ -17,6 +17,10 @@ class AppStateSelector {
     return this.state.auth.isSignedIn || false;
   }
 
+  get uid() {
+    return this.state.auth.user ? this.state.auth.user.uid : '';
+  }
+
   get infoDialog() {
     return this.state.utility.dialog.info;
   }

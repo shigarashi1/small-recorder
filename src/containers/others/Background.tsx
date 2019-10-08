@@ -6,13 +6,15 @@ import { AppState } from '../../store';
 
 import Logger from '../../helpers/generals/logger';
 import { TUser } from '../../types/firebase';
-import { getCollection, QuerySnapshot, TFirebaseUser } from '../../lib/firebase';
+import { TFirebaseUser } from '../../lib/firebase';
 import { Nullable } from '../../types';
 import { AuthenticationService } from '../../services/auth';
+import { getState } from '../../store-observable/state-selector';
+import { UserService } from '../../services/user';
 
 function mapStateToProps(state: AppState) {
   return {
-    uid: '',
+    uid: getState.auth.uid(state),
   };
 }
 
@@ -28,10 +30,10 @@ interface IState {
 }
 
 const initialState: IState = {
-  uid: '11111',
+  uid: '',
   user: {
     id: null,
-    uid: '11111',
+    uid: '',
     username: '',
   },
 };
@@ -52,37 +54,41 @@ class Background extends Component<TProps, IState> {
   }
   private users: TUser[] = [];
   private intervalTimer: any;
+  private authSubscription: () => void;
   private userSubscription: () => void;
 
   constructor(props: TProps) {
     super(props);
     this.state = { ...initialState, user: { ...initialState.user } };
-    this.userSubscription = () => Logger.log('not set');
+    const emptyFunc = () => Logger.log('not set');
+    this.authSubscription = emptyFunc;
+    this.userSubscription = emptyFunc;
   }
+
+  logError = (err: any) => {
+    Logger.error('logError', err);
+  };
+
+  onChangedAuth = (user: Nullable<TFirebaseUser>) => {
+    Logger.log('onChangeAuth', user);
+  };
+
+  onChangedUser = (user: Nullable<TUser>) => {
+    Logger.log('onChangedUser', user);
+  };
 
   componentDidMount() {
     Logger.log('Background didMound');
-    const getUid = (user: TFirebaseUser | null) => {
-      const firebaseUser = user ? user.uid : '';
-      // TODO: stateが変わった時に実行する
-      this.userSubscription = getCollection('users')
-        .where('uid', '==', firebaseUser)
-        // .orderBy('updatedAt', 'desc') // indexを貼る必要がある
-        .limit(3)
-        .onSnapshot(next => this.listenUser(next), error => Logger.error('listen user error', error));
-    };
-
-    this.userSubscription = AuthenticationService.getSubscriptionAuthStateChanged(getUid, err => {
-      Logger.error('listen user error', err);
-    });
-
+    this.authSubscription = AuthenticationService.onAuthStateChanged(this.onChangedAuth, this.logError);
+    this.userSubscription = UserService.onChangedUser(this.props.uid, this.onChangedUser, this.logError);
     this.intervalTimer = setInterval(() => {
       Logger.log('user', this.user);
-    }, 5000);
+    }, 30000);
   }
 
   componentWillUnmount() {
     Logger.log('Background willUnmount');
+    this.authSubscription();
     this.userSubscription();
     clearInterval(this.intervalTimer);
   }
@@ -90,11 +96,6 @@ class Background extends Component<TProps, IState> {
   render() {
     return <React.Fragment />;
   }
-
-  listenUser = (query: QuerySnapshot) => {
-    this.users = query.docs.map(v => ({ id: v.id, ...(v.data() as TUser) }));
-    Logger.log('onChanged Users', this.users);
-  };
 }
 
 export default connect(
