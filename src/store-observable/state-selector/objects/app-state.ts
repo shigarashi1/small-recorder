@@ -32,4 +32,12 @@ class AppStateSelector {
   get yesNoDialog() {
     return this.state.utility.dialog.yesNo;
   }
+
+  get user() {
+    return this.state.user.user ? this.state.user.user : null;
+  }
+
+  get userId() {
+    return this.user ? this.user.id : '';
+  }
 }

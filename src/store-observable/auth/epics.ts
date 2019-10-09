@@ -9,10 +9,13 @@ import { ApiError } from '../../models/ApiError';
 import Logger from '../../helpers/generals/logger';
 import { replace, CallHistoryMethodAction } from 'connected-react-router';
 import { EPath } from '../../types';
+import { userActions } from '../user';
 
 const signIn: Epic<
   AnyAction,
-  Action<void> | Action<Parameters<typeof authActions.signIn.done>[0]> | CallHistoryMethodAction,
+  | Action<void>
+  | Action<Parameters<typeof authActions.signIn.done>[0]>
+  | Action<Parameters<typeof userActions.readUser.started>[0]>,
   AppState
 > = (action$, store) =>
   action$.pipe(
@@ -27,8 +30,7 @@ const signIn: Epic<
         return [];
       }
       const { user } = res;
-      // TODO: userの取得に進む
-      return [authActions.signIn.done({ params: payload, result: { user } }), replace(EPath.Home)];
+      return [authActions.signIn.done({ params: payload, result: { user } }), userActions.readUser.started({})];
     }),
   );
 
@@ -62,7 +64,7 @@ const signUp: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
     }),
   );
 
-const signOut: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+const signOut: Epic<AnyAction, Action<void> | CallHistoryMethodAction, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(authActions.signOut.started),
     mergeMap(({ payload }) => AuthenticationService.signOut()),
@@ -70,8 +72,8 @@ const signOut: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
       if (res instanceof ApiError) {
         return [];
       }
-      // TODO: 未定
-      return [];
+      // TODO: stateを削除する
+      return [replace(EPath.Login)];
     }),
   );
 

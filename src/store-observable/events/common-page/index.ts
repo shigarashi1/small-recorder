@@ -4,6 +4,7 @@ import { ofAction } from 'typescript-fsa-redux-observable-of-action';
 import { mergeMap } from 'rxjs/operators';
 import { AppState } from '../../../store';
 import { TKeyboardKey } from '../../../types/components/number-keyboard';
+import { authActions } from '../../auth';
 
 // actions
 const ac = actionCreatorFactory('[listener-commonPage]');
@@ -16,10 +17,13 @@ export const commonPageActions = {
 };
 
 // onSignOut
-const onSignOut: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+const onSignOut: Epic<AnyAction, Action<void> | Action<Parameters<typeof authActions.signOut.started>[0]>, AppState> = (
+  action$,
+  store,
+) =>
   action$.pipe(
     ofAction(commonPageActions.onSignOut),
-    mergeMap(action => []),
+    mergeMap(action => [authActions.signOut.started({})]),
   );
 
 //

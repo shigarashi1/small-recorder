@@ -6,14 +6,15 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 
 //
 import history from '../helpers/history';
+import { AppState } from '../store';
 import { sampleReducers, sampleEpics } from './_sample-src';
 import { utilityReducers } from './utilities';
 import { eventListenerEpics } from './events';
 import { authReducers, authEpics } from './auth';
-import { AppState } from '../store';
+import { userReducers, userEpics } from './user';
 
 // actions
-const ac = actionCreatorFactory('[---- root]');
+const ac = actionCreatorFactory('[root]');
 const actions = {
   clearAllState: ac<void>('clearAllState'),
 };
@@ -23,6 +24,7 @@ export const reducers = combineReducers({
   router: connectRouter(history),
   utility: utilityReducers,
   auth: authReducers,
+  user: userReducers,
   // sample is not used
   sample: sampleReducers,
 });
@@ -35,7 +37,7 @@ const rootReducer = (state: any, action: any) => {
 };
 
 // epic
-const rootEpic = combineEpics(sampleEpics, eventListenerEpics, authEpics);
+const rootEpic = combineEpics(sampleEpics, eventListenerEpics, authEpics, userEpics);
 const epicMiddleware = createEpicMiddleware<AnyAction, AnyAction, AppState>();
 
 // enhance

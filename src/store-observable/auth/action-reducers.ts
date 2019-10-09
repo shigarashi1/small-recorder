@@ -5,7 +5,7 @@ import { Nullable } from '../../types';
 import { TFirebaseUser } from '../../lib/firebase';
 
 // actions
-const ac = actionCreatorFactory('[---auth Actions]');
+const ac = actionCreatorFactory('[auth]');
 const actions = {
   signIn: ac.async<TSignIn, { user: Nullable<TFirebaseUser> }, {}>('signIn'),
   signUp: ac.async<TSignUp, {}, {}>('signUp'),
