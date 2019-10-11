@@ -12,6 +12,8 @@ import { utilityReducers } from './utilities';
 import { eventListenerEpics } from './events';
 import { authReducers, authEpics } from './auth';
 import { userReducers, userEpics } from './user';
+import { categoryReducers, categoryEpics } from './category';
+import Logger from '../helpers/generals/logger';
 
 // actions
 const ac = actionCreatorFactory('[root]');
@@ -25,6 +27,7 @@ export const reducers = combineReducers({
   utility: utilityReducers,
   auth: authReducers,
   user: userReducers,
+  category: categoryReducers,
   // sample is not used
   sample: sampleReducers,
 });
@@ -33,11 +36,17 @@ const rootReducer = (state: any, action: any) => {
   if (action.type === actions.clearAllState.type) {
     state = undefined;
   }
+  if (/_STARTED$/.test(action.type)) {
+    Logger.log('rootReducer', action.type);
+  }
+  if (/_DONE$|_FAILED$/.test(action.type)) {
+    Logger.log('rootReducer', action.type);
+  }
   return reducers(state, action);
 };
 
 // epic
-const rootEpic = combineEpics(sampleEpics, eventListenerEpics, authEpics, userEpics);
+const rootEpic = combineEpics(sampleEpics, eventListenerEpics, authEpics, userEpics, categoryEpics);
 const epicMiddleware = createEpicMiddleware<AnyAction, AnyAction, AppState>();
 
 // enhance

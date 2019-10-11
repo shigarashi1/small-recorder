@@ -2,7 +2,7 @@ import { actionCreatorFactory, Action, AnyAction } from 'typescript-fsa';
 import { Epic, combineEpics } from 'redux-observable';
 import { ofAction } from 'typescript-fsa-redux-observable-of-action';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
-import { mergeMap, delay } from 'rxjs/operators';
+import { mergeMap, map } from 'rxjs/operators';
 import { AppState } from '../../store';
 
 // actions
@@ -31,14 +31,14 @@ export const sampleReducers = reducers;
 const sampleEpic1: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(actions.initialize),
-    delay(300),
+    map(({ payload }) => payload),
     mergeMap(action => []),
   );
 
 const sampleEpic2: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(actions.initialize),
-    delay(300),
+    map(({ payload }) => payload),
     mergeMap(action => []),
   );
 

@@ -8,7 +8,7 @@ export class ErrorBase<T = TError> extends Error {
   constructor(error: T) {
     super();
     if (typeof error === 'string') {
-      this._errors.push({ code: 'E0000', error });
+      this._errors.push({ code: 'E0000', message: error });
     } else if (Array.isArray(error)) {
       this._errors = [...error];
     } else if (isIError(error)) {

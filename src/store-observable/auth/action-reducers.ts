@@ -7,6 +7,9 @@ import { TFirebaseUser } from '../../lib/firebase';
 // actions
 const ac = actionCreatorFactory('[auth]');
 const actions = {
+  onChangedStart: ac<void>('onChangedStart'),
+  onChangedEnd: ac<void>('onChangedEnd'),
+  setData: ac<void>('setData'),
   signIn: ac.async<TSignIn, { user: Nullable<TFirebaseUser> }, {}>('signIn'),
   signUp: ac.async<TSignUp, {}, {}>('signUp'),
   signOut: ac.async<{}, {}, {}>('signOut'),

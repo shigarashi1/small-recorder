@@ -2,10 +2,12 @@ import { TUser } from '../../types/firebase';
 import { Nullable, NestedPartial } from '../../types';
 import { getCollection, QuerySnapshot, getServerTime } from '../../lib/firebase';
 import { ApiError } from '../../models/ApiError';
+import { toKeysPickObject } from '../../helpers/conv-object';
 
 const toUser = (uid: string, q: QuerySnapshot): Nullable<TUser> => {
   const users = q.docs.map(v => ({ id: v.id, ...(v.data() as TUser) }));
-  return users.find(v => v.uid === uid) || null;
+  const user = users.find(v => v.uid === uid);
+  return user ? toKeysPickObject(user, ['id', 'uid', 'username']) : null;
 };
 
 const readUser = async (uid: string) => {

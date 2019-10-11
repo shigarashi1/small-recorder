@@ -1,6 +1,6 @@
 export interface IError {
   code: string;
-  error: string;
+  message: string;
 }
 
 export type TMessageType = 'err' | 'warn' | 'info';

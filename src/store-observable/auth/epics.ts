@@ -15,7 +15,7 @@ const signIn: Epic<
   AnyAction,
   | Action<void>
   | Action<Parameters<typeof authActions.signIn.done>[0]>
-  | Action<Parameters<typeof userActions.readUser.started>[0]>,
+  | Action<Parameters<typeof userActions.read.started>[0]>,
   AppState
 > = (action$, store) =>
   action$.pipe(
@@ -30,7 +30,7 @@ const signIn: Epic<
         return [];
       }
       const { user } = res;
-      return [authActions.signIn.done({ params: payload, result: { user } }), userActions.readUser.started({})];
+      return [authActions.signIn.done({ params: payload, result: { user } }), userActions.read.started({})];
     }),
   );
 
@@ -42,7 +42,7 @@ const signUp: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
       // TODO: emailのフォーマット確認
       if (password !== confirmation) {
         // FIXME: business error classを用意する
-        const businessError = new ApiError({ code: '0000', error: 'パスワードが一致しません.' });
+        const businessError = new ApiError({ code: '0000', message: 'パスワードが一致しません.' });
         return { payload, res: businessError };
       }
       const res = await AuthenticationService.signUp(email, password);

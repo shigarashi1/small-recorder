@@ -3,7 +3,6 @@ import Logger from '../helpers/generals/logger';
 import { getMessage } from '../helpers/generals/message';
 
 export class ApiError extends Error {
-
   get error() {
     return this._errors;
   }
@@ -14,11 +13,11 @@ export class ApiError extends Error {
     if (typeof error === 'string') {
       const code = error;
       const message = getMessage('err', error, []);
-      this._errors.push({ code, error: message });
+      this._errors.push({ code, message });
     } else if (this.isIError(error)) {
       this._errors.push({ ...error });
     } else if (this.isError(error)) {
-      this._errors.push({ code: 'unknown', error: error.stack ? error.stack : error.toString() });
+      this._errors.push({ code: 'unknown', message: error.stack ? error.stack : error.toString() });
     }
     Logger.error('ApiError', error);
   }
