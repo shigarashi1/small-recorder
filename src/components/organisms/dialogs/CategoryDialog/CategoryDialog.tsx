@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import styles from './InformationDialog.module.scss';
 
-import BaseDialog from '../dialogs/BaseDialog/BaseDialog';
-import { voidFunc, createButtonProps } from '../../../helpers/components/dialog';
-import { TCategory } from '../../../types/firebase';
+import BaseDialog from '../BaseDialog/BaseDialog';
+import { voidFunc, createButtonProps } from '../../../../helpers/components/dialog';
+import { TCategory } from '../../../../types/firebase';
 
 interface IProps {
   hasOpen: boolean;
@@ -14,7 +14,7 @@ interface IProps {
   mode: 'create' | 'update';
 }
 
-const RecordCategoryDialog: React.FC<IProps> = (props: IProps) => {
+const CategoryDialog: React.FC<IProps> = (props: IProps) => {
   const [category, setCategory] = useState(props.category.name);
   const { hasOpen, onClose, onAction, mode } = props;
 
@@ -29,9 +29,9 @@ const RecordCategoryDialog: React.FC<IProps> = (props: IProps) => {
 
   return (
     <div id={styles.container}>
-      <BaseDialog hasOpen={hasOpen} onClose={onClose} buttons={buttons} title={mode}/>
+      <BaseDialog hasOpen={hasOpen} onClose={onClose} buttons={buttons} title={mode} />
     </div>
   );
 };
 
-export default RecordCategoryDialog;
+export default CategoryDialog;
