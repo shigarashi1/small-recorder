@@ -5,10 +5,10 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Fab from '@material-ui/core/Fab';
+import Icon from '@material-ui/core/Icon';
 
 import styles from './SettingTable.module.scss';
-
-import IconButton from '../../atoms/IconButton/IconButton';
 
 interface IProps {
   rows: any[];
@@ -52,8 +52,12 @@ const SettingTable: React.FC<IProps> = (props: IProps) => {
 
     return (
       <TableCell className={styles.actionCell}>
-        <IconButton onClick={handleActionClick} icon="edit" color="primary" size="small" />
-        <IconButton onClick={handleActionClick} icon="delete" color="secondary" size="small" />
+        <Fab id={styles.root} onClick={handleActionClick} size="small" color="primary">
+          <Icon>edit</Icon>
+        </Fab>
+        <Fab id={styles.root} onClick={handleActionClick} size="small" color="secondary">
+          <Icon>delete</Icon>
+        </Fab>
       </TableCell>
     );
   }

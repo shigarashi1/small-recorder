@@ -2,16 +2,17 @@ import React from 'react';
 import NumberFormat from 'react-number-format';
 
 import styles from '../InputText/InputText.module.scss';
-import { IProps as ITextProps } from '../InputText/InputText';
 import { isIOS } from '../../../helpers/generals/agent';
 
 interface IProps {
+  id: string;
+  value: string | number;
   prefix?: string;
   decimalScale?: number;
   onFocus?: (v: string) => void;
 }
 
-type TProps = IProps & ITextProps;
+type TProps = IProps;
 
 const InputNumber: React.FC<TProps> = (props: TProps) => {
   const { prefix, decimalScale, value } = props;

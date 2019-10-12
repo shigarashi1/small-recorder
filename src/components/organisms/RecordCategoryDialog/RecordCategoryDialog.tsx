@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 
 import styles from './InformationDialog.module.scss';
 
-import BaseDialog from '../../molecules/dialogs/BaseDialog/BaseDialog';
+import BaseDialog from '../dialogs/BaseDialog/BaseDialog';
 import { voidFunc, createButtonProps } from '../../../helpers/components/dialog';
-import RecordCategoryForm from '../../molecules/RecordCategoryForm/RecordCategoryForm';
-import { onChangedValue } from '../../../helpers/components/text-field';
 import { TCategory } from '../../../types/firebase';
 
 interface IProps {
@@ -29,13 +27,9 @@ const RecordCategoryDialog: React.FC<IProps> = (props: IProps) => {
     setCategory(v);
   };
 
-  const onChangeCategoryName = onChangedValue(category, setCategoryName);
-
   return (
     <div id={styles.container}>
-      <BaseDialog hasOpen={hasOpen} onClose={onClose} buttons={buttons} title={mode}>
-        <RecordCategoryForm category={category} onChange={onChangeCategoryName} />
-      </BaseDialog>
+      <BaseDialog hasOpen={hasOpen} onClose={onClose} buttons={buttons} title={mode}/>
     </div>
   );
 };

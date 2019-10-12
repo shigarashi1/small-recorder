@@ -4,7 +4,7 @@ import { AppState } from '../../store';
 
 import { commonPageActions } from '../../store-observable/events/common-page';
 
-import DraggableNumberKeyboard from '../../components/atoms/DraggableNumberKeyboard/DraggableNumberKeyboard';
+import DraggableNumberKeyboard from '../../components/molecules/DraggableNumberKeyboard/DraggableNumberKeyboard';
 
 function mapStateToProps(state: AppState) {
   return {

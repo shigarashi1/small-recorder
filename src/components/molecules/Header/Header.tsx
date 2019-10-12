@@ -1,12 +1,11 @@
 import React from 'react';
+import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 
 import styles from './Header.module.scss';
-
-import HeaderTitle from '../../atoms/HeaderTitle/HeaderTitle';
 
 import { THeaderProps } from '../../../containers/components/Header';
 
@@ -28,7 +27,9 @@ const Header: React.FC<TProps> = (props: TProps) => {
         <IconButton color="inherit" aria-label="Menu" onClick={onOpen}>
           <Icon>menu_icon</Icon>
         </IconButton>
-        <HeaderTitle title="Small Recorder" />
+        <Typography variant="h6" color="inherit">
+          Small Recorder
+        </Typography>
       </React.Fragment>
     );
   };

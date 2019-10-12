@@ -1,116 +1,116 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import Button from '@material-ui/core/Button';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import TextField from '@material-ui/core/TextField';
 
 import styles from './LoginPage.module.scss';
 
-import SignInUpCard from '../../organisms/SignInUpCard/SignInUpCard';
 import { TPageProps } from '../../../containers/pages/LoginPage';
-import { ISignUpForm } from '../../../types/pages/login-page';
-import { onChangedValue } from '../../../helpers/components/text-field';
 import { BREAK_POINT } from '../../../lookups/page-layout';
+import { TSignUp } from '../../../store-observable/types';
 
 type TProps = TPageProps;
 
-interface IState {
-  isSignUp: boolean;
-}
+type TPageState = TSignUp & {
+  isSignIn: boolean;
+};
 
-type TState = IState & ISignUpForm;
-
-const initialState: TState = {
-  isSignUp: false,
+const initialState: TPageState = {
+  isSignIn: true,
   username: '',
   email: '',
   password: '',
   confirmation: '',
 };
 
-class LoginPage extends Component<TProps, TState> {
-  constructor(props: TProps) {
-    super(props);
-    this.state = initialState;
-  }
+const LABEL = {
+  signIn: 'Sign In',
+  signUp: 'Sign Up',
+};
 
-  render() {
-    const { isSignUp, username, email, password, confirmation } = this.state;
-    const {
-      onChangeTab,
-      onSignIn,
-      onSignUp,
-      onCancel,
-      changeUsername,
-      changeEmail,
-      changePassword,
-      changeConfirmation,
-    } = this;
+const LoginPage: React.FC<TProps> = props => {
+  const [pageState, setPageState] = useState(initialState);
 
-    const onChangedUsername = onChangedValue(this.state.username, changeUsername);
-    const onChangedEmail = onChangedValue(this.state.username, changeEmail);
-    const onChangedPassword = onChangedValue(this.state.username, changePassword);
-    const onChangedConfirmation = onChangedValue(this.state.username, changeConfirmation);
+  const onCancel = () => {
+    setPageState({ ...initialState });
+  };
 
-    return (
-      <div id={styles.container} style={{ height: window.innerHeight }}>
-        <Grid container={true} spacing={2} alignContent="space-around" justify="center">
-          <Grid item={true} xs={11} sm={8} md={BREAK_POINT.sm} lg={BREAK_POINT.sm} xl={BREAK_POINT.md}>
-            <SignInUpCard
-              onChangeTab={onChangeTab}
-              isSignUp={isSignUp}
-              username={username}
-              onSignIn={onSignIn}
-              onSignUp={onSignUp}
-              onCancel={onCancel}
-              email={email}
-              password={password}
-              passwordConfirmation={confirmation}
-              onChangedUsername={onChangedUsername}
-              onChangedEmail={onChangedEmail}
-              onChangedPassword={onChangedPassword}
-              onChangedConfirmation={onChangedConfirmation}
-            />
-          </Grid>
+  // tab
+  const tabIndex = pageState.isSignIn ? 0 : 1;
+  const onChangeTab = () => {
+    setPageState({ ...pageState, isSignIn: !pageState.isSignIn });
+  };
+
+  // button
+  const onSignInUp = () => {
+    const { isSignIn, username, email, password, confirmation } = pageState;
+    if (isSignIn) {
+      props.onSignIn({ email, password });
+    } else {
+      props.onSignUp({ email, password, username, confirmation });
+    }
+  };
+
+  // form
+  const onChangeValue = (key: keyof TSignUp) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value || '';
+    setPageState({ ...pageState, [key]: value });
+  };
+
+  return (
+    <div id={styles.container} style={{ height: window.innerHeight }}>
+      <Grid container={true} spacing={2} alignContent="space-around" justify="center">
+        <Grid item={true} xs={11} sm={8} md={BREAK_POINT.sm} lg={BREAK_POINT.sm} xl={BREAK_POINT.md}>
+          <Card className={styles.card}>
+            <CardHeader className={styles.header} title="Small Recorder" />
+            <CardContent className={styles.card}>
+              <div className={styles.tab}>
+                <AppBar position="static">
+                  <Tabs value={tabIndex} onChange={onChangeTab} variant="fullWidth">
+                    {[LABEL.signIn, LABEL.signUp].map((v, i) => (
+                      <Tab key={i} label={v} />
+                    ))}
+                  </Tabs>
+                </AppBar>
+              </div>
+              <div className={styles.form}>
+                {Object.keys(pageState)
+                  .filter(v => v !== 'isSignIn')
+                  .map(k => k as keyof TSignUp)
+                  .map((key, i) =>
+                    pageState.isSignIn && ['username', 'confirmation'].includes(key) ? null : (
+                      <div key={i} className={styles.form}>
+                        <TextField
+                          label={key}
+                          value={pageState[key]}
+                          onChange={onChangeValue(key)}
+                          type={['password', 'confirmation'].includes(key) ? 'password' : undefined}
+                        />
+                      </div>
+                    ),
+                  )}
+              </div>
+            </CardContent>
+            <CardActions className={styles.action}>
+              <Button onClick={onCancel} variant="contained">
+                Cancel
+              </Button>
+              <Button onClick={onSignInUp} variant="contained" color="primary">
+                {pageState.isSignIn ? LABEL.signIn : LABEL.signUp}
+              </Button>
+            </CardActions>
+          </Card>
         </Grid>
-      </div>
-    );
-  }
-
-  onChangeTab = () => {
-    const { isSignUp } = this.state;
-    this.setState({ isSignUp: !isSignUp });
-  };
-
-  onSignIn = () => {
-    const { onSignIn } = this.props;
-    const { email, password } = this.state;
-    onSignIn({ email, password });
-  };
-
-  onSignUp = () => {
-    const { onSignUp } = this.props;
-    const { username, email, password, confirmation } = this.state;
-    onSignUp({ email, password, username, confirmation });
-  };
-
-  onCancel = () => {
-    // FIXME:
-    this.setState({ ...initialState });
-  };
-
-  changeUsername = (v: string) => {
-    this.setState({ username: v });
-  };
-
-  changeEmail = (v: string) => {
-    this.setState({ email: v });
-  };
-
-  changePassword = (v: string) => {
-    this.setState({ password: v });
-  };
-
-  changeConfirmation = (v: string) => {
-    this.setState({ confirmation: v });
-  };
-}
+      </Grid>
+    </div>
+  );
+};
 
 export default LoginPage;
