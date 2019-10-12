@@ -3,7 +3,7 @@ import { Nullable } from '../../types';
 import { QueryDocSnapshot, QuerySnapshot } from '../../lib/firebase';
 import { TUser, FirebaseUser } from '../../types/firebase';
 
-export class UserService extends FirestoreServiceBase<TUser, FirebaseUser> {
+export class User extends FirestoreServiceBase<TUser, FirebaseUser> {
   private _user: Nullable<TUser> = null;
 
   constructor() {

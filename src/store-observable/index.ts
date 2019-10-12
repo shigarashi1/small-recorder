@@ -13,6 +13,7 @@ import { eventListenerEpics } from './events';
 import { authReducers, authEpics } from './auth';
 import { userReducers, userEpics } from './user';
 import { categoryReducers, categoryEpics } from './category';
+import { errorReducers, errorEpics } from './error';
 import Logger from '../helpers/generals/logger';
 
 // actions
@@ -28,6 +29,7 @@ export const reducers = combineReducers({
   auth: authReducers,
   user: userReducers,
   category: categoryReducers,
+  error: errorReducers,
   // sample is not used
   sample: sampleReducers,
 });
@@ -46,7 +48,7 @@ const rootReducer = (state: any, action: any) => {
 };
 
 // epic
-const rootEpic = combineEpics(sampleEpics, eventListenerEpics, authEpics, userEpics, categoryEpics);
+const rootEpic = combineEpics(sampleEpics, eventListenerEpics, authEpics, userEpics, categoryEpics, errorEpics);
 const epicMiddleware = createEpicMiddleware<AnyAction, AnyAction, AppState>();
 
 // enhance

@@ -1,6 +1,6 @@
-import { UserService } from './user';
+import { User } from './user';
 
-const user = new UserService();
+const user = new User();
 
 export const firestoreService = {
   user,

@@ -1,5 +1,5 @@
 import { IApiResponseError } from '../../types/api';
-import { ErrorBase } from '../../models/error-base';
+import { ApiError } from '../../models/ApiError';
 
 export function interceptResponse(response: Response): Promise<any> | undefined {
   if (response.ok) {
@@ -7,10 +7,10 @@ export function interceptResponse(response: Response): Promise<any> | undefined 
   }
 
   if (response.statusText) {
-    throw new ErrorBase(response.statusText);
+    throw new ApiError(response.statusText);
   }
 
   response.json().then((res: IApiResponseError) => {
-    throw new ErrorBase(res.errors);
+    throw new ApiError(res.errors[0]);
   });
 }
