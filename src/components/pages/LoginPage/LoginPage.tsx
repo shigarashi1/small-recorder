@@ -86,14 +86,14 @@ const LoginPage: React.FC<TProps> = props => {
                   .map(k => k as keyof TSignUp)
                   .map((key, i) =>
                     pageState.isSignIn && ['username', 'confirmation'].includes(key) ? null : (
-                      <div key={i} className={styles.form}>
-                        <TextField
-                          label={key}
-                          value={pageState[key]}
-                          onChange={onChangeValue(key)}
-                          type={['password', 'confirmation'].includes(key) ? 'password' : undefined}
-                        />
-                      </div>
+                      <TextField
+                        className={styles.text}
+                        key={i}
+                        label={key}
+                        value={pageState[key]}
+                        onChange={onChangeValue(key)}
+                        type={['password', 'confirmation'].includes(key) ? 'password' : undefined}
+                      />
                     ),
                   )}
               </div>

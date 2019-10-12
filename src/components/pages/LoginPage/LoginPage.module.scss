@@ -3,4 +3,24 @@
   > div {
     height: 100%;
   }
+  .card {
+    padding: 8px;
+    .tab {
+      width: 100%;
+    }
+    .form {
+      padding: 4px;
+      .text {
+        width: 100%;
+      }
+    }
+    .action {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      > button {
+        width: 40%;
+      }
+    }
+  }
 }
