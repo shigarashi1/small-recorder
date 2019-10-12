@@ -81,16 +81,17 @@ class Background extends Component<TProps, IState> {
     Logger.log('Background didMound');
     this.authSubscription = AuthenticationService.onAuthStateChanged(this.onChangedAuth, this.logError);
     this.userSubscription = UserService.onChangedUser(this.props.uid, this.onChangedUser, this.logError);
-    this.intervalTimer = setInterval(() => {
-      Logger.log('user', this.user);
-    }, 30000);
+    // this.intervalTimer = setInterval(() => {
+    //   Logger.log('user', this.user);
+    //   AuthenticationService.onAuthStateChanged(this.onChangedAuth, this.logError);
+    // }, 10000);
   }
 
   componentWillUnmount() {
     Logger.log('Background willUnmount');
     this.authSubscription();
     this.userSubscription();
-    clearInterval(this.intervalTimer);
+    // clearInterval(this.intervalTimer);
   }
 
   render() {

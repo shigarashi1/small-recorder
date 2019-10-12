@@ -24,6 +24,8 @@ export type TDocRefColumn = {
 // auth
 export type TUserCredential = firebase.auth.UserCredential;
 export type TFirebaseUser = firebase.User;
+const { SESSION, LOCAL, NONE } = firebase.auth.Auth.Persistence;
+export const Persistence = { SESSION, LOCAL, NONE };
 
 // functions
 export const getCollection = (collectionName: string): CollectionRef => db.collection(`${dbPath}/${collectionName}`);

@@ -1,8 +1,11 @@
+import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+//
 import { AppState } from '../../store';
 import { getState } from '../../store-observable/state-selector';
 
 import AppRouterGuard from '../../guards/AppRouterGuard';
+import { backgroundActions } from '../../store-observable/events/background';
 
 function mapStateToProps(state: AppState) {
   return {
@@ -10,9 +13,14 @@ function mapStateToProps(state: AppState) {
   };
 }
 
-export type TRouterGuardProps = ReturnType<typeof mapStateToProps>;
+function mapDispatchToProps(dispatch: Dispatch) {
+  return {
+    ...bindActionCreators(backgroundActions, dispatch),
+  };
+}
+export type TRouterGuardProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
 export default connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 )(AppRouterGuard);

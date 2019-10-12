@@ -4,12 +4,17 @@ import { TSignIn, TSignUp } from '../types';
 import { Nullable } from '../../types';
 import { TFirebaseUser } from '../../lib/firebase';
 
+export type TAuthSetData = {
+  isSignedIn: boolean;
+  user: Nullable<TFirebaseUser>;
+};
+
 // actions
 const ac = actionCreatorFactory('[auth]');
 const actions = {
   onChangedStart: ac<void>('onChangedStart'),
   onChangedEnd: ac<void>('onChangedEnd'),
-  setData: ac<void>('setData'),
+  setData: ac<TAuthSetData>('setData'),
   signIn: ac.async<TSignIn, { user: Nullable<TFirebaseUser> }, {}>('signIn'),
   signUp: ac.async<TSignUp, {}, {}>('signUp'),
   signOut: ac.async<{}, {}, {}>('signOut'),
@@ -30,5 +35,6 @@ const initialState: TAuthState = {
 const reducers = reducerWithInitialState(initialState)
   .case(actions.signIn.started, (state, payload) => ({ ...state }))
   .case(actions.signIn.done, (state, payload) => ({ ...state, isSignedIn: true, user: payload.result.user }))
+  .case(actions.setData, (state, payload) => ({ ...state, isSignedIn: payload.isSignedIn, user: payload.user }))
   .case(actions.signOut.started, (state, payload) => ({ ...state }));
 export const authReducers = reducers;

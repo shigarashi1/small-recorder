@@ -1,27 +1,36 @@
-import React, { Component } from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Redirect, Route, withRouter, RouteComponentProps } from 'react-router';
 
 import LoginPageTemplate from '../components/templates/LoginTemplate/LoginTemplate';
 
 import { EPath } from '../types/index';
 import { TRouterGuardProps } from '../containers/others/AppRouterGuard';
+import { AuthenticationService } from '../services/auth';
+import Logger from '../helpers/generals/logger';
 
-type TProps = TRouterGuardProps;
+type TProps = TRouterGuardProps & RouteComponentProps;
 
-class AppRouterGuard extends Component<TProps> {
-  render() {
-    const children = this.props.children ? this.props.children : null;
+const AppRouterGuard: React.FC<TProps> = ({ isSignedIn, children, onAutoSignIn }) => {
+  useEffect(() => {
+    AuthenticationService.getAuthState()
+      .then(user => {
+        if (user) {
+          onAutoSignIn(user);
+        }
+      })
+      .catch(err => Logger.log('auto login failture'));
+  }, [onAutoSignIn]);
 
-    if (!this.props.isSignedIn) {
-      return (
-        <React.Fragment>
-          <Route exact={true} path={EPath.Login} component={LoginPageTemplate} />
-          <Redirect from="/" to={EPath.Login} />
-        </React.Fragment>
-      );
-    }
-    return <React.Fragment>{children}</React.Fragment>;
+  if (isSignedIn && children) {
+    return <React.Fragment> {children} </React.Fragment>;
   }
-}
 
-export default AppRouterGuard;
+  return (
+    <React.Fragment>
+      <Route exact={true} path={EPath.Login} component={LoginPageTemplate} />
+      <Redirect from="/" to={EPath.Login} />
+    </React.Fragment>
+  );
+};
+
+export default withRouter(AppRouterGuard);

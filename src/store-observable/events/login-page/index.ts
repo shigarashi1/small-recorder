@@ -8,7 +8,7 @@ import { AppState } from '../../../store';
 import { authActions } from '../../auth';
 
 // actions
-const ac = actionCreatorFactory('[listener-loginPage]');
+const ac = actionCreatorFactory('[listen-loginPage]');
 
 // ===== login page =====
 export const loginPageActions = {

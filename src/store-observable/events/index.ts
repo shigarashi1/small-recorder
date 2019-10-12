@@ -1,6 +1,7 @@
 import { combineEpics } from 'redux-observable';
 import { loginPageEpics } from './login-page';
 import { commonPageEpics } from './common-page';
+import { backgroundEpics } from './background';
 
 // ===== background =====
 // onChangeUser
@@ -30,4 +31,4 @@ import { commonPageEpics } from './common-page';
 // ===== query page =====
 // onChangeFilter
 
-export const eventListenerEpics = combineEpics(loginPageEpics, commonPageEpics);
+export const eventListenerEpics = combineEpics(loginPageEpics, commonPageEpics, backgroundEpics);

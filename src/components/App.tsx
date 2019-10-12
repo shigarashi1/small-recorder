@@ -12,12 +12,11 @@ const store = configureStore({});
 
 class App extends Component {
   render() {
-    const isSignedIn = false;
     return (
       <Provider store={store}>
         <Router history={history}>
           <Switch>
-            <AppRouterGuard isSignedIn={isSignedIn}>
+            <AppRouterGuard>
               <MainTemplate />
             </AppRouterGuard>
           </Switch>
