@@ -7,6 +7,7 @@ import { TKeyboardKey } from '../../../types/components/number-keyboard';
 import { authActions } from '../../auth';
 import { TFirebaseUser } from '../../../lib/firebase';
 import { TAuthSetData } from '../../auth/action-reducers';
+import { sidebarActions } from '../../utilities';
 
 // actions
 const ac = actionCreatorFactory('[listen-commonPage]');
@@ -15,7 +16,7 @@ const ac = actionCreatorFactory('[listen-commonPage]');
 export const commonPageActions = {
   onSignOut: ac('onSignOut'),
   onPushKeyboard: ac<TKeyboardKey>('onPushKeyboard'),
-  onToggleSidebar: ac('onToggleSidebar'),
+  onTogleSidebar: ac<boolean>('onTogleSidebar'),
   onAutoSignIn: ac<TFirebaseUser>('onAutoSignIn'),
 };
 
@@ -35,6 +36,12 @@ const onAutoSignIn: Epic<AnyAction, Action<TAuthSetData>, AppState> = (action$, 
     map(({ payload }) => authActions.setData({ isSignedIn: true, user: payload })),
   );
 
+const onTogleSidebar: Epic<AnyAction, Action<boolean>, AppState> = (action$, store) =>
+  action$.pipe(
+    ofAction(commonPageActions.onTogleSidebar),
+    map(({ payload }) => sidebarActions.togle(payload)),
+  );
+
 //
 // onShowInfoDialog
 // onShowOkCancelDialog
@@ -44,4 +51,4 @@ const onAutoSignIn: Epic<AnyAction, Action<TAuthSetData>, AppState> = (action$, 
 // onCloseKeyboard
 // onShowSnackbar
 
-export const commonPageEpics = combineEpics(onSignOut, onAutoSignIn);
+export const commonPageEpics = combineEpics(onSignOut, onAutoSignIn, onTogleSidebar);

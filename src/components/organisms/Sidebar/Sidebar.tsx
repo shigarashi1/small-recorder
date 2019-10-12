@@ -13,7 +13,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 import styles from './Sidebar.module.scss';
 
-import { IListItem } from '../../../types/components/sidebar';
 import { SIDEBAR_LIST } from '../../../lookups/sidebar';
 import { EPath } from '../../../types';
 import { TSidebarProps } from '../../../containers/components/Sidebar';
@@ -23,8 +22,8 @@ type TProps = RouteComponentProps & TSidebarProps;
 const Sidebar: React.FC<TProps> = (props: TProps) => {
   const { history, hasOpen } = props;
 
-  const togleHasOpen = () => {
-    props.onToggleSidebar();
+  const onClose = () => {
+    props.onTogleSidebar(false);
   };
 
   const activeRoute = (path: EPath): boolean => {
@@ -42,25 +41,13 @@ const Sidebar: React.FC<TProps> = (props: TProps) => {
       return;
     }
     history.push(path);
-    togleHasOpen();
-  };
-
-  const renderListItem = (menuList: IListItem[]) => {
-    return menuList.map(menu => {
-      return (
-        <ListItem button={true} key={menu.text} className={getClassName(menu.path)} onClick={onClickMenu(menu.path)}>
-          {renderIcon(menu.icon)}
-          <ListItemText primary={menu.text} />
-        </ListItem>
-      );
-    });
   };
 
   const renderSidebarContent = () => {
     return (
       <div className={styles.list}>
         <Toolbar>
-          <IconButton onClick={togleHasOpen}>
+          <IconButton onClick={onClose}>
             <Icon>chevron_right_icon</Icon>
           </IconButton>
         </Toolbar>
@@ -68,7 +55,17 @@ const Sidebar: React.FC<TProps> = (props: TProps) => {
           return (
             <React.Fragment key={index}>
               <Divider />
-              {renderListItem(menuList)}
+              {menuList.map(menu => (
+                <ListItem
+                  button={true}
+                  key={menu.text}
+                  className={getClassName(menu.path)}
+                  onClick={onClickMenu(menu.path)}
+                >
+                  {renderIcon(menu.icon)}
+                  <ListItemText primary={menu.text} />
+                </ListItem>
+              ))}
             </React.Fragment>
           );
         })}
@@ -76,17 +73,12 @@ const Sidebar: React.FC<TProps> = (props: TProps) => {
     );
   };
 
-  const renderIcon = (iconName?: string) => {
-    if (!iconName) {
-      return null;
-    }
-
-    return (
+  const renderIcon = (iconName?: string) =>
+    !iconName ? null : (
       <ListItemIcon>
         <Icon>{iconName}</Icon>
       </ListItemIcon>
     );
-  };
 
   // const renderSidebarOver = () => {
   //   return (
@@ -98,7 +90,7 @@ const Sidebar: React.FC<TProps> = (props: TProps) => {
 
   const renderSidebarUnder = () => {
     return (
-      <Drawer variant="temporary" anchor="right" open={hasOpen} onClose={togleHasOpen}>
+      <Drawer variant="temporary" anchor="right" open={hasOpen} onClose={onClose}>
         {renderSidebarContent()}
       </Drawer>
     );

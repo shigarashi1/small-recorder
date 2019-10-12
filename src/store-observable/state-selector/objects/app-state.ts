@@ -44,4 +44,8 @@ class AppStateSelector {
   get isLoading() {
     return this.state.utility.loading;
   }
+
+  get hasOpenedSidebar() {
+    return this.state.utility.sidebar;
+  }
 }

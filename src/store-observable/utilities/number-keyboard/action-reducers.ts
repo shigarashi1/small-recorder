@@ -2,7 +2,7 @@ import { actionCreatorFactory } from 'typescript-fsa';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 
 // actions
-const ac = actionCreatorFactory('[---keyboard]');
+const ac = actionCreatorFactory('[---utilities/keyboard]');
 const actions = {
   initialize: ac('initialize'),
   createCategory: ac<string>('createCategory'),

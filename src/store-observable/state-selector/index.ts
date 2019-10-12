@@ -23,5 +23,9 @@ export const getState = {
       appStateSelector,
       selector => selector.isLoading,
     ),
+    hasOpenedSidebar: createSelector(
+      appStateSelector,
+      selector => selector.hasOpenedSidebar,
+    ),
   },
 };

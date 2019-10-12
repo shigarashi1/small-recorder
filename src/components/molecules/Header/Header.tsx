@@ -1,9 +1,9 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import Icon from '@material-ui/core/Icon';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
+import Typography from '@material-ui/core/Typography';
 
 import styles from './Header.module.scss';
 
@@ -13,42 +13,28 @@ type TProps = THeaderProps & {
   isFixed?: boolean;
 };
 
-const Header: React.FC<TProps> = (props: TProps) => {
-  const { isSignedIn, isFixed } = props;
+const Header: React.FC<TProps> = ({ isFixed, onTogleSidebar }) => {
   const position = isFixed ? 'fixed' : 'static';
 
   const onOpen = () => {
-    props.onToggleSidebar();
+    onTogleSidebar(true);
   };
 
-  const renderLeftBlock = () => {
-    return (
-      <React.Fragment>
+  return (
+    <AppBar id={styles.container} position={position}>
+      <Toolbar>
         <IconButton color="inherit" aria-label="Menu" onClick={onOpen}>
           <Icon>menu_icon</Icon>
         </IconButton>
         <Typography variant="h6" color="inherit">
           Small Recorder
         </Typography>
-      </React.Fragment>
-    );
-  };
-
-  const renderRightBlock = () => {
-    if (!isSignedIn) {
-      return null;
-    }
-    return (
-      <IconButton aria-owns={'menu-appbar'} aria-haspopup="true" color="inherit">
-        <Icon>account_circle</Icon>
-      </IconButton>
-    );
-  };
-
-  return (
-    <AppBar id={styles.container} position={position}>
-      <Toolbar>{renderLeftBlock()}</Toolbar>
-      <Toolbar className={styles.right}>{renderRightBlock()}</Toolbar>
+      </Toolbar>
+      <Toolbar className={styles.right}>
+        <IconButton aria-owns={'menu-appbar'} aria-haspopup="true" color="inherit">
+          <Icon>account_circle</Icon>
+        </IconButton>
+      </Toolbar>
     </AppBar>
   );
 };
