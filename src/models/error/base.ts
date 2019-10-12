@@ -11,7 +11,7 @@ export class ErrorBase extends Error {
   constructor(error: any, type: TMessageType = 'err') {
     super();
     if (typeof error === 'string') {
-      const { code, message } = getMessage(type, error, []);
+      const { code, message } = getMessage(type, error);
       this._error = { code, message };
       return;
     }
