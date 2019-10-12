@@ -1,7 +1,7 @@
 import { TUser } from '../../types/firebase';
 import { Nullable, NestedPartial } from '../../types';
 import { getCollection, QuerySnapshot, getServerTime } from '../../lib/firebase';
-import { ApiError } from '../../models/ApiError';
+import { ApiError } from '../../models/error';
 import { toKeysPickObject } from '../../helpers/conv-object';
 
 const toUser = (uid: string, q: QuerySnapshot): Nullable<TUser> => {
@@ -15,10 +15,7 @@ const readUser = async (uid: string) => {
     .where('uid', '==', uid)
     .get()
     .then(q => toUser(uid, q))
-    .catch(err => {
-      // TODO: error handling
-      return new ApiError('0004');
-    });
+    .catch(err => new ApiError(err));
 };
 
 const createUser = async (uid: string, username: string) => {
@@ -26,10 +23,7 @@ const createUser = async (uid: string, username: string) => {
   const data = { uid, username, createdAt: serverTime, updatedAt: serverTime };
   return getCollection('users')
     .add(data)
-    .catch(err => {
-      // TODO: error handling
-      return new ApiError('0003');
-    });
+    .catch(err => new ApiError(err));
 };
 
 const updateUser = async (id: string, param: NestedPartial<Omit<TUser, 'id'>>) => {
@@ -37,20 +31,14 @@ const updateUser = async (id: string, param: NestedPartial<Omit<TUser, 'id'>>) =
   return getCollection('users')
     .doc(id)
     .update({ ...param, updatedAt })
-    .catch(err => {
-      // TODO: error handling
-      return new ApiError('0003');
-    });
+    .catch(err => new ApiError(err));
 };
 
 const deleteUser = async (id: string) => {
   return getCollection('users')
     .doc(id)
     .delete()
-    .catch(err => {
-      // TODO: error handling
-      return new ApiError('0003');
-    });
+    .catch(err => new ApiError(err));
 };
 
 const onChangedUser = (

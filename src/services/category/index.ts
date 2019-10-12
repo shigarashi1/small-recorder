@@ -1,6 +1,6 @@
 import { getCollection, QuerySnapshot, getServerTime } from '../../lib/firebase';
 import { TCategory } from '../../types/firebase';
-import { ApiError } from '../../models/ApiError';
+import { ApiError } from '../../models/error';
 import { NestedPartial } from '../../types';
 
 const toUserRef = (id: string) => getCollection('users').doc(id);
@@ -16,11 +16,7 @@ const readCategories = async (params: { userId: string }) => {
     .where('user', '==', userRef)
     .get()
     .then(toCategories)
-    .catch(err => {
-      console.log(err);
-      // TODO: error handling
-      return new ApiError('0004');
-    });
+    .catch(err => new ApiError(err));
 };
 
 const createCategory = async (name: string, userId: string) => {
@@ -29,10 +25,7 @@ const createCategory = async (name: string, userId: string) => {
   const data = { name, user, hasDeleted: false, createdAt: serverTime, updatedAt: serverTime };
   return getCollection('categories')
     .add(data)
-    .catch(err => {
-      // TODO: error handling
-      return new ApiError('0004');
-    });
+    .catch(err => new ApiError(err));
 };
 
 const updateCategory = async (id: string, data: NestedPartial<Omit<TCategory, 'id' | 'user'>>) => {
@@ -40,10 +33,7 @@ const updateCategory = async (id: string, data: NestedPartial<Omit<TCategory, 'i
   return getCollection('categories')
     .doc(id)
     .update({ ...data, updatedAt })
-    .catch(err => {
-      // TODO: error handling
-      return new ApiError('0004');
-    });
+    .catch(err => new ApiError(err));
 };
 
 const deleteCategory = async (id: string) => {

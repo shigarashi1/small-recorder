@@ -6,7 +6,7 @@ import { CategoryService } from '../../services/category';
 import { appStateSelector } from '../state-selector/objects/app-state';
 import { AppState } from '../../store';
 import { categoryActions } from './action-reducers';
-import { ApiError } from '../../models/ApiError';
+import { ApiError } from '../../models/error';
 
 const readCategories: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
   action$.pipe(

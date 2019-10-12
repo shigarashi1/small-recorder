@@ -5,7 +5,7 @@ import { mergeMap } from 'rxjs/operators';
 import { AppState } from '../../store';
 import { authActions } from '.';
 import { AuthenticationService } from '../../services/auth';
-import { ApiError } from '../../models/ApiError';
+import { ApiError } from '../../models/error';
 import Logger from '../../helpers/generals/logger';
 import { replace, CallHistoryMethodAction } from 'connected-react-router';
 import { EPath } from '../../types';

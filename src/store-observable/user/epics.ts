@@ -8,7 +8,7 @@ import { CallHistoryMethodAction, replace } from 'connected-react-router';
 import { EPath } from '../../types';
 import { appStateSelector } from '../state-selector/objects/app-state';
 import { UserService } from '../../services/user';
-import { ApiError } from '../../models/ApiError';
+import { ApiError } from '../../models/error';
 import Logger from '../../helpers/generals/logger';
 
 const readUser: Epic<

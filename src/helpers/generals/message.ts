@@ -2,13 +2,13 @@ import { TMessageType } from '../../types/error';
 import { IMessage } from '../../types/message';
 import { INFO_MESSAGES, WARN_MESSAGES, ERROR_MESSAGES } from '../../lookups/message';
 
-export function getMessage(type: TMessageType, code: string, value: string[]): string {
+export const getMessage = (type: TMessageType, targetCode: string, value: string[] = []): IMessage => {
   const messageList = getMessageList(type);
-  const message = findMessage(code, messageList, type);
-  return replaceMessage(message, value);
-}
+  const { code, message } = findMessage(targetCode, messageList, type);
+  return { code, message: replaceMessage(message, value) };
+};
 
-function getMessageList(type: TMessageType): IMessage[] {
+const getMessageList = (type: TMessageType): IMessage[] => {
   switch (type) {
     case 'info':
       return INFO_MESSAGES;
@@ -17,18 +17,13 @@ function getMessageList(type: TMessageType): IMessage[] {
     default:
       return ERROR_MESSAGES;
   }
-}
+};
 
-function findMessage(code: string, messageList: IMessage[], type: TMessageType): string {
-  const message = messageList.find(v => v.code === code);
-  if (!message) {
-    return `not found message. type: ${type}, code: ${code}`;
-  }
-  return message.message;
-}
+const findMessage = (code: string, messageList: IMessage[], type: TMessageType): IMessage =>
+  messageList.find(v => v.code === code) || {
+    code: 'unknown',
+    message: `not found message. type: ${type}, code: ${code}`,
+  };
 
-function replaceMessage(message: string, value: string[]): string {
-  return value.reduce((pre, cur, i) => {
-    return pre.replace(`{${i}}`, cur);
-  }, message);
-}
+const replaceMessage = (message: string, value: string[]): string =>
+  value.reduce((pre, cur, i) => pre.replace(`{${i}}`, cur), message);

@@ -1,4 +1,4 @@
-import { isCategoryType } from './type-guard';
+import { isCategoryType } from './generals/type-guard';
 import { TBase } from '../types/firebase';
 
 export const getMaxId = <T extends TBase>(arr: T[]): string => {

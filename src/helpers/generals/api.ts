@@ -1,5 +1,5 @@
 import { IApiResponseError } from '../../types/api';
-import { ApiError } from '../../models/ApiError';
+import { ApiError } from '../../models/error';
 
 export function interceptResponse(response: Response): Promise<any> | undefined {
   if (response.ok) {

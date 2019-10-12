@@ -1,24 +1,18 @@
 import { auth, TFirebaseUser } from '../../lib/firebase';
-import { ApiError } from '../../models/ApiError';
+import { ApiError } from '../../models/error';
 import Logger from '../../helpers/generals/logger';
 import { Nullable } from '../../types';
 
 const signIn = async (email: string, password: string) => {
-  return await auth.signInWithEmailAndPassword(email, password).catch(err => {
-    return new ApiError('0002');
-  });
+  return await auth.signInWithEmailAndPassword(email, password).catch(err => new ApiError(err));
 };
 
 const signUp = async (email: string, password: string) => {
-  return await auth.createUserWithEmailAndPassword(email, password).catch(err => {
-    return new ApiError('0003');
-  });
+  return await auth.createUserWithEmailAndPassword(email, password).catch(err => new ApiError(err));
 };
 
 const signOut = async () => {
-  return await auth.signOut().catch(err => {
-    return new ApiError('0004');
-  });
+  return await auth.signOut().catch(err => new ApiError(err));
 };
 
 const onAuthStateChanged = (

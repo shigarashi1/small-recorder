@@ -1,4 +1,8 @@
-import { TCategory, TTarget, TRecord, TUser } from '../types/firebase';
+import { TCategory, TTarget, TRecord, TUser } from '../../types/firebase';
+import { IError } from '../../types/error';
+
+export const isIError = (value: any): value is IError =>
+  value.hasOwnProperty('code') && value.hasOwnProperty('message');
 
 export function isCategoryType(v: any): v is TCategory {
   return v.name !== undefined && v.hasDeleted !== undefined;
