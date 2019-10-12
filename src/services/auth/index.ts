@@ -1,6 +1,5 @@
 import { auth, TFirebaseUser, Persistence } from '../../lib/firebase';
 import { ApiError } from '../../models/error';
-import Logger from '../../helpers/generals/logger';
 import { Nullable } from '../../types';
 
 const PersistenceType = window.location.hostname === 'localhost' ? Persistence.SESSION : Persistence.NONE;
@@ -30,7 +29,7 @@ const onAuthStateChanged = (
       next(user);
     },
     err => {
-      Logger.log('changedUser error', err);
+      error(err);
     },
   );
   return subscription;

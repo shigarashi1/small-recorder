@@ -7,6 +7,7 @@ import { configureStore } from '../store-observable';
 import history from '../helpers/history';
 import MainTemplate from './templates/MainTemplate/MainTemplate';
 import AppRouterGuard from '../containers/others/AppRouterGuard';
+import LoadingSpiner from '../containers/others/LoadingSpiner';
 
 const store = configureStore({});
 
@@ -17,7 +18,9 @@ class App extends Component {
         <Router history={history}>
           <Switch>
             <AppRouterGuard>
-              <MainTemplate />
+              <LoadingSpiner>
+                <MainTemplate />
+              </LoadingSpiner>
             </AppRouterGuard>
           </Switch>
         </Router>

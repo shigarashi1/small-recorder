@@ -18,4 +18,10 @@ export const getState = {
       selector => selector.currentPath,
     ),
   },
+  utility: {
+    isLoading: createSelector(
+      appStateSelector,
+      selector => selector.isLoading,
+    ),
+  },
 };

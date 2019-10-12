@@ -14,7 +14,6 @@ import { authReducers, authEpics } from './auth';
 import { userReducers, userEpics } from './user';
 import { categoryReducers, categoryEpics } from './category';
 import { errorReducers, errorEpics } from './error';
-import Logger from '../helpers/generals/logger';
 
 // actions
 const ac = actionCreatorFactory('[root]');
@@ -39,10 +38,10 @@ const rootReducer = (state: any, action: any) => {
     state = undefined;
   }
   if (/_STARTED$/.test(action.type)) {
-    Logger.log('rootReducer', action.type);
+    state.utility.loading = true;
   }
   if (/_DONE$|_FAILED$/.test(action.type)) {
-    Logger.log('rootReducer', action.type);
+    state.utility.loading = false;
   }
   return reducers(state, action);
 };
