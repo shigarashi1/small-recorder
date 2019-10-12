@@ -58,7 +58,7 @@ const signUp: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
 
       const { user } = res;
       const { username } = payload;
-      Logger.log('signUp', { user, username });
+      Logger().log('signUp', { user, username });
       // TODO: ユーザーを登録する
       return [];
     }),

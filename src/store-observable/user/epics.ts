@@ -36,7 +36,7 @@ const readUser: Epic<
         return [];
       }
       const user = res;
-      Logger.log('user', user);
+      Logger().log('user', user);
       return [replace(EPath.Home), userActions.read.done({ params: payload, result: { user } })];
     }),
   );

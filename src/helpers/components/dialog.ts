@@ -3,7 +3,7 @@ import { PropTypes } from '@material-ui/core';
 
 export function voidFunc() {
   return () => {
-    // Logger.log('void func called');
+    // Logger().log('void func called');
   };
 }
 

@@ -44,9 +44,9 @@ class Background extends Component<TProps, IState> {
   }
 
   static getDerivedStateFromProps(nextProps: TProps, prevState: IState) {
-    Logger.log('getDerivedStateFromProps called');
+    Logger().log('getDerivedStateFromProps called');
     if (nextProps.uid !== prevState.uid) {
-      Logger.log('update uid', nextProps.uid);
+      Logger().log('update uid', nextProps.uid);
     }
     // TODO: lookups(category&target)
     // TODO: tasks
@@ -60,35 +60,35 @@ class Background extends Component<TProps, IState> {
   constructor(props: TProps) {
     super(props);
     this.state = { ...initialState, user: { ...initialState.user } };
-    const emptyFunc = () => Logger.log('not set');
+    const emptyFunc = () => Logger().log('not set');
     this.authSubscription = emptyFunc;
     this.userSubscription = emptyFunc;
   }
 
   logError = (err: any) => {
-    Logger.error('logError', err);
+    Logger().error('logError', err);
   };
 
   onChangedAuth = (user: Nullable<TFirebaseUser>) => {
-    Logger.log('onChangeAuth', user);
+    Logger().log('onChangeAuth', user);
   };
 
   onChangedUser = (user: Nullable<TUser>) => {
-    Logger.log('onChangedUser', user);
+    Logger().log('onChangedUser', user);
   };
 
   componentDidMount() {
-    Logger.log('Background didMound');
+    Logger().log('Background didMound');
     this.authSubscription = AuthenticationService.onAuthStateChanged(this.onChangedAuth, this.logError);
     this.userSubscription = UserService.onChangedUser(this.props.uid, this.onChangedUser, this.logError);
     // this.intervalTimer = setInterval(() => {
-    //   Logger.log('user', this.user);
+    //   Logger().log('user', this.user);
     //   AuthenticationService.onAuthStateChanged(this.onChangedAuth, this.logError);
     // }, 10000);
   }
 
   componentWillUnmount() {
-    Logger.log('Background willUnmount');
+    Logger().log('Background willUnmount');
     this.authSubscription();
     this.userSubscription();
     // clearInterval(this.intervalTimer);

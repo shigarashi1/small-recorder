@@ -58,7 +58,7 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
   };
 
   const onCreate = () => {
-    Logger.log('');
+    Logger().log('');
   };
 
   return (

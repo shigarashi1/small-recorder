@@ -14,7 +14,7 @@ const NumberKeyboard: React.FC<IProps> = (props: IProps) => {
   const { onPushKeyboard } = props;
 
   const onClickHandler = (key: TKeyboardKey) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    Logger.log('numberKeyBoard pushed', key);
+    Logger().log('numberKeyBoard pushed', key);
     onPushKeyboard(key);
   };
 

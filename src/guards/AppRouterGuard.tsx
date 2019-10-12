@@ -18,7 +18,7 @@ const AppRouterGuard: React.FC<TProps> = ({ isSignedIn, children, onAutoSignIn }
           onAutoSignIn(user);
         }
       })
-      .catch(err => Logger.log('auto login failture'));
+      .catch(err => Logger().log('auto login failture'));
   }, [onAutoSignIn]);
 
   if (isSignedIn && children) {
