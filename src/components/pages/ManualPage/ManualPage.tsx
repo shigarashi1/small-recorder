@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import Typography from '@material-ui/core/Typography';
 
 // import styles from './ManualPage.module.scss';
 
-import PageTitle from '../../atoms/PageTitle/PageTitle';
 import { TPageProps } from '../../../containers/pages/ManualPage';
 
 type TProps = TPageProps;
@@ -20,7 +20,9 @@ class ManualPage extends Component<TProps, IState> {
   render() {
     return (
       <div className="sample-page">
-        <PageTitle title="ManualPage" />
+        <Typography variant="h4" color="inherit">
+          ManualPage
+        </Typography>
       </div>
     );
   }

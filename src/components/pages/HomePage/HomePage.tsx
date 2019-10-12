@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import Typography from '@material-ui/core/Typography';
 
 // import styles from './HomePage.module.scss';
 
-import PageTitle from '../../atoms/PageTitle/PageTitle';
 import { TPageProps } from '../../../containers/pages/HomePage';
 
 interface IState {
@@ -21,7 +21,9 @@ class HomePage extends Component<TProps, IState> {
     const { onSignOut } = this;
     return (
       <div className="sample-page">
-        <PageTitle title="HomePage" />
+        <Typography variant="h4" color="inherit">
+          HomePage
+        </Typography>
         <button onClick={onSignOut}>Signout</button>
       </div>
     );

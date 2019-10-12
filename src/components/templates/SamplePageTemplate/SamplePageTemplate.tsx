@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
+import Typography from '@material-ui/core/Typography';
 
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -7,7 +8,6 @@ import Tab from '@material-ui/core/Tab';
 
 import styles from './SamplePageTemplate.module.scss';
 
-import PageTitle from '../../atoms/PageTitle/PageTitle';
 import SampleRouter from '../../../routers/sub/SampleRouter';
 import { EPath } from '../../../types';
 
@@ -32,7 +32,9 @@ class SamplePageTemplate extends Component<TProps, IState> {
     return (
       <div id={styles.root}>
         <div className={styles.title}>
-          <PageTitle title="SamplePage" />
+          <Typography variant="h4" color="inherit">
+            SamplePage
+          </Typography>
         </div>
         <div className={styles.tab}>
           <AppBar position="static">

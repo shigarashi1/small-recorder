@@ -31,8 +31,8 @@ const initialState: TPageState = {
 };
 
 const LABEL = {
-  signIn: 'Sign In',
-  signUp: 'Sign Up',
+  signIn: 'sign in',
+  signUp: 'sign up',
 };
 
 const LoginPage: React.FC<TProps> = props => {
@@ -100,7 +100,7 @@ const LoginPage: React.FC<TProps> = props => {
             </CardContent>
             <CardActions className={styles.action}>
               <Button onClick={onCancel} variant="contained">
-                Cancel
+                clear
               </Button>
               <Button onClick={onSignInUp} variant="contained" color="primary">
                 {pageState.isSignIn ? LABEL.signIn : LABEL.signUp}

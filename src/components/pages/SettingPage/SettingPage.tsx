@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
 
 import styles from './SettingPage.module.scss';
 
-import PageTitle from '../../atoms/PageTitle/PageTitle';
 import { TPageProps } from '../../../containers/pages/SettingPage';
 import Button from '../../atoms/Button/Button';
 import SettingTable from '../../organisms/SettingTable/SettingTable';
@@ -57,7 +57,9 @@ class SettingPage extends Component<TProps, IState> {
     return (
       <div id={styles.root}>
         <div className={styles.title}>
-          <PageTitle title="SettingPage" />
+          <Typography variant="h4" color="inherit">
+            SettingPage
+          </Typography>
         </div>
         <div className={styles.tab}>
           <AppBar position="static">

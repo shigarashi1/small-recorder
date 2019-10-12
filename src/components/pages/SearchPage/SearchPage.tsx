@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import Typography from '@material-ui/core/Typography';
 
 // import styles from './SearchPage.module.scss';
 
-import PageTitle from '../../atoms/PageTitle/PageTitle';
 import { TPageProps } from '../../../containers/pages/SearchPage';
 
 type TProps = TPageProps;
@@ -20,7 +20,9 @@ class SearchPage extends Component<TProps, IState> {
   render() {
     return (
       <div className="sample-page">
-        <PageTitle title="SearchPage" />
+        <Typography variant="h4" color="inherit">
+          SearchPage
+        </Typography>
       </div>
     );
   }
