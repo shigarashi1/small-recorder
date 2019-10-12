@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 
 // import styles from './ReportPage.module.scss';
@@ -11,21 +11,14 @@ interface IState {
   state?: boolean;
 }
 
-class ReportPage extends Component<TProps, IState> {
-  constructor(props: TProps) {
-    super(props);
-    this.state = { state: false };
-  }
-
-  render() {
-    return (
-      <div className="sample-page">
-        <Typography variant="h4" color="inherit">
-          ReportPage
-        </Typography>
-      </div>
-    );
-  }
-}
+const ReportPage: React.FC<TProps> = (props: TProps) => {
+  return (
+    <div className="sample-page">
+      <Typography variant="h4" color="inherit">
+        ReportPage
+      </Typography>
+    </div>
+  );
+};
 
 export default ReportPage;

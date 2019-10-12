@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 import styles from './SampleMoleculesPage.module.scss';
 
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import SampleCard from '../../../molecules/SampleCard/SampleCard';
+// import SampleCard from '../../../molecules/SampleCard/SampleCard';
+// import { ISampleCardProps } from '../../../../types/components/sample-card';
+// import { BREAK_POINT } from '../../../../lookups/page-layout';
 import { ObjectIndexes } from '../../../../types';
-import { ISampleCardProps } from '../../../../types/components/sample-card';
-import { BREAK_POINT } from '../../../../lookups/page-layout';
 import { TPageProps } from '../../../../containers/pages/samples/SampleMoleculesPage';
 
 type TProps = TPageProps;
@@ -18,42 +18,35 @@ interface IState {
 
 type TState = IState & ObjectIndexes;
 
-class SampleMoleculesPage extends Component<TProps, TState> {
-  constructor(props: TProps) {
-    super(props);
-    this.state = {};
-  }
+const SampleMoleculesPage: React.FC<TProps> = (props: TProps) => {
+  // const renderSample = (sample: ISampleCardProps, key: number) => {
+  //   return (
+  //     <Grid
+  //       key={key}
+  //       item={true}
+  //       xs={BREAK_POINT.xs}
+  //       sm={BREAK_POINT.sm}
+  //       md={BREAK_POINT.md}
+  //       lg={BREAK_POINT.lg}
+  //       xl={BREAK_POINT.lg}
+  //     >
+  //       <SampleCard {...sample} />
+  //     </Grid>
+  //   );
+  // };
 
-  render() {
-    return (
-      <div id={styles.container}>
-        <div className={styles.contents}>
-          <Typography variant="h5">Molecules</Typography>
-          <Grid container={true} spacing={2}>
-            {/* {MOLECULES_SAMPLES.map((sample, i) => {
+  return (
+    <div id={styles.container}>
+      <div className={styles.contents}>
+        <Typography variant="h5">Molecules</Typography>
+        <Grid container={true} spacing={2}>
+          {/* {MOLECULES_SAMPLES.map((sample, i) => {
               return this.renderSample(sample, i);
             })} */}
-          </Grid>
-        </div>
+        </Grid>
       </div>
-    );
-  } // Render End
-
-  renderSample(sample: ISampleCardProps, key: number) {
-    return (
-      <Grid
-        key={key}
-        item={true}
-        xs={BREAK_POINT.xs}
-        sm={BREAK_POINT.sm}
-        md={BREAK_POINT.md}
-        lg={BREAK_POINT.lg}
-        xl={BREAK_POINT.lg}
-      >
-        <SampleCard {...sample} />
-      </Grid>
-    );
-  }
-}
+    </div>
+  );
+}; // Render End
 
 export default SampleMoleculesPage;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 
 // import styles from './RecordPage.module.scss';
@@ -11,21 +11,14 @@ interface IState {
   state?: boolean;
 }
 
-class RecordPage extends Component<TProps, IState> {
-  constructor(props: TProps) {
-    super(props);
-    this.state = { state: false };
-  }
-
-  render() {
-    return (
-      <div className="sample-page">
-        <Typography variant="h4" color="inherit">
-          RecordPage
-        </Typography>
-      </div>
-    );
-  }
-}
+const RecordPage: React.FC<TProps> = (props: TProps) => {
+  return (
+    <div className="sample-page">
+      <Typography variant="h4" color="inherit">
+        RecordPage
+      </Typography>
+    </div>
+  );
+};
 
 export default RecordPage;

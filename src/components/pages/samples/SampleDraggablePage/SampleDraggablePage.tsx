@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import TouchBackend from 'react-dnd-touch-backend';
@@ -19,31 +19,20 @@ interface IState {
 
 type TState = IState & ObjectIndexes;
 
-class SampleDraggablePage extends Component<TProps, TState> {
-  constructor(props: TProps) {
-    super(props);
-    this.state = {
-      inputText: '',
-      numberKeyboard: '',
-    };
-  }
-
-  render() {
-    const backEnd = isMobile ? TouchBackend : HTML5Backend;
-
-    return (
-      <div id={styles.container}>
-        <div className={styles.title}>
-          <Typography variant="h5">Draggable Sample</Typography>
-        </div>
-        <div className={styles.contents}>
-          <DndProvider backend={backEnd}>
-            <ExampleCardContent />
-          </DndProvider>
-        </div>
+const SampleDraggablePage: React.FC<TProps> = (props: TProps) => {
+  const backEnd = isMobile ? TouchBackend : HTML5Backend;
+  return (
+    <div id={styles.container}>
+      <div className={styles.title}>
+        <Typography variant="h5">Draggable Sample</Typography>
       </div>
-    );
-  } // Render End
-}
+      <div className={styles.contents}>
+        <DndProvider backend={backEnd}>
+          <ExampleCardContent />
+        </DndProvider>
+      </div>
+    </div>
+  );
+}; // Render End
 
 export default SampleDraggablePage;

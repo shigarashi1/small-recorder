@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import styles from './SampleOrganismsPage.module.scss';
 
@@ -14,24 +14,14 @@ interface IState {
 
 type TState = IState & ObjectIndexes;
 
-class SampleOrganismsPage extends Component<TProps, TState> {
-  constructor(props: TProps) {
-    super(props);
-    this.state = {
-      inputText: '',
-      numberKeyboard: '',
-    };
-  }
-
-  render() {
-    return (
-      <div id={styles.container}>
-        <div className={styles.contents}>
-          <Typography variant="h5">Organisms</Typography>
-        </div>
+const SampleOrganismsPage: React.FC<TProps> = (props: TProps) => {
+  return (
+    <div id={styles.container}>
+      <div className={styles.contents}>
+        <Typography variant="h5">Organisms</Typography>
       </div>
-    );
-  } // Render End
-}
+    </div>
+  );
+}; // Render End
 
 export default SampleOrganismsPage;

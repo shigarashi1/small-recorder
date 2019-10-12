@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import styles from './SampleAtomsPage.module.scss';
 
@@ -18,32 +18,17 @@ interface IState {
 
 type TState = IState & ObjectIndexes;
 
-class SampleAtomsPage extends Component<TProps, TState> {
-  constructor(props: TProps) {
-    super(props);
-    this.state = {};
-  }
+const SampleAtomsPage: React.FC<TProps> = (props: TProps) => {
+  const atomsSamples = [
+    {
+      title: 'PopupNumberKeyboard',
+      contexts: 'PopupNumberKeyboardだよー',
+      node: <p>buttonで表示・非表示</p>,
+      onAction: () => props.onOpenKeyboard(!props.hasOpenKeyboard),
+    },
+  ];
 
-  render() {
-    const atomsSamples = this.getAtomsSampleWithProps();
-    return (
-      <div id={styles.container}>
-        <div className={styles.contents}>
-          <Typography variant="h5">Atoms</Typography>
-          <Grid container={true} spacing={2}>
-            {atomsSamples.map((sample, i) => {
-              return this.renderSample(sample, i);
-            })}
-            {/* {ATOMS_SAMPLES.map((sample, i) => {
-              return this.renderSample(sample, i);
-            })} */}
-          </Grid>
-        </div>
-      </div>
-    );
-  } // Render End
-
-  renderSample(sample: ISampleCardProps, key: number) {
+  const renderSample = (sample: ISampleCardProps, key: number) => {
     return (
       <Grid
         key={key}
@@ -57,18 +42,20 @@ class SampleAtomsPage extends Component<TProps, TState> {
         <SampleCard {...sample} />
       </Grid>
     );
-  }
+  };
 
-  getAtomsSampleWithProps(): ISampleCardProps[] {
-    return [
-      {
-        title: 'PopupNumberKeyboard',
-        contexts: 'PopupNumberKeyboardだよー',
-        node: <p>buttonで表示・非表示</p>,
-        onAction: () => this.props.onOpenKeyboard(!this.props.hasOpenKeyboard),
-      },
-    ];
-  }
-}
+  return (
+    <div id={styles.container}>
+      <div className={styles.contents}>
+        <Typography variant="h5">Atoms</Typography>
+        <Grid container={true} spacing={2}>
+          {atomsSamples.map((sample, i) => {
+            return renderSample(sample, i);
+          })}
+        </Grid>
+      </div>
+    </div>
+  );
+}; // Render End
 
 export default SampleAtomsPage;

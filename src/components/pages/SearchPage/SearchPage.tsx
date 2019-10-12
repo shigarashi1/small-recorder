@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 
 // import styles from './SearchPage.module.scss';
@@ -11,21 +11,14 @@ interface IState {
   state?: boolean;
 }
 
-class SearchPage extends Component<TProps, IState> {
-  constructor(props: TProps) {
-    super(props);
-    this.state = { state: false };
-  }
-
-  render() {
-    return (
-      <div className="sample-page">
-        <Typography variant="h4" color="inherit">
-          SearchPage
-        </Typography>
-      </div>
-    );
-  }
-}
+const SearchPage: React.FC<TProps> = (props: TProps) => {
+  return (
+    <div className="sample-page">
+      <Typography variant="h4" color="inherit">
+        SearchPage
+      </Typography>
+    </div>
+  );
+};
 
 export default SearchPage;
