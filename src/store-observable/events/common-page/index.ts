@@ -14,7 +14,7 @@ const ac = actionCreatorFactory('[listen-commonPage]');
 
 // ===== common page =====
 export const commonPageActions = {
-  onSignOut: ac('onSignOut'),
+  onSignOut: ac<void>('onSignOut'),
   onPushKeyboard: ac<TKeyboardKey>('onPushKeyboard'),
   onTogleSidebar: ac<boolean>('onTogleSidebar'),
   onAutoSignIn: ac<TFirebaseUser>('onAutoSignIn'),

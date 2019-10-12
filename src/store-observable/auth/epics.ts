@@ -10,6 +10,7 @@ import Logger from '../../helpers/generals/logger';
 import { replace, CallHistoryMethodAction } from 'connected-react-router';
 import { EPath } from '../../types';
 import { userActions } from '../user';
+import { rootActions } from '../actions';
 
 const signIn: Epic<
   AnyAction,
@@ -64,16 +65,26 @@ const signUp: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
     }),
   );
 
-const signOut: Epic<AnyAction, Action<void> | CallHistoryMethodAction, AppState> = (action$, store) =>
+const signOut: Epic<
+  AnyAction,
+  Action<void> | Action<Parameters<typeof authActions.signOut.done>[0]> | CallHistoryMethodAction,
+  AppState
+> = (action$, store) =>
   action$.pipe(
     ofAction(authActions.signOut.started),
-    mergeMap(({ payload }) => AuthenticationService.signOut()),
-    mergeMap(res => {
+    mergeMap(async ({ payload }) => {
+      const res = await AuthenticationService.signOut();
+      return { res, payload };
+    }),
+    mergeMap(({ payload, res }) => {
       if (res instanceof ApiError) {
         return [];
       }
-      // TODO: stateを削除する
-      return [replace(EPath.Login)];
+      return [
+        authActions.signOut.done({ params: payload, result: {} }),
+        rootActions.clearAllState(),
+        replace(EPath.Login),
+      ];
     }),
   );
 

@@ -1,9 +1,7 @@
 import thunk from 'redux-thunk';
-import { actionCreatorFactory } from 'typescript-fsa';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { combineReducers, compose, applyMiddleware, StoreCreator, createStore, AnyAction } from 'redux';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
-
 //
 import history from '../helpers/history';
 import { AppState } from '../store';
@@ -14,12 +12,7 @@ import { authReducers, authEpics } from './auth';
 import { userReducers, userEpics } from './user';
 import { categoryReducers, categoryEpics } from './category';
 import { errorReducers, errorEpics } from './error';
-
-// actions
-const ac = actionCreatorFactory('[root]');
-const actions = {
-  clearAllState: ac<void>('clearAllState'),
-};
+import { rootActions } from './actions';
 
 // reducer
 export const reducers = combineReducers({
@@ -34,7 +27,7 @@ export const reducers = combineReducers({
 });
 
 const rootReducer = (state: any, action: any) => {
-  if (action.type === actions.clearAllState.type) {
+  if (action.type === rootActions.clearAllState.type) {
     state = undefined;
   }
   if (/_STARTED$/.test(action.type)) {
