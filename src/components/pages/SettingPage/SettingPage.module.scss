@@ -11,10 +11,8 @@
     width: 100%;
     .btnWrapper {
       margin: 10px;
-      > div {
-        display: flex;
-        justify-content: flex-end;
-      }
+      display: flex;
+      justify-content: flex-end;
     }
   }
 }

@@ -15,6 +15,7 @@ import { errorReducers, errorEpics } from './error';
 import { rootActions } from './actions';
 import { targetReducers, targetEpics } from './target';
 import { recordReducers, recordEpics } from './record';
+import Logger from '../helpers/generals/logger';
 
 // reducer
 export const reducers = combineReducers({
@@ -35,9 +36,11 @@ const rootReducer = (state: any, action: any) => {
     state = undefined;
   }
   if (/_STARTED$/.test(action.type)) {
+    Logger().log('STARTED', action.type);
     state.utility.loading = true;
   }
-  if (/_DONE$|_FAILED$/.test(action.type)) {
+  if (/_(DONE|FAILED)$/.test(action.type)) {
+    Logger().log('DONE|FAILED', action.type);
     state.utility.loading = false;
   }
   return reducers(state, action);
