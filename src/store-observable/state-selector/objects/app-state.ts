@@ -46,6 +46,16 @@ class AppStateSelector {
     return this.user ? this.user.username : '';
   }
 
+  // category
+  get categories() {
+    return this.state.category.categories;
+  }
+
+  // target
+  get targets() {
+    return this.state.target.targets;
+  }
+
   // records
   get records() {
     return this.state.record.records;

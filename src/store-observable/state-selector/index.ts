@@ -26,6 +26,16 @@ export const getState = {
       selector => selector.username,
     ),
   },
+  lookups: {
+    categories: createSelector(
+      appStateSelector,
+      selector => selector.categories,
+    ),
+    targets: createSelector(
+      appStateSelector,
+      selector => selector.targets,
+    ),
+  },
   // record
   record: {
     records: createSelector(
