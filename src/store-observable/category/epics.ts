@@ -7,8 +7,12 @@ import { appStateSelector } from '../state-selector/objects/app-state';
 import { AppState } from '../../store';
 import { categoryActions } from './action-reducers';
 import { ApiError } from '../../models/error';
+import { WrapAction } from '../types';
 
-const readCategories: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+const readCategories: Epic<AnyAction, Action<void> | WrapAction<typeof categoryActions.read.done>, AppState> = (
+  action$,
+  store,
+) =>
   action$.pipe(
     ofAction(categoryActions.read.started),
     map(({ payload }) => {
@@ -30,7 +34,10 @@ const readCategories: Epic<AnyAction, Action<void>, AppState> = (action$, store)
     }),
   );
 
-const updateCategory: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+const updateCategory: Epic<AnyAction, Action<void> | WrapAction<typeof categoryActions.update.done>, AppState> = (
+  action$,
+  store,
+) =>
   action$.pipe(
     ofAction(categoryActions.update.started),
     filter(({ payload }) => payload.id !== '' && payload.data.name !== undefined),
@@ -44,11 +51,14 @@ const updateCategory: Epic<AnyAction, Action<void>, AppState> = (action$, store)
         // TODO: errorの実装
         return [];
       }
-      return [];
+      return [categoryActions.update.done({ params: payload, result: {} })];
     }),
   );
 
-const createCategory: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+const createCategory: Epic<AnyAction, Action<void> | WrapAction<typeof categoryActions.create.done>, AppState> = (
+  action$,
+  store,
+) =>
   action$.pipe(
     ofAction(categoryActions.create.started),
     map(({ payload }) => {
@@ -67,11 +77,14 @@ const createCategory: Epic<AnyAction, Action<void>, AppState> = (action$, store)
         // TODO: errorの実装
         return [];
       }
-      return [];
+      return [categoryActions.create.done({ params: payload, result: {} })];
     }),
   );
 
-const deleteCategory: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+const deleteCategory: Epic<AnyAction, Action<void> | WrapAction<typeof categoryActions.delete.done>, AppState> = (
+  action$,
+  store,
+) =>
   action$.pipe(
     ofAction(categoryActions.delete.started),
     map(({ payload }) => {
@@ -89,7 +102,7 @@ const deleteCategory: Epic<AnyAction, Action<void>, AppState> = (action$, store)
         // TODO: errorの実装
         return [];
       }
-      return [];
+      return [categoryActions.delete.done({ params: payload, result: {} })];
     }),
   );
 

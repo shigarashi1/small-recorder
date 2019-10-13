@@ -6,6 +6,7 @@ import { AppState } from '../../../store';
 import { TKeyboardKey } from '../../../types/components/number-keyboard';
 import { authActions } from '../../auth';
 import { sidebarActions } from '../../utilities';
+import { WrapAction } from '../../types';
 
 // actions
 const ac = actionCreatorFactory('[listen-commonPage]');
@@ -18,10 +19,7 @@ export const commonPageActions = {
 };
 
 // onSignOut
-const onSignOut: Epic<AnyAction, Action<Parameters<typeof authActions.signOut.started>[0]>, AppState> = (
-  action$,
-  store,
-) =>
+const onSignOut: Epic<AnyAction, WrapAction<typeof authActions.signOut.started>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(commonPageActions.onSignOut),
     map(action => authActions.signOut.started({})),

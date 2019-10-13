@@ -4,23 +4,25 @@ import { ofAction } from 'typescript-fsa-redux-observable-of-action';
 import { map, mergeMap } from 'rxjs/operators';
 import { AppState } from '../../../store';
 import { settingPageActions } from './actions';
+import { categoryActions } from '../../category';
+import { WrapAction } from '../../types';
 
-const createCategory: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+const createCategory: Epic<AnyAction, WrapAction<typeof categoryActions.create.started>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(settingPageActions.createCategory),
-    mergeMap(({ payload }) => []),
+    map(({ payload }) => categoryActions.create.started({ name: payload.name })),
   );
 
-const updateCategory: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+const updateCategory: Epic<AnyAction, WrapAction<typeof categoryActions.update.started>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(settingPageActions.updateCategory),
-    mergeMap(({ payload }) => []),
+    map(({ payload }) => categoryActions.update.started({ id: payload.id, data: { name: payload.name } })),
   );
 
-const deleteCategory: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+const deleteCategory: Epic<AnyAction, WrapAction<typeof categoryActions.delete.started>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(settingPageActions.deleteCategory),
-    mergeMap(({ payload }) => []),
+    map(({ payload }) => categoryActions.delete.started({ id: payload.id })),
   );
 
 const createTarget: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
