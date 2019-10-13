@@ -11,10 +11,12 @@ import { AuthenticationService } from '../../services/auth';
 //
 import Logger from '../../helpers/generals/logger';
 import { CategoryService } from '../../services/category';
+import { TargetService } from '../../services';
 
 function mapStateToProps(state: AppState) {
   return {
     uid: getState.auth.uid(state),
+    userId: getState.user.id(state),
   };
 }
 
@@ -26,7 +28,16 @@ function mapDispatchToProps(dispatch: Dispatch) {
 
 type TProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-const Background: React.FC<TProps> = ({ uid, onChangedUser, onChangedAuth, onChangedCategories, onThrowError }) => {
+const Background: React.FC<TProps> = ({
+  uid,
+  userId,
+  onChangedUser,
+  onChangedAuth,
+  onChangedCategories,
+  onChangedTargets,
+  onThrowError,
+}) => {
+  // auth
   useEffect(() => {
     Logger().log('auth subscription start');
     const subscription = AuthenticationService.onAuthStateChanged(onChangedAuth, onThrowError);
@@ -36,23 +47,35 @@ const Background: React.FC<TProps> = ({ uid, onChangedUser, onChangedAuth, onCha
     };
   }, [onChangedAuth, onThrowError]);
 
+  // user
   useEffect(() => {
-    Logger().log('user subscription start');
+    Logger().log('uid subscription start');
     const subscription = UserService.onChangedUser(uid, onChangedUser, onThrowError);
     return () => {
-      Logger().log('user subscription end');
+      Logger().log('uid subscription end');
       subscription();
     };
   }, [uid, onChangedUser, onThrowError]);
 
+  // category, target
   useEffect(() => {
-    Logger().log('categories subscription start');
-    const subscription = CategoryService.onChangedCategories(uid, onChangedCategories, onThrowError);
+    Logger().log('userId subscription start');
+    const categorySubscription = CategoryService.onChangedCategories(userId, onChangedCategories, onThrowError);
+    const targetSubscription = TargetService.onChangedTargets(userId, onChangedTargets, onThrowError);
     return () => {
-      Logger().log('categories subscription end');
-      subscription();
+      Logger().log('userId subscription end');
+      categorySubscription();
+      targetSubscription();
     };
-  }, [uid, onChangedCategories, onThrowError]);
+  }, [userId, onThrowError, onChangedCategories, onChangedTargets]);
+
+  // records
+  useEffect(() => {
+    Logger().log('targets subscription start');
+    return () => {
+      Logger().log('targets subscription end');
+    };
+  }, [uid, onChangedTargets, onThrowError]);
 
   Logger().log('Background render');
   return <React.Fragment />;

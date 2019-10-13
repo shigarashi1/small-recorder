@@ -14,7 +14,7 @@ import styles from './LoginPage.module.scss';
 
 import { TPageProps } from '../../../containers/pages/LoginPage';
 import { BREAK_POINT } from '../../../lookups/page-layout';
-import { TSignUp } from '../../../store-observable/types';
+import { TSignUp } from '../../../store-observable/auth/action-reducers';
 
 type TProps = TPageProps;
 

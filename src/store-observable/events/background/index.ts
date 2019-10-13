@@ -11,6 +11,7 @@ import { errorActions } from '../../error';
 import { Nullable } from '../../../types';
 import { TUser, TCategory, TTarget } from '../../../types/firebase';
 import { userActions } from '../../user';
+import { categoryActions } from '../../category';
 
 // actions
 const ac = actionCreatorFactory('[listen-background]');
@@ -36,10 +37,10 @@ const onChangedUser: Epic<AnyAction, Action<Nullable<TUser>>, AppState> = (actio
     map(({ payload }) => userActions.setData(payload)),
   );
 
-const onChangedCategories: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+const onChangedCategories: Epic<AnyAction, Action<TCategory[]>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(backgroundActions.onChangedCategories),
-    mergeMap(({ payload }) => []),
+    map(({ payload }) => categoryActions.setData(payload)),
   );
 
 const onChangedTargets: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>

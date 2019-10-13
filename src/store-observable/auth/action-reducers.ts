@@ -1,12 +1,23 @@
 import { actionCreatorFactory } from 'typescript-fsa';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
-import { TSignIn, TSignUp } from '../types';
 import { Nullable } from '../../types';
 import { TFirebaseUser } from '../../lib/firebase';
 
 export type TAuthSetData = {
   isSignedIn: boolean;
   user: Nullable<TFirebaseUser>;
+};
+
+export type TSignIn = {
+  email: string;
+  password: string;
+};
+
+export type TSignUp = {
+  username: string;
+  email: string;
+  password: string;
+  confirmation: string;
 };
 
 // actions

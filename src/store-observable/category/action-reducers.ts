@@ -12,9 +12,7 @@ export type TDeleteCategory = { id: string };
 // actions
 const ac = actionCreatorFactory('[category]');
 const actions = {
-  onChangedStart: ac<void>('onChangedStart'),
-  onChangedEnd: ac<void>('onChangedEnd'),
-  setData: ac<void>('setData'),
+  setData: ac<TCategory[]>('setData'),
   create: ac.async<TCreateCategory, {}, {}>('create'),
   update: ac.async<TUpdateCategory, {}, {}>('update'),
   read: ac.async<TReadCategories, {}, {}>('read'),
@@ -25,15 +23,14 @@ export const categoryActions = actions;
 // reducers
 interface ICategoryState {
   categories: TCategory[];
-  isReading: boolean;
 }
 
 const initialState: ICategoryState = {
   categories: [],
-  isReading: false,
 };
 
 const reducers = reducerWithInitialState(initialState)
+  .case(actions.setData, (state, payload) => ({ ...state, categories: payload }))
   .case(actions.create.started, (state, payload) => ({ ...state }))
   .case(actions.create.done, (state, payload) => ({ ...state, sample: payload }));
 export const categoryReducers = reducers;

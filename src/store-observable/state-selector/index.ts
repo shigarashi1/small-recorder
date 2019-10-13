@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
 import { appStateSelector } from './objects/app-state';
+//
+export { appStateSelector } from './objects/app-state';
 
 export const getState = {
   // auth

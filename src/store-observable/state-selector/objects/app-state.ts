@@ -38,7 +38,7 @@ class AppStateSelector {
   }
 
   get userId() {
-    return this.user ? this.user.id : '';
+    return this.user && this.user.id ? this.user.id : '';
   }
 
   get username() {

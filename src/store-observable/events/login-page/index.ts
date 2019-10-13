@@ -3,9 +3,9 @@ import { Epic, combineEpics } from 'redux-observable';
 import { ofAction } from 'typescript-fsa-redux-observable-of-action';
 import { map } from 'rxjs/operators';
 //
-import { TSignIn, TSignUp } from '../../types';
 import { AppState } from '../../../store';
 import { authActions } from '../../auth';
+import { TSignIn, TSignUp } from '../../auth/action-reducers';
 
 // actions
 const ac = actionCreatorFactory('[listen-loginPage]');
