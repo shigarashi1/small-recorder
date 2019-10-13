@@ -9,22 +9,26 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 import styles from './SettingTable.module.scss';
+import { TMode, Mode } from '../../../types';
 
 interface IProps {
   rows: any[];
+  onAction: (mode: TMode, id: string) => void;
 }
+
+const getHeaderName = (rows: any[]) =>
+  rows.length > 0
+    ? Object.keys(rows[0])
+        .map(v => v)
+        .filter(v => v !== '_docId')
+    : [];
 
 const SettingTable: React.FC<IProps> = (props: IProps) => {
   const { rows } = props;
-  const headers =
-    rows.length > 0
-      ? Object.keys(rows[0])
-          .map(v => v)
-          .filter(v => v !== '_docId')
-      : [];
+  const headers = getHeaderName(rows);
 
-  const onAction = (mode: 'edit' | 'delete', row: any) => () => {
-    console.log(mode, row._docId);
+  const onAction = (mode: TMode, row: any) => () => {
+    props.onAction(mode, row._docId);
   };
 
   return (
@@ -46,10 +50,10 @@ const SettingTable: React.FC<IProps> = (props: IProps) => {
                   <TableCell key={index}>{row[header]}</TableCell>
                 ))}
                 <TableCell className={styles.actionCell}>
-                  <Fab id={styles.root} onClick={onAction('edit', row)} size="small" color="primary">
+                  <Fab id={styles.root} onClick={onAction(Mode.edit, row)} size="small" color="primary">
                     <Icon>edit</Icon>
                   </Fab>
-                  <Fab id={styles.root} onClick={onAction('delete', row)} size="small" color="secondary">
+                  <Fab id={styles.root} onClick={onAction(Mode.delete, row)} size="small" color="secondary">
                     <Icon>delete</Icon>
                   </Fab>
                 </TableCell>

@@ -1,38 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import styles from './InformationDialog.module.scss';
+import styles from './CategoryDialog.module.scss';
 
 import BaseDialog from '../BaseDialog/BaseDialog';
 import { TCategory } from '../../../../types/firebase';
-import Logger from '../../../../helpers/generals/logger';
+import { Nullable } from '../../../../types';
 
 interface IProps {
   hasOpen: boolean;
-  category: TCategory;
+  category: Nullable<TCategory>;
   onClose: () => void;
-  onAction: () => void;
-  mode: 'create' | 'update';
+  onAction: (v: TCategory) => void;
 }
 
-const CategoryDialog: React.FC<IProps> = (props: IProps) => {
-  const [category, setCategory] = useState(props.category.name);
-  const { hasOpen, onClose, mode } = props;
+const getCategory = (v: Nullable<TCategory>) => v || ({ id: '', name: '' } as TCategory);
 
-  const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+const CategoryDialog: React.FC<IProps> = (props: IProps) => {
+  const [category, setCategory] = useState(getCategory(props.category));
+  const { hasOpen, onClose } = props;
+
+  useEffect(() => {
+    setCategory(getCategory(props.category));
+  }, [props.category]);
+
+  const onChangeValue = (key: keyof TCategory) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value || '';
-    setCategory(value);
+    setCategory({ ...category, [key]: value });
   };
 
   const onAction = () => {
-    Logger().log(category, props.category.name);
+    props.onAction(category);
   };
 
   const buttonChildren = (
     <div className={styles.btnWrapper}>
       <Button onClick={onClose}>Close</Button>
-      <Button onClick={onAction}>{mode}</Button>
+      <Button onClick={onAction}>{category.id !== '' ? 'edit' : 'create'}</Button>
     </div>
   );
 
@@ -41,11 +46,16 @@ const CategoryDialog: React.FC<IProps> = (props: IProps) => {
       <BaseDialog
         hasOpen={hasOpen}
         onClose={onClose}
-        title={mode}
+        title={category.id !== '' ? 'edit' : 'create'}
         areaLabeledby="dialog-category"
         buttonChildren={buttonChildren}
       >
-        <TextField className={styles.text} label="category name" value={category} onChange={onChangeValue} />
+        <TextField
+          className={styles.text}
+          label="category name"
+          value={category.name}
+          onChange={onChangeValue('name')}
+        />
       </BaseDialog>
     </div>
   );

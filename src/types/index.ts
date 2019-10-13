@@ -18,3 +18,10 @@ export enum EPath {
   Search = '/search',
   Setting = '/setting',
 }
+
+export type TMode = 'CREATE' | 'EDIT' | 'DELETE';
+export const Mode: ObjectIndexes<TMode> = {
+  create: 'CREATE',
+  edit: 'EDIT',
+  delete: 'DELETE',
+};
