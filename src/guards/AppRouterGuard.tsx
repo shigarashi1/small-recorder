@@ -10,16 +10,16 @@ import Logger from '../helpers/generals/logger';
 
 type TProps = TRouterGuardProps & RouteComponentProps;
 
-const AppRouterGuard: React.FC<TProps> = ({ isSignedIn, children, onAutoSignIn }) => {
+const AppRouterGuard: React.FC<TProps> = ({ isSignedIn, children, onChangedAuth }) => {
   useEffect(() => {
     AuthenticationService.getAuthState()
       .then(user => {
         if (user) {
-          onAutoSignIn(user);
+          onChangedAuth(user);
         }
       })
       .catch(err => Logger().log('auto login failture'));
-  }, [onAutoSignIn]);
+  }, [onChangedAuth]);
 
   if (isSignedIn && children) {
     return <React.Fragment> {children} </React.Fragment>;

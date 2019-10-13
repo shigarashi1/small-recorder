@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
-import { Dispatch } from 'redux';
+import React, { useEffect } from 'react';
+import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { AppState } from '../../store';
-
-import Logger from '../../helpers/generals/logger';
-import { TUser } from '../../types/firebase';
-import { TFirebaseUser } from '../../lib/firebase';
-import { Nullable } from '../../types';
-import { AuthenticationService } from '../../services/auth';
 import { getState } from '../../store-observable/state-selector';
+import { backgroundActions } from '../../store-observable/events/background';
+//
 import { UserService } from '../../services/user';
+import { AuthenticationService } from '../../services/auth';
+//
+import Logger from '../../helpers/generals/logger';
 
 function mapStateToProps(state: AppState) {
   return {
@@ -19,85 +18,66 @@ function mapStateToProps(state: AppState) {
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
-  return {};
+  return {
+    ...bindActionCreators(backgroundActions, dispatch),
+  };
 }
 
 type TProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-interface IState {
-  uid: string;
-  user: TUser;
-}
+const Background: React.FC<TProps> = ({ uid, onChangedUser, onChangedAuth, onThrowError }) => {
+  useEffect(() => {
+    Logger().log('user subscription didMound');
+    const subscription = UserService.onChangedUser(uid, onChangedUser, onThrowError);
+    return () => {
+      Logger().log('user subscription willUnmount');
+      subscription();
+    };
+  }, [uid, onChangedUser, onThrowError]);
 
-const initialState: IState = {
-  uid: '',
-  user: {
-    id: null,
-    uid: '',
-    username: '',
-  },
+  useEffect(() => {
+    Logger().log('auth subscription didMound');
+    const subscription = AuthenticationService.onAuthStateChanged(onChangedAuth, onThrowError);
+    return () => {
+      Logger().log('auth subscription willUnmount');
+      subscription();
+    };
+  }, [onChangedAuth, onThrowError]);
+
+  Logger().log('Background render');
+  return <React.Fragment />;
+
+  // private authSubscription: () => void; // ログインしてないことはないからな。。。
+  // private userSubscription: () => void;
+  // private categorySubscription: () => void;
+  // private targetSubscription: () => void;
+  // private recordSubscription: () => void;
+  // constructor(props: TProps) {
+  //   super(props);
+  //   Logger().log('Background constructor');
+  //   // this.authSubscription = emptyFunc;
+  //   this.userSubscription = emptyFunc;
+  //   this.categorySubscription = emptyFunc;
+  //   this.targetSubscription = emptyFunc;
+  //   this.recordSubscription = emptyFunc;
+  // }
+
+  // componentDidMount() {
+  //   Logger().log('Background didMound');
+  //   const { onChangedUser, onThrowError, uid } = this.props;
+  //   // this.authSubscription = AuthenticationService.onAuthStateChanged(onChangedAuth, onThrowError);
+  //   this.userSubscription =
+  // }
+
+  // componentWillUnmount() {
+  //   Logger().log('Background willUnmount');
+  //   // this.authSubscription();
+  //   this.userSubscription();
+  //   this.categorySubscription();
+  //   this.targetSubscription();
+  //   this.recordSubscription();
+  // }
 };
-
-class Background extends Component<TProps, IState> {
-  private get user(): Nullable<TUser> {
-    return this.users.find(v => v.uid === this.state.uid) || null;
-  }
-
-  static getDerivedStateFromProps(nextProps: TProps, prevState: IState) {
-    Logger().log('getDerivedStateFromProps called');
-    if (nextProps.uid !== prevState.uid) {
-      Logger().log('update uid', nextProps.uid);
-    }
-    // TODO: lookups(category&target)
-    // TODO: tasks
-    return null;
-  }
-  private users: TUser[] = [];
-  private intervalTimer: any;
-  private authSubscription: () => void;
-  private userSubscription: () => void;
-
-  constructor(props: TProps) {
-    super(props);
-    this.state = { ...initialState, user: { ...initialState.user } };
-    const emptyFunc = () => Logger().log('not set');
-    this.authSubscription = emptyFunc;
-    this.userSubscription = emptyFunc;
-  }
-
-  logError = (err: any) => {
-    Logger().error('logError', err);
-  };
-
-  onChangedAuth = (user: Nullable<TFirebaseUser>) => {
-    Logger().log('onChangeAuth', user);
-  };
-
-  onChangedUser = (user: Nullable<TUser>) => {
-    Logger().log('onChangedUser', user);
-  };
-
-  componentDidMount() {
-    Logger().log('Background didMound');
-    this.authSubscription = AuthenticationService.onAuthStateChanged(this.onChangedAuth, this.logError);
-    this.userSubscription = UserService.onChangedUser(this.props.uid, this.onChangedUser, this.logError);
-    // this.intervalTimer = setInterval(() => {
-    //   Logger().log('user', this.user);
-    //   AuthenticationService.onAuthStateChanged(this.onChangedAuth, this.logError);
-    // }, 10000);
-  }
-
-  componentWillUnmount() {
-    Logger().log('Background willUnmount');
-    this.authSubscription();
-    this.userSubscription();
-    // clearInterval(this.intervalTimer);
-  }
-
-  render() {
-    return <React.Fragment />;
-  }
-}
 
 export default connect(
   mapStateToProps,

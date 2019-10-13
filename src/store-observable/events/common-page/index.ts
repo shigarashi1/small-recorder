@@ -1,12 +1,10 @@
 import actionCreatorFactory, { Action, AnyAction } from 'typescript-fsa';
 import { Epic, combineEpics } from 'redux-observable';
 import { ofAction } from 'typescript-fsa-redux-observable-of-action';
-import { mergeMap, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AppState } from '../../../store';
 import { TKeyboardKey } from '../../../types/components/number-keyboard';
 import { authActions } from '../../auth';
-import { TFirebaseUser } from '../../../lib/firebase';
-import { TAuthSetData } from '../../auth/action-reducers';
 import { sidebarActions } from '../../utilities';
 
 // actions
@@ -17,23 +15,16 @@ export const commonPageActions = {
   onSignOut: ac<void>('onSignOut'),
   onPushKeyboard: ac<TKeyboardKey>('onPushKeyboard'),
   onTogleSidebar: ac<boolean>('onTogleSidebar'),
-  onAutoSignIn: ac<TFirebaseUser>('onAutoSignIn'),
 };
 
 // onSignOut
-const onSignOut: Epic<AnyAction, Action<void> | Action<Parameters<typeof authActions.signOut.started>[0]>, AppState> = (
+const onSignOut: Epic<AnyAction, Action<Parameters<typeof authActions.signOut.started>[0]>, AppState> = (
   action$,
   store,
 ) =>
   action$.pipe(
     ofAction(commonPageActions.onSignOut),
-    mergeMap(action => [authActions.signOut.started({})]),
-  );
-
-const onAutoSignIn: Epic<AnyAction, Action<TAuthSetData>, AppState> = (action$, store) =>
-  action$.pipe(
-    ofAction(commonPageActions.onAutoSignIn),
-    map(({ payload }) => authActions.setData({ isSignedIn: true, user: payload })),
+    map(action => authActions.signOut.started({})),
   );
 
 const onTogleSidebar: Epic<AnyAction, Action<boolean>, AppState> = (action$, store) =>
@@ -51,4 +42,4 @@ const onTogleSidebar: Epic<AnyAction, Action<boolean>, AppState> = (action$, sto
 // onCloseKeyboard
 // onShowSnackbar
 
-export const commonPageEpics = combineEpics(onSignOut, onAutoSignIn, onTogleSidebar);
+export const commonPageEpics = combineEpics(onSignOut, onTogleSidebar);
