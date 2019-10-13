@@ -26,6 +26,17 @@ export const getState = {
       selector => selector.username,
     ),
   },
+  // record
+  record: {
+    records: createSelector(
+      appStateSelector,
+      selector => selector.records,
+    ),
+    dateRange: createSelector(
+      appStateSelector,
+      selector => selector.recordDateRange,
+    ),
+  },
   // router
   router: {
     currentPath: createSelector(

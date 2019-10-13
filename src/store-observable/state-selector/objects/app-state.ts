@@ -33,6 +33,7 @@ class AppStateSelector {
     return this.state.utility.dialog.yesNo;
   }
 
+  // user
   get user() {
     return this.state.user.user ? this.state.user.user : null;
   }
@@ -45,6 +46,16 @@ class AppStateSelector {
     return this.user ? this.user.username : '';
   }
 
+  // records
+  get records() {
+    return this.state.record.records;
+  }
+
+  get recordDateRange() {
+    return this.state.record.date;
+  }
+
+  // utility
   get isLoading() {
     return this.state.utility.loading;
   }
