@@ -34,7 +34,7 @@ const initialState: ITargetState = {
 
 const reducers = reducerWithInitialState(initialState).case(actions.setData, (state, payload) => ({
   ...state,
-  categories: payload,
+  targets: payload,
 }));
 
 export const targetReducers = reducers;

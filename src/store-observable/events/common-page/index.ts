@@ -9,7 +9,7 @@ import { sidebarActions } from '../../utilities';
 import { WrapAction } from '../../types';
 
 // actions
-const ac = actionCreatorFactory('[listen-commonPage]');
+const ac = actionCreatorFactory('[commonPage]');
 
 // ===== common page =====
 export const commonPageActions = {

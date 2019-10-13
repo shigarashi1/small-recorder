@@ -3,49 +3,34 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-
-import styles from './SettingPage.module.scss';
-
-import { TPageProps } from '../../../containers/pages/SettingPage';
 import Button from '../../atoms/Button/Button';
+//
+import styles from './SettingPage.module.scss';
+//
 import SettingTable from '../../organisms/SettingTable/SettingTable';
-import { TCategory } from '../../../types/firebase';
+//
+import { TPageProps } from '../../../containers/pages/SettingPage';
 import Logger from '../../../helpers/generals/logger';
+import { toPickKeysObject } from '../../../helpers/conv-object';
+import { TTarget, TCategory } from '../../../types/firebase';
+
+const LABELS = ['Record Category', 'Record Target'];
+
+const getRows = (tabIndex: number, data: { categories: TCategory[]; targets: TTarget[] }): any[] => {
+  const categories = data.categories.map((v, i) => ({
+    _docId: v.id,
+    id: i + 1,
+    ...toPickKeysObject(v, ['name', 'hasDeleted']),
+  }));
+  const targets = data.targets.map((v, i) => ({
+    _docId: v.id,
+    id: i + 1,
+    ...toPickKeysObject(v, ['category', 'count', 'term']),
+  }));
+  return tabIndex === 0 ? categories : targets;
+};
 
 type TProps = TPageProps;
-
-interface IState {
-  tabIndex: number;
-}
-
-const LABELS = ['Record Title', 'Record Target'];
-
-const ROWS: TCategory[] = [
-  {
-    id: '1',
-    name: 'aaaaaa',
-    user: '',
-    hasDeleted: false,
-  },
-  {
-    id: '2',
-    name: 'bbbb',
-    user: '',
-    hasDeleted: false,
-  },
-  {
-    id: '3',
-    name: 'cccc',
-    user: '',
-    hasDeleted: false,
-  },
-  {
-    id: '4',
-    name: 'dddd',
-    user: '',
-    hasDeleted: false,
-  },
-];
 
 const SettingPage: React.FC<TProps> = (props: TProps) => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -61,6 +46,7 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
     Logger().log('');
   };
 
+  const rows = getRows(tabIndex, { categories: props.categories, targets: props.targets });
   return (
     <div id={styles.root}>
       <div className={styles.title}>
@@ -82,7 +68,7 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
           <Button label="create new" onClick={onCreate} color="primary" />
         </div>
         <div className={styles.table}>
-          <SettingTable rows={ROWS} />
+          <SettingTable rows={rows} />
         </div>
       </div>
     </div>
