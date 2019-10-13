@@ -4,7 +4,7 @@ import { TCategory } from '../../types/firebase';
 import { NestedPartial } from '../../types';
 
 // action param type
-export type TCreateCategory = Omit<TCategory, 'id' | 'hasDeleted'>;
+export type TCreateCategory = Pick<TCategory, 'name'>;
 export type TUpdateCategory = { id: string; data: NestedPartial<TCreateCategory> };
 export type TReadCategories = { userId?: string };
 export type TDeleteCategory = { id: string };

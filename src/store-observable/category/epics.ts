@@ -33,7 +33,7 @@ const readCategories: Epic<AnyAction, Action<void>, AppState> = (action$, store)
 const updateCategory: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(categoryActions.update.started),
-    filter(({ payload }) => payload.id !== '' && (payload.data.name !== undefined || payload.data.user !== undefined)),
+    filter(({ payload }) => payload.id !== '' && payload.data.name !== undefined),
     mergeMap(async ({ payload }) => {
       const { id, data } = payload;
       const res = await CategoryService.updateCategory(id, { ...data });
@@ -57,7 +57,7 @@ const createCategory: Epic<AnyAction, Action<void>, AppState> = (action$, store)
       return { payload, userId };
     }),
     filter(({ userId }) => userId !== '' && userId !== null),
-    filter(({ payload }) => payload.name !== undefined && payload.user !== undefined),
+    filter(({ payload }) => payload.name !== undefined),
     mergeMap(async ({ payload, userId }) => {
       const res = await CategoryService.createCategory({ user: String(userId), name: payload.name });
       return { payload, res };
