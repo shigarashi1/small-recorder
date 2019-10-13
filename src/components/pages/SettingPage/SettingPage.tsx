@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import Button from '../../atoms/Button/Button';
 //
 import styles from './SettingPage.module.scss';
 //
@@ -51,7 +51,7 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
     <div id={styles.root}>
       <div className={styles.title}>
         <Typography variant="h4" color="inherit">
-          SettingPage
+          Setting Page
         </Typography>
       </div>
       <div className={styles.tab}>
@@ -65,7 +65,9 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
       </div>
       <div className={styles.contents}>
         <div className={styles.btnWrapper}>
-          <Button label="create new" onClick={onCreate} color="primary" />
+          <Button onClick={onCreate} color="primary" variant="contained">
+            create new
+          </Button>
         </div>
         <div className={styles.table}>
           <SettingTable rows={rows} />

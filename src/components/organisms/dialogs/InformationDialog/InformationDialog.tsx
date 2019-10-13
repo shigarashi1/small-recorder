@@ -1,9 +1,9 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
 
 import styles from './InformationDialog.module.scss';
 
 import BaseDialog from '../BaseDialog/BaseDialog';
-import { voidFunc, createButtonProps } from '../../../../helpers/components/dialog';
 
 interface IProps {
   hasOpen: boolean;
@@ -14,12 +14,16 @@ interface IProps {
 
 const InformationDialog: React.FC<IProps> = (props: IProps) => {
   const { hasOpen, onClose, title, context } = props;
-  const buttons = {
-    right: createButtonProps('Close', voidFunc),
-  };
+
+  const buttonChildren = (
+    <div className={styles.btnWrapper}>
+      <Button onClick={onClose}>Close</Button>
+    </div>
+  );
+
   return (
     <div id={styles.container}>
-      <BaseDialog hasOpen={hasOpen} onClose={onClose} buttons={buttons} title={title}>
+      <BaseDialog hasOpen={hasOpen} onClose={onClose} buttonChildren={buttonChildren} title={title}>
         <p>{context}</p>
       </BaseDialog>
     </div>

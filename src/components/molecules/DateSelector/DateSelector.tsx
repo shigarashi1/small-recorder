@@ -1,8 +1,10 @@
 import React from 'react';
+import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button';
 
 import styles from './DateSelector.module.scss';
 import InputDate, { IProps as DateProps } from '../../atoms/InputDate/InputDate';
-import Button from '../../atoms/Button/Button';
+
 import { addDays } from 'date-fns';
 
 interface IProps {
@@ -19,13 +21,17 @@ const DateSelector: React.FC<TProps> = (props: TProps) => {
   return (
     <div id={styles.container}>
       <div className={styles.arrowButton}>
-        <Button label={null} onClick={removeDay} iconType="left" icon="keyboard_arrow_left" />
+        <Button onClick={removeDay}>
+          <Icon>keyboard_arrow_left</Icon>
+        </Button>
       </div>
       <div className={styles.inputDate}>
         <InputDate {...props} />
       </div>
       <div className={styles.arrowButton}>
-        <Button label={null} onClick={addDay} iconType="right" icon="keyboard_arrow_right" />
+        <Button onClick={addDay}>
+          <Icon>keyboard_arrow_right</Icon>
+        </Button>
       </div>
       {renderMaltiButton()}
     </div>
@@ -38,7 +44,9 @@ const DateSelector: React.FC<TProps> = (props: TProps) => {
 
     return (
       <div className={styles.button}>
-        <Button label={maltiButtonLabel} onClick={onMaltiButtonClick} variant="contained" color="primary" />
+        <Button onClick={onMaltiButtonClick} variant="contained" color="primary">
+          {maltiButtonLabel}
+        </Button>
       </div>
     );
   }
