@@ -1,4 +1,4 @@
-import actionCreatorFactory, { Action, AnyAction } from 'typescript-fsa';
+import { actionCreatorFactory, Action, AnyAction } from 'typescript-fsa';
 import { Epic, combineEpics } from 'redux-observable';
 import { ofAction } from 'typescript-fsa-redux-observable-of-action';
 import { map } from 'rxjs/operators';
