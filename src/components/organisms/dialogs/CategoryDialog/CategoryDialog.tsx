@@ -15,6 +15,8 @@ interface IProps {
   onAction: (v: TCategory) => void;
 }
 
+const getLabel = (id: Nullable<string>) => (id !== null && id !== '' ? 'Edit' : 'Create');
+
 const getCategory = (v: Nullable<TCategory>) => v || ({ id: '', name: '' } as TCategory);
 
 const CategoryDialog: React.FC<IProps> = (props: IProps) => {
@@ -32,12 +34,13 @@ const CategoryDialog: React.FC<IProps> = (props: IProps) => {
 
   const onAction = () => {
     props.onAction(category);
+    onClose();
   };
 
   const buttonChildren = (
     <div className={styles.btnWrapper}>
       <Button onClick={onClose}>Close</Button>
-      <Button onClick={onAction}>{category.id !== '' ? 'edit' : 'create'}</Button>
+      <Button onClick={onAction}>{getLabel(category.id)}</Button>
     </div>
   );
 
@@ -46,13 +49,13 @@ const CategoryDialog: React.FC<IProps> = (props: IProps) => {
       <BaseDialog
         hasOpen={hasOpen}
         onClose={onClose}
-        title={category.id !== '' ? 'edit' : 'create'}
+        title={`${getLabel(category.id)} Category`}
         areaLabeledby="dialog-category"
         buttonChildren={buttonChildren}
       >
         <TextField
           className={styles.text}
-          label="category name"
+          label="Category Name"
           value={category.name}
           onChange={onChangeValue('name')}
         />
