@@ -3,7 +3,6 @@ import { TCategory } from '../../types/firebase';
 import { ApiError } from '../../models/error';
 import { NestedPartial } from '../../types';
 import { toCategories, blankFunc } from '../tools';
-import Logger from '../../helpers/generals/logger';
 
 const readCategories = async (params: { userId: string }) => {
   const userRef = toDocRef('users', params.userId);
@@ -20,7 +19,6 @@ const onChangedCategories = (
   error: (err: any) => void,
   completed?: () => void,
 ) => {
-  Logger().log(userId);
   if (userId === '') {
     return blankFunc;
   }

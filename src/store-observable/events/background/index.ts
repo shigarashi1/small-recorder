@@ -1,7 +1,7 @@
 import actionCreatorFactory, { Action, AnyAction } from 'typescript-fsa';
 import { Epic, combineEpics } from 'redux-observable';
 import { ofAction } from 'typescript-fsa-redux-observable-of-action';
-import { map, mergeMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AppState } from '../../../store';
 import { authActions } from '../../auth';
 import { TFirebaseUser } from '../../../lib/firebase';
@@ -9,10 +9,11 @@ import { TAuthSetData } from '../../auth/action-reducers';
 import { THandleError } from '../../error/action-reducers';
 import { errorActions } from '../../error';
 import { Nullable } from '../../../types';
-import { TUser, TCategory, TTarget } from '../../../types/firebase';
+import { TUser, TCategory, TTarget, TRecord } from '../../../types/firebase';
 import { userActions } from '../../user';
 import { categoryActions } from '../../category';
 import { targetActions } from '../../target';
+import { recordActions } from '../../record';
 
 // actions
 const ac = actionCreatorFactory('[listen-background]');
@@ -22,14 +23,14 @@ export const backgroundActions = {
   onChangedUser: ac<Nullable<TUser>>('onChangedUser'),
   onChangedCategories: ac<TCategory[]>('onChangedCategories'),
   onChangedTargets: ac<TTarget[]>('onChangedTargets'),
-  onChangedRecord: ac<void>('onChangedRecord'), // これは多分使わない。。。
+  onChangedRecords: ac<TRecord[]>('onChangedRecords'),
   onThrowError: ac<any>('onThrowError'),
 };
 
 const onChangedAuth: Epic<AnyAction, Action<TAuthSetData>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(backgroundActions.onChangedAuth),
-    map(({ payload }) => authActions.setData({ isSignedIn: true, user: payload })),
+    map(({ payload }) => authActions.setData({ isSignedIn: !!payload, user: payload })),
   );
 
 const onChangedUser: Epic<AnyAction, Action<Nullable<TUser>>, AppState> = (action$, store) =>
@@ -50,6 +51,12 @@ const onChangedTargets: Epic<AnyAction, Action<TTarget[]>, AppState> = (action$,
     map(({ payload }) => targetActions.setData(payload)),
   );
 
+const onChangedRecords: Epic<AnyAction, Action<TRecord[]>, AppState> = (action$, store) =>
+  action$.pipe(
+    ofAction(backgroundActions.onChangedRecords),
+    map(({ payload }) => recordActions.setData(payload)),
+  );
+
 const onThrowError: Epic<AnyAction, Action<THandleError>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(backgroundActions.onThrowError),
@@ -61,5 +68,6 @@ export const backgroundEpics = combineEpics(
   onChangedUser,
   onChangedCategories,
   onChangedTargets,
+  onChangedRecords,
   onThrowError,
 );
