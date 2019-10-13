@@ -28,7 +28,10 @@ const { SESSION, LOCAL, NONE } = firebase.auth.Auth.Persistence;
 export const Persistence = { SESSION, LOCAL, NONE };
 
 // functions
-export const getCollection = (collectionName: string): CollectionRef => db.collection(`${dbPath}/${collectionName}`);
+export type TCollectionName = 'users' | 'categories' | 'targets' | 'records';
+export const getCollection = (collectionName: TCollectionName): CollectionRef =>
+  db.collection(`${dbPath}/${collectionName}`);
+export const toDocRef = (collectionName: TCollectionName, id: string) => getCollection(collectionName).doc(id);
 export const getServerTime = (): ServerTimestamp => firebase.firestore.FieldValue.serverTimestamp();
 export const toDateTimeStamp = (seconds: number, nanoseconds: number): Date =>
   new firebase.firestore.Timestamp(seconds, nanoseconds).toDate();

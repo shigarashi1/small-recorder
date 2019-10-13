@@ -9,7 +9,6 @@ import { EPath } from '../../types';
 import { appStateSelector } from '../state-selector/objects/app-state';
 import { UserService } from '../../services/user';
 import { ApiError } from '../../models/error';
-import Logger from '../../helpers/generals/logger';
 
 const readUser: Epic<
   AnyAction,
@@ -35,9 +34,7 @@ const readUser: Epic<
         // TODO: うーん、エラー画面に遷移？？？
         return [];
       }
-      const user = res;
-      Logger().log('user', user);
-      return [replace(EPath.Home), userActions.read.done({ params: payload, result: { user } })];
+      return [replace(EPath.Home), userActions.read.done({ params: payload, result: { user: res } })];
     }),
   );
 

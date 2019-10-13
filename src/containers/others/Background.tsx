@@ -10,6 +10,7 @@ import { UserService } from '../../services/user';
 import { AuthenticationService } from '../../services/auth';
 //
 import Logger from '../../helpers/generals/logger';
+import { CategoryService } from '../../services/category';
 
 function mapStateToProps(state: AppState) {
   return {
@@ -25,58 +26,36 @@ function mapDispatchToProps(dispatch: Dispatch) {
 
 type TProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-const Background: React.FC<TProps> = ({ uid, onChangedUser, onChangedAuth, onThrowError }) => {
+const Background: React.FC<TProps> = ({ uid, onChangedUser, onChangedAuth, onChangedCategories, onThrowError }) => {
   useEffect(() => {
-    Logger().log('user subscription didMound');
+    Logger().log('auth subscription start');
+    const subscription = AuthenticationService.onAuthStateChanged(onChangedAuth, onThrowError);
+    return () => {
+      Logger().log('auth subscription end');
+      subscription();
+    };
+  }, [onChangedAuth, onThrowError]);
+
+  useEffect(() => {
+    Logger().log('user subscription start');
     const subscription = UserService.onChangedUser(uid, onChangedUser, onThrowError);
     return () => {
-      Logger().log('user subscription willUnmount');
+      Logger().log('user subscription end');
       subscription();
     };
   }, [uid, onChangedUser, onThrowError]);
 
   useEffect(() => {
-    Logger().log('auth subscription didMound');
-    const subscription = AuthenticationService.onAuthStateChanged(onChangedAuth, onThrowError);
+    Logger().log('categories subscription start');
+    const subscription = CategoryService.onChangedCategories(uid, onChangedCategories, onThrowError);
     return () => {
-      Logger().log('auth subscription willUnmount');
+      Logger().log('categories subscription end');
       subscription();
     };
-  }, [onChangedAuth, onThrowError]);
+  }, [uid, onChangedCategories, onThrowError]);
 
   Logger().log('Background render');
   return <React.Fragment />;
-
-  // private authSubscription: () => void; // ログインしてないことはないからな。。。
-  // private userSubscription: () => void;
-  // private categorySubscription: () => void;
-  // private targetSubscription: () => void;
-  // private recordSubscription: () => void;
-  // constructor(props: TProps) {
-  //   super(props);
-  //   Logger().log('Background constructor');
-  //   // this.authSubscription = emptyFunc;
-  //   this.userSubscription = emptyFunc;
-  //   this.categorySubscription = emptyFunc;
-  //   this.targetSubscription = emptyFunc;
-  //   this.recordSubscription = emptyFunc;
-  // }
-
-  // componentDidMount() {
-  //   Logger().log('Background didMound');
-  //   const { onChangedUser, onThrowError, uid } = this.props;
-  //   // this.authSubscription = AuthenticationService.onAuthStateChanged(onChangedAuth, onThrowError);
-  //   this.userSubscription =
-  // }
-
-  // componentWillUnmount() {
-  //   Logger().log('Background willUnmount');
-  //   // this.authSubscription();
-  //   this.userSubscription();
-  //   this.categorySubscription();
-  //   this.targetSubscription();
-  //   this.recordSubscription();
-  // }
 };
 
 export default connect(

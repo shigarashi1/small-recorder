@@ -41,6 +41,10 @@ class AppStateSelector {
     return this.user ? this.user.id : '';
   }
 
+  get username() {
+    return this.user ? this.user.username : '';
+  }
+
   get isLoading() {
     return this.state.utility.loading;
   }

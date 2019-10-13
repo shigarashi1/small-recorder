@@ -2,13 +2,7 @@ import { TUser } from '../../types/firebase';
 import { Nullable, NestedPartial } from '../../types';
 import { getCollection, QuerySnapshot, getServerTime } from '../../lib/firebase';
 import { ApiError } from '../../models/error';
-import { toKeysPickObject } from '../../helpers/conv-object';
-
-const toUser = (uid: string, q: QuerySnapshot): Nullable<TUser> => {
-  const users = q.docs.map(v => ({ id: v.id, ...(v.data() as TUser) }));
-  const user = users.find(v => v.uid === uid);
-  return user ? toKeysPickObject(user, ['id', 'uid', 'username']) : null;
-};
+import { toUser, blankFunc } from '../tools';
 
 const readUser = async (uid: string) => {
   return await getCollection('users')
@@ -48,6 +42,9 @@ const onChangedUser = (
   completed?: () => void,
 ) => {
   const query = (q: QuerySnapshot) => next(toUser(uid, q));
+  if (uid === '') {
+    return blankFunc;
+  }
   return (
     getCollection('users')
       .where('uid', '==', uid)

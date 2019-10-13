@@ -59,7 +59,7 @@ const createCategory: Epic<AnyAction, Action<void>, AppState> = (action$, store)
     filter(({ userId }) => userId !== '' && userId !== null),
     filter(({ payload }) => payload.name !== undefined && payload.user !== undefined),
     mergeMap(async ({ payload, userId }) => {
-      const res = await CategoryService.createCategory(String(userId), payload.name);
+      const res = await CategoryService.createCategory({ user: String(userId), name: payload.name });
       return { payload, res };
     }),
     mergeMap(({ payload, res }) => {

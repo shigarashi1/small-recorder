@@ -9,7 +9,7 @@ import { TAuthSetData } from '../../auth/action-reducers';
 import { THandleError } from '../../error/action-reducers';
 import { errorActions } from '../../error';
 import { Nullable } from '../../../types';
-import { TUser } from '../../../types/firebase';
+import { TUser, TCategory, TTarget } from '../../../types/firebase';
 import { userActions } from '../../user';
 
 // actions
@@ -18,8 +18,8 @@ const ac = actionCreatorFactory('[listen-background]');
 export const backgroundActions = {
   onChangedAuth: ac<Nullable<TFirebaseUser>>('onAutoSignIn'),
   onChangedUser: ac<Nullable<TUser>>('onChangedUser'),
-  onChangedCategory: ac<void>('onChangedCategory'),
-  onChangedTarget: ac<void>('onChangedTarget'),
+  onChangedCategories: ac<TCategory[]>('onChangedCategories'),
+  onChangedTargets: ac<TTarget[]>('onChangedTargets'),
   onChangedRecord: ac<void>('onChangedRecord'), // これは多分使わない。。。
   onThrowError: ac<any>('onThrowError'),
 };
@@ -36,15 +36,15 @@ const onChangedUser: Epic<AnyAction, Action<Nullable<TUser>>, AppState> = (actio
     map(({ payload }) => userActions.setData(payload)),
   );
 
-const onChangedCategory: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+const onChangedCategories: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
   action$.pipe(
-    ofAction(backgroundActions.onChangedCategory),
+    ofAction(backgroundActions.onChangedCategories),
     mergeMap(({ payload }) => []),
   );
 
-const onChangedTarget: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+const onChangedTargets: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
   action$.pipe(
-    ofAction(backgroundActions.onChangedTarget),
+    ofAction(backgroundActions.onChangedTargets),
     mergeMap(({ payload }) => []),
   );
 
@@ -57,7 +57,7 @@ const onThrowError: Epic<AnyAction, Action<THandleError>, AppState> = (action$, 
 export const backgroundEpics = combineEpics(
   onChangedAuth,
   onChangedUser,
-  onChangedCategory,
-  onChangedTarget,
+  onChangedCategories,
+  onChangedTargets,
   onThrowError,
 );

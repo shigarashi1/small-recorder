@@ -6,10 +6,8 @@
   justify-content: space-between;
   .right {
     justify-content: flex-end;
+    .username {
+      padding: 3px 3px 0;
+    }
   }
 }
-
-// .fixed {
-//   top: 0;
-//   position: fixed !important;
-// }

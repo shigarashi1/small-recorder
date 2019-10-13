@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
 
 import styles from './Header.module.scss';
 
@@ -46,9 +47,12 @@ const Header: React.FC<TProps> = props => {
           </Typography>
         </Toolbar>
         <Toolbar className={styles.right}>
-          <IconButton onClick={onOpenMenu} aria-owns={'menu-appbar'} aria-haspopup="true" color="inherit">
+          <Button onClick={onOpenMenu} color="inherit">
+            <Typography className={styles.username} variant="subtitle2" color="inherit">
+              {props.username}
+            </Typography>
             <Icon>account_circle</Icon>
-          </IconButton>
+          </Button>
         </Toolbar>
       </AppBar>
       <Menu id="icon-menu" anchorEl={anchorEl} keepMounted={true} open={Boolean(anchorEl)} onClose={onCloseMenu}>

@@ -12,16 +12,11 @@ interface IState {
 type TProps = TPageProps;
 
 const HomePage: React.FC<TProps> = (props: TProps) => {
-  const onSignOut = () => {
-    props.onSignOut();
-  };
-
   return (
     <div className="sample-page">
       <Typography variant="h4" color="inherit">
         HomePage
       </Typography>
-      <button onClick={onSignOut}>Signout</button>
     </div>
   );
 };
