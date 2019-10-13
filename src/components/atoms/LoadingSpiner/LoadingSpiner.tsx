@@ -8,15 +8,15 @@ type TProps = {
 };
 
 const LoadingSpiner: React.FC<TProps> = ({ isLoading, children }) => {
-  return isLoading ? (
+  return (
     <React.Fragment>
-      <div id={styles.container}>
-        <CircularProgress className={styles.progress} />
-      </div>
+      {isLoading ? (
+        <div id={styles.container}>
+          <CircularProgress className={styles.progress} />
+        </div>
+      ) : null}
       {children}
     </React.Fragment>
-  ) : (
-    <React.Fragment>{children}</React.Fragment>
   );
 };
 
