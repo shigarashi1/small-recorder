@@ -25,8 +25,12 @@ export const ERROR_MESSAGES: IMessage[] = [
 
 export const WARN_MESSAGES: IMessage[] = [
   {
-    code: '0001',
+    code: '0000',
     message: 'Bussiness Error. message: {0}',
+  },
+  {
+    code: '0001',
+    message: 'パスワードが一致しません.',
   },
 ];
 

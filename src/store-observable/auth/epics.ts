@@ -5,18 +5,22 @@ import { mergeMap } from 'rxjs/operators';
 import { AppState } from '../../store';
 import { authActions } from '.';
 import { AuthenticationService } from '../../services/auth';
-import { ApiError } from '../../models/error';
-import Logger from '../../helpers/generals/logger';
+import { ApiError, BusinessError } from '../../models/error';
 import { replace, CallHistoryMethodAction } from 'connected-react-router';
 import { EPath } from '../../types';
 import { userActions } from '../user';
 import { rootActions } from '../actions';
+import { errorActions } from '../error';
+import { THandleError } from '../error/action-reducers';
+import { WrapAction } from '../types';
+import Logger from '../../helpers/generals/logger';
 
 const signIn: Epic<
   AnyAction,
-  | Action<void>
-  | Action<Parameters<typeof authActions.signIn.done>[0]>
-  | Action<Parameters<typeof userActions.read.started>[0]>,
+  | Action<THandleError>
+  | WrapAction<typeof authActions.signIn.done>
+  | WrapAction<typeof authActions.signIn.failed>
+  | WrapAction<typeof userActions.read.started>,
   AppState
 > = (action$, store) =>
   action$.pipe(
@@ -27,39 +31,38 @@ const signIn: Epic<
     }),
     mergeMap(({ payload, res }) => {
       if (res instanceof ApiError) {
-        // TODO: errorの実装
-        return [];
+        return [errorActions.handle({ error: res }), authActions.signIn.failed({ params: payload, error: {} })];
       }
       const { user } = res;
-      return [authActions.signIn.done({ params: payload, result: { user } }), userActions.read.started({})];
+      return [
+        authActions.signIn.done({ params: payload, result: { user } }),
+        // userActions.read.started({}) // MEMO: backgroundで自動読み込みにしたので不要
+      ];
     }),
   );
 
-const signUp: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+const signUp: Epic<
+  AnyAction,
+  Action<THandleError> | Action<void> | WrapAction<typeof authActions.signUp.failed>,
+  AppState
+> = (action$, store) =>
   action$.pipe(
     ofAction(authActions.signUp.started),
     mergeMap(async ({ payload }) => {
       const { email, password, confirmation } = payload;
-      // TODO: emailのフォーマット確認
+      // TODO: emailとかのバリデーションを実行する
       if (password !== confirmation) {
-        // FIXME: business error classを用意する
-        const businessError = new ApiError({ code: '0000', message: 'パスワードが一致しません.' });
+        const businessError = new BusinessError('0001');
         return { payload, res: businessError };
       }
       const res = await AuthenticationService.signUp(email, password);
       return { payload, res };
     }),
     mergeMap(({ payload, res }) => {
-      // FIXME: business error
-
-      if (res instanceof ApiError) {
-        // TODO: errorHandling
-        return [];
+      if (res instanceof BusinessError || res instanceof ApiError) {
+        return [errorActions.handle({ error: res }), authActions.signUp.failed({ params: payload, error: {} })];
       }
-
-      const { user } = res;
-      const { username } = payload;
-      Logger().log('signUp', { user, username });
+      Logger().log('signUp', { user: res, username: payload.username });
       // TODO: ユーザーを登録する
       return [];
     }),
@@ -67,7 +70,11 @@ const signUp: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
 
 const signOut: Epic<
   AnyAction,
-  Action<void> | Action<Parameters<typeof authActions.signOut.done>[0]> | CallHistoryMethodAction,
+  | Action<void>
+  | Action<THandleError>
+  | WrapAction<typeof authActions.signOut.done>
+  | WrapAction<typeof authActions.signOut.failed>
+  | CallHistoryMethodAction,
   AppState
 > = (action$, store) =>
   action$.pipe(
@@ -78,12 +85,12 @@ const signOut: Epic<
     }),
     mergeMap(({ payload, res }) => {
       if (res instanceof ApiError) {
-        return [];
+        return [errorActions.handle({ error: res }), authActions.signOut.failed({ params: payload, error: {} })];
       }
       return [
-        authActions.signOut.done({ params: payload, result: {} }),
-        rootActions.clearAllState(),
-        replace(EPath.Login),
+        authActions.signOut.done({ params: payload, result: {} }), // signout 完了
+        rootActions.clearAllState(), // state clear
+        replace(EPath.Login), // login画面に遷移
       ];
     }),
   );

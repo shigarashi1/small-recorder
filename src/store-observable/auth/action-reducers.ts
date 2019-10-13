@@ -47,5 +47,6 @@ const reducers = reducerWithInitialState(initialState)
   .case(actions.signIn.started, (state, payload) => ({ ...state }))
   .case(actions.signIn.done, (state, payload) => ({ ...state, isSignedIn: true, user: payload.result.user }))
   .case(actions.setData, (state, payload) => ({ ...state, isSignedIn: payload.isSignedIn, user: payload.user }))
-  .case(actions.signOut.started, (state, payload) => ({ ...state }));
+  .case(actions.signOut.started, (state, payload) => ({ ...state }))
+  .case(actions.signOut.done, (state, payload) => ({ ...state, isSignedIn: false }));
 export const authReducers = reducers;

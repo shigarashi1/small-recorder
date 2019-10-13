@@ -8,11 +8,14 @@ import { AppState } from '../../store';
 import { categoryActions } from './action-reducers';
 import { ApiError } from '../../models/error';
 import { WrapAction } from '../types';
+import { errorActions } from '../error';
+import { THandleError } from '../error/action-reducers';
 
-const readCategories: Epic<AnyAction, Action<void> | WrapAction<typeof categoryActions.read.done>, AppState> = (
-  action$,
-  store,
-) =>
+const readCategories: Epic<
+  AnyAction,
+  Action<void> | WrapAction<typeof categoryActions.read.done> | Action<THandleError>,
+  AppState
+> = (action$, store) =>
   action$.pipe(
     ofAction(categoryActions.read.started),
     map(({ payload }) => {
@@ -23,21 +26,24 @@ const readCategories: Epic<AnyAction, Action<void> | WrapAction<typeof categoryA
     filter(({ userId }) => userId !== '' && userId !== null),
     mergeMap(async ({ payload, userId }) => {
       const res = await CategoryService.readCategories({ userId: String(userId) });
-      return { payload, res, userId };
+      return { payload, res };
     }),
-    mergeMap(({ payload, res, userId }) => {
+    mergeMap(({ payload, res }) => {
       if (res instanceof ApiError) {
-        // TODO: errorの実装
-        return [];
+        return [errorActions.handle({ error: res })];
       }
-      return [];
+      return [categoryActions.read.done({ params: payload, result: {} })];
     }),
   );
 
-const updateCategory: Epic<AnyAction, Action<void> | WrapAction<typeof categoryActions.update.done>, AppState> = (
-  action$,
-  store,
-) =>
+const updateCategory: Epic<
+  AnyAction,
+  | Action<void>
+  | WrapAction<typeof categoryActions.update.done>
+  | WrapAction<typeof categoryActions.update.failed>
+  | Action<THandleError>,
+  AppState
+> = (action$, store) =>
   action$.pipe(
     ofAction(categoryActions.update.started),
     filter(({ payload }) => payload.id !== '' && payload.data.name !== undefined),
@@ -48,17 +54,23 @@ const updateCategory: Epic<AnyAction, Action<void> | WrapAction<typeof categoryA
     }),
     mergeMap(({ payload, res }) => {
       if (res instanceof ApiError) {
-        // TODO: errorの実装
-        return [];
+        return [
+          errorActions.handle({ error: res }), //
+          categoryActions.update.failed({ params: payload, error: {} }),
+        ];
       }
       return [categoryActions.update.done({ params: payload, result: {} })];
     }),
   );
 
-const createCategory: Epic<AnyAction, Action<void> | WrapAction<typeof categoryActions.create.done>, AppState> = (
-  action$,
-  store,
-) =>
+const createCategory: Epic<
+  AnyAction,
+  | Action<void>
+  | WrapAction<typeof categoryActions.create.done>
+  | WrapAction<typeof categoryActions.create.failed>
+  | Action<THandleError>,
+  AppState
+> = (action$, store) =>
   action$.pipe(
     ofAction(categoryActions.create.started),
     map(({ payload }) => {
@@ -74,17 +86,23 @@ const createCategory: Epic<AnyAction, Action<void> | WrapAction<typeof categoryA
     }),
     mergeMap(({ payload, res }) => {
       if (res instanceof ApiError) {
-        // TODO: errorの実装
-        return [];
+        return [
+          errorActions.handle({ error: res }), //
+          categoryActions.create.failed({ params: payload, error: {} }),
+        ];
       }
       return [categoryActions.create.done({ params: payload, result: {} })];
     }),
   );
 
-const deleteCategory: Epic<AnyAction, Action<void> | WrapAction<typeof categoryActions.delete.done>, AppState> = (
-  action$,
-  store,
-) =>
+const deleteCategory: Epic<
+  AnyAction,
+  | Action<void>
+  | WrapAction<typeof categoryActions.delete.done>
+  | WrapAction<typeof categoryActions.delete.failed>
+  | Action<THandleError>,
+  AppState
+> = (action$, store) =>
   action$.pipe(
     ofAction(categoryActions.delete.started),
     map(({ payload }) => {
@@ -99,8 +117,10 @@ const deleteCategory: Epic<AnyAction, Action<void> | WrapAction<typeof categoryA
     }),
     mergeMap(({ payload, res }) => {
       if (res instanceof ApiError) {
-        // TODO: errorの実装
-        return [];
+        return [
+          errorActions.handle({ error: res }), //
+          categoryActions.delete.failed({ params: payload, error: {} }),
+        ];
       }
       return [categoryActions.delete.done({ params: payload, result: {} })];
     }),
