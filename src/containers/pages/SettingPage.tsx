@@ -5,6 +5,7 @@ import { AppState } from '../../store';
 import SettingPage from '../../components/pages/SettingPage/SettingPage';
 import { getState } from '../../store-observable/state-selector';
 import { settingPageActions } from '../../store-observable/events/setting-page';
+import { commonPageActions } from '../../store-observable/events/common-page';
 
 function mapStateToProps(state: AppState) {
   return {
@@ -16,6 +17,7 @@ function mapStateToProps(state: AppState) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     ...bindActionCreators(settingPageActions, dispatch),
+    ...bindActionCreators(commonPageActions, dispatch),
   };
 }
 

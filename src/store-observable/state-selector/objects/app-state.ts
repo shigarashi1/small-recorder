@@ -74,6 +74,10 @@ class AppStateSelector {
     return this.state.utility.sidebar;
   }
 
+  get selectionDialogData() {
+    return this.state.utility.dialog.yesNo;
+  }
+
   // errors
   get systemErrors() {
     return this.state.error.systemErrors;

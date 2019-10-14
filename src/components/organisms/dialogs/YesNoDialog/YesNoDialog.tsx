@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 
-import styles from './SelectionDialog.module.scss';
+import styles from './YesNoDialog.module.scss';
 
 import BaseDialog from '../BaseDialog/BaseDialog';
 
-interface IProps {
-  hasOpen: boolean;
-  onClose: () => void;
-  title: string;
-  content: string;
-  onYes: () => void;
-  onNo: () => void;
-}
+import { TYesNoDialogProps } from '../../../../containers/components/dialogs/YesNoDialog';
 
-const SelectionDialog: React.FC<IProps> = (props: IProps) => {
-  const { hasOpen, onClose, title, content } = props;
+type TProps = TYesNoDialogProps;
+
+const YesNoDialog: React.FC<TProps> = (props: TProps) => {
+  const [state, setState] = useState(props);
+  useEffect(() => {
+    setState(props);
+  }, [props]);
+
+  const { hasOpen, onClose, title, context } = state;
 
   const onYes = () => {
     props.onYes();
@@ -43,10 +43,10 @@ const SelectionDialog: React.FC<IProps> = (props: IProps) => {
         title={title}
         areaLabeledby="dialog-selection"
       >
-        <p>{content}</p>
+        <p>{context}</p>
       </BaseDialog>
     </div>
   );
 };
 
-export default SelectionDialog;
+export default YesNoDialog;

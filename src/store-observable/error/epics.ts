@@ -1,17 +1,19 @@
 import { Action, AnyAction } from 'typescript-fsa';
 import { Epic, combineEpics } from 'redux-observable';
 import { ofAction } from 'typescript-fsa-redux-observable-of-action';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, tap } from 'rxjs/operators';
 import { AppState } from '../../store';
 import { errorActions } from '.';
 import { ApiError, SystemError, BusinessError } from '../../models/error';
 import { IError } from '../../types/error';
 import { loadingActions } from '../utilities';
+import Logger from '../../helpers/generals/logger';
 
 // epics
 const errorHandler: Epic<AnyAction, Action<IError> | Action<void>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(errorActions.handle),
+    tap(({ payload }) => Logger.log(payload)),
     mergeMap(({ payload }) => {
       const { error } = payload;
       if (error instanceof BusinessError) {

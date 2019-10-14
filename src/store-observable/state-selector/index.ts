@@ -64,6 +64,12 @@ export const getState = {
       appStateSelector,
       selector => selector.hasOpenedSidebar,
     ),
+    dialog: {
+      yesNo: createSelector(
+        appStateSelector,
+        selector => selector.selectionDialogData,
+      ),
+    },
   },
   // error
   error: {

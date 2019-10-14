@@ -5,9 +5,10 @@ import { map } from 'rxjs/operators';
 import { AppState } from '../../../store';
 import { TKeyboardKey } from '../../../types/components/number-keyboard';
 import { authActions } from '../../auth';
-import { sidebarActions } from '../../utilities';
+import { sidebarActions, yesNoDialogActions } from '../../utilities';
 import { WrapAction } from '../../types';
 import { errorActions } from '../../error';
+import { TYesNoDialog } from '../../../types/components/dialog';
 
 // actions
 const ac = actionCreatorFactory('[commonPage]');
@@ -19,6 +20,8 @@ export const commonPageActions = {
   onTogleSidebar: ac<boolean>('onTogleSidebar'),
   onClearSnack: ac<number>('onClearSnack'),
   onClearError: ac<void>('onClearError'),
+  onShowYesNoDialog: ac<TYesNoDialog>('onShowYesNoDialog'),
+  onCloseYesNoDialog: ac<void>('onCloseYesNoDialog'),
 };
 
 // onSignOut
@@ -45,13 +48,31 @@ const onClearError: Epic<AnyAction, Action<void>, AppState> = (action$, store) =
     ofAction(commonPageActions.onClearError),
     map(({ payload }) => errorActions.clearSystemError()),
   );
+
+const onShowYesNoDialog: Epic<AnyAction, Action<TYesNoDialog>, AppState> = (action$, store) =>
+  action$.pipe(
+    ofAction(commonPageActions.onShowYesNoDialog),
+    map(({ payload }) => yesNoDialogActions.show(payload)),
+  );
+
+const onCloseYesNoDialog: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+  action$.pipe(
+    ofAction(commonPageActions.onCloseYesNoDialog),
+    map(({ payload }) => yesNoDialogActions.close()),
+  );
 //
 // onShowInfoDialog
 // onShowOkCancelDialog
-// onShowYesNoDialog
 // onCloseDialogs
 // onShowKeyboard
 // onCloseKeyboard
 // onShowSnackbar
 
-export const commonPageEpics = combineEpics(onSignOut, onTogleSidebar, onClearSnack, onClearError);
+export const commonPageEpics = combineEpics(
+  onSignOut,
+  onTogleSidebar,
+  onClearSnack,
+  onClearError,
+  onShowYesNoDialog,
+  onCloseYesNoDialog,
+);

@@ -15,6 +15,7 @@ import { toPickKeysObject } from '../../../helpers/conv-object';
 import { TTarget, TCategory } from '../../../types/firebase';
 import { Nullable, TMode, Mode } from '../../../types';
 import TargetDialog from '../../organisms/dialogs/TargetDialog/TargetDialog';
+import Logger from '../../../helpers/generals/logger';
 
 enum ETab {
   category,
@@ -25,11 +26,11 @@ const LABELS = ['Record Category', 'Record Target'];
 
 const getRows = (tabIndex: number, data: { categories: TCategory[]; targets: TTarget[] }): any[] => {
   const categories = data.categories
-    .filter(v => !v.hasDeleted)
+    .filter(v => !v.hasDeleted) // TODO:論理削除もあとで表示できるようにする
     .map((v, i) => ({
       _docId: v.id,
       id: i + 1,
-      ...toPickKeysObject(v, ['name', 'hasDeleted']),
+      ...toPickKeysObject(v, ['name']),
     }));
   const targets = data.targets.map((v, i) => ({
     _docId: v.id,
@@ -39,6 +40,15 @@ const getRows = (tabIndex: number, data: { categories: TCategory[]; targets: TTa
   }));
   return tabIndex === 0 ? categories : targets;
 };
+
+const getYesNoDialogData = (context: string, onYes: () => void, onNo: () => void, onClose: () => void) => ({
+  hasOpen: true,
+  title: '確認',
+  context,
+  onYes,
+  onNo,
+  onClose,
+});
 
 type TProps = TPageProps;
 
@@ -76,7 +86,7 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
     }
   };
 
-  const onShowEditMode = (mode: TMode, id?: string) => {
+  const onActionTable = (mode: TMode, id: string) => {
     if (mode === Mode.edit) {
       if (tabIndex === ETab.category) {
         const category = props.categories.find(v => v.id === id) || null;
@@ -86,6 +96,21 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
         const target = props.targets.find(v => v.id === id) || null;
         setSelectedTarget(target);
         setHasOpenedTarget(true);
+      }
+    } else {
+      if (tabIndex === ETab.category) {
+        Logger.log('delete', id);
+        const { name } = props.categories.find(v => v.id === id) || { name: '' };
+        const onDelete = () => {
+          props.deleteCategory({ id });
+        };
+        const onClose = () => {
+          props.onCloseYesNoDialog();
+        };
+        const data = getYesNoDialogData(`${name}を削除しますか？`, onDelete, onClose, onClose);
+        props.onShowYesNoDialog(data);
+      } else {
+        Logger.log('delete', id);
       }
     }
   };
@@ -132,7 +157,7 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
             </Button>
           </div>
           <div className={styles.table}>
-            <SettingTable rows={rows} onAction={onShowEditMode} />
+            <SettingTable rows={rows} onAction={onActionTable} />
           </div>
         </div>
       </div>

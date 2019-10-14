@@ -8,6 +8,7 @@ import Sidebar from '../../../containers/components/Sidebar';
 import NumberKeyboard from '../../../containers/components/NumberKeyboard';
 import ErrorBoundary from '../../molecules/ErrorBoundary/ErrorBoundary';
 import Background from '../../../containers/others/Background';
+import YesNoDialog from '../../../containers/components/dialogs/YesNoDialog';
 
 const MainTemplate: React.FC<{}> = props => {
   return (
@@ -28,6 +29,7 @@ const MainTemplate: React.FC<{}> = props => {
         <Background />
         <Sidebar />
         <NumberKeyboard />
+        <YesNoDialog />
       </React.Fragment>
     );
   }

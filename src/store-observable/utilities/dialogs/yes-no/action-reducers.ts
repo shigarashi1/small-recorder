@@ -7,8 +7,8 @@ import { TYesNoDialog } from '../../../../types/components/dialog';
 // actions
 const ac = actionCreatorFactory('[dialog - yes no]');
 const actions = {
-  show: ac<TYesNoDialog>('set'),
-  close: ac<void>('clear'),
+  show: ac<TYesNoDialog>('show'),
+  close: ac<void>('close'),
 };
 export const yesNoDialogActions = actions;
 
@@ -22,6 +22,6 @@ const initialState: TYesNoDialog = {
   onClose: () => console.log('close'),
 };
 const reducers = reducerWithInitialState(initialState)
-  .case(actions.show, (state, payload) => ({ ...state, payload }))
+  .case(actions.show, (state, payload) => ({ ...state, ...payload }))
   .case(actions.close, (state, payload) => ({ ...initialState }));
 export const yesNoDialogReducers = reducers;
