@@ -65,4 +65,15 @@ export const getState = {
       selector => selector.hasOpenedSidebar,
     ),
   },
+  // error
+  error: {
+    systemErrors: createSelector(
+      appStateSelector,
+      selector => selector.systemErrors,
+    ),
+    businessErrors: createSelector(
+      appStateSelector,
+      selector => selector.businessErrors,
+    ),
+  },
 };

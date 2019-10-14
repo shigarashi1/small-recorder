@@ -8,6 +8,7 @@ import history from '../helpers/history';
 import MainTemplate from './templates/MainTemplate/MainTemplate';
 import AppRouterGuard from '../containers/others/AppRouterGuard';
 import LoadingSpiner from '../containers/others/LoadingSpiner';
+import SnackStacker from '../containers/components/SnackStacker';
 
 const store = configureStore({});
 
@@ -24,6 +25,7 @@ class App extends Component {
             </AppRouterGuard>
           </Switch>
         </Router>
+        <SnackStacker />
       </Provider>
     );
   }

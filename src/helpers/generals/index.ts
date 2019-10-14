@@ -5,3 +5,6 @@ export const delayFunction = async <T>(func: () => T, ms: number = 100): Promise
     }, ms);
   });
 };
+
+export const generateId = <T extends { id: number }>(array: T[]) =>
+  array.length !== 0 ? Math.max(...array.map(v => v.id)) : 0;

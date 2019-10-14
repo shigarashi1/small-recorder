@@ -73,4 +73,13 @@ class AppStateSelector {
   get hasOpenedSidebar() {
     return this.state.utility.sidebar;
   }
+
+  // errors
+  get systemErrors() {
+    return this.state.error.systemErrors;
+  }
+
+  get businessErrors() {
+    return this.state.error.budinessErrors;
+  }
 }

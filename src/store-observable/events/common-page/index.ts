@@ -7,6 +7,7 @@ import { TKeyboardKey } from '../../../types/components/number-keyboard';
 import { authActions } from '../../auth';
 import { sidebarActions } from '../../utilities';
 import { WrapAction } from '../../types';
+import { errorActions } from '../../error';
 
 // actions
 const ac = actionCreatorFactory('[commonPage]');
@@ -16,6 +17,7 @@ export const commonPageActions = {
   onSignOut: ac<void>('onSignOut'),
   onPushKeyboard: ac<TKeyboardKey>('onPushKeyboard'),
   onTogleSidebar: ac<boolean>('onTogleSidebar'),
+  onClearSnack: ac<number>('onClearSnack'),
 };
 
 // onSignOut
@@ -31,6 +33,11 @@ const onTogleSidebar: Epic<AnyAction, Action<boolean>, AppState> = (action$, sto
     map(({ payload }) => sidebarActions.togle(payload)),
   );
 
+const onClearSnack: Epic<AnyAction, Action<number>, AppState> = (action$, store) =>
+  action$.pipe(
+    ofAction(commonPageActions.onClearSnack),
+    map(({ payload }) => errorActions.clearBusinessError(payload)),
+  );
 //
 // onShowInfoDialog
 // onShowOkCancelDialog
@@ -40,4 +47,4 @@ const onTogleSidebar: Epic<AnyAction, Action<boolean>, AppState> = (action$, sto
 // onCloseKeyboard
 // onShowSnackbar
 
-export const commonPageEpics = combineEpics(onSignOut, onTogleSidebar);
+export const commonPageEpics = combineEpics(onSignOut, onTogleSidebar, onClearSnack);
