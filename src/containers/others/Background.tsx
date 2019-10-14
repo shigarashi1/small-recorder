@@ -65,15 +65,15 @@ const Background: React.FC<TProps> = ({
 
   // records
   useEffect(() => {
-    Logger().log('record subscription start');
+    Logger.log('record subscription start');
     const subscription = RecordService.onChangedRecords(userId, dateRange, onChangedRecords, onThrowError);
     return () => {
-      Logger().log('record subscription end');
+      Logger.log('record subscription end');
       subscription();
     };
   }, [userId, dateRange, onChangedRecords, onThrowError]);
 
-  Logger().log('Background render');
+  Logger.log('Background render');
   return <React.Fragment />;
 };
 

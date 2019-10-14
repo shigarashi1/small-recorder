@@ -40,7 +40,7 @@ export const toRecords = (q: QuerySnapshot): TRecord[] => {
     user: { id: v.get('user').id, ...v.get('user').data() } as TUser,
     category: { id: v.get('category').id, ...(v.get('category').data() as TCategory) },
   }));
-  Logger().log('Records population', array);
+  Logger.log('Records population', array);
   return array.map(v =>
     toOmitKeysObject<TRecord>({ id: v.id, ...v.data, user: v.user.id, category: v.category.id }, [
       'createdAt',
@@ -50,5 +50,5 @@ export const toRecords = (q: QuerySnapshot): TRecord[] => {
 };
 
 export const blankFunc = () => {
-  Logger().log('onChanged no userId.');
+  Logger.log('onChanged no userId.');
 };

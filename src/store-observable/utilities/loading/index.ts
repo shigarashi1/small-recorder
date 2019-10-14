@@ -2,7 +2,7 @@ import { reducerWithInitialState } from 'typescript-fsa-reducers';
 import { actionCreatorFactory } from 'typescript-fsa';
 
 // actions
-const ac = actionCreatorFactory('[----utilities/loading]');
+const ac = actionCreatorFactory('[utilities/loading]');
 const actions = {
   start: ac<void>('start'),
   end: ac<void>('end'),

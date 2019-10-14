@@ -1,7 +1,6 @@
 import config from '../../configuration/config';
 
-const canLog = (config.isDev && !config.isTest) || config.isTest;
-export const Logger = () => (canLog ? console : new MockConsole());
+const canLog = (): boolean => config.isDev || config.isTest;
 
 class MockConsole {
   log(...v: any[]): void {
@@ -44,5 +43,7 @@ class MockConsole {
     //
   }
 }
+
+export const Logger = canLog() ? console : new MockConsole();
 
 export default Logger;

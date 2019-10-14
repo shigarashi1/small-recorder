@@ -100,9 +100,9 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
   const onActionTarget = (v: TTarget) => {
     const { id, count, category, term } = v;
     if (id !== null && id !== '') {
-      props.updateTarget();
+      props.updateTarget({ id, data: { count, category, term } });
     } else {
-      props.createTarget();
+      props.createTarget({ count, category, term });
     }
   };
 

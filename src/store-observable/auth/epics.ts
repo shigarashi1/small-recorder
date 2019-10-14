@@ -52,6 +52,7 @@ const signUp: Epic<
       const { email, password, confirmation } = payload;
       // TODO: emailとかのバリデーションを実行する
       if (password !== confirmation) {
+        // FIXME: これはpageのactionに移動
         const businessError = new BusinessError('0001');
         return { payload, res: businessError };
       }
@@ -62,7 +63,7 @@ const signUp: Epic<
       if (res instanceof BusinessError || res instanceof ApiError) {
         return [errorActions.handle({ error: res }), authActions.signUp.failed({ params: payload, error: {} })];
       }
-      Logger().log('signUp', { user: res, username: payload.username });
+      Logger.log('signUp', { user: res, username: payload.username });
       // TODO: ユーザーを登録する
       return [];
     }),

@@ -36,12 +36,13 @@ const rootReducer = (state: any, action: any) => {
     state = undefined;
   }
   if (/_STARTED$/.test(action.type)) {
-    Logger().log('STARTED', action.type);
+    Logger.log('STARTED', action.type);
     state.utility.loading = true;
   }
   if (/_(DONE|FAILED)$/.test(action.type)) {
-    Logger().log('DONE|FAILED', action.type);
+    Logger.log('DONE|FAILED', action.type);
     state.utility.loading = false;
+    Logger.log('DONE|FAILED', state);
   }
   return reducers(state, action);
 };
