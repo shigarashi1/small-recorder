@@ -9,4 +9,4 @@ export const toOmitKeysObject = <T>(obj: any, keys: string[]) =>
 export const toOmitUndefinedValueKey = <T>(obj: T): any =>
   Object.keys(obj)
     .map(k => k as keyof T)
-    .reduce((pre, key) => (typeof obj[key] !== 'undefined' ? { ...pre, key: obj[key] } : { ...pre }), {});
+    .reduce((pre, key) => (typeof obj[key] !== 'undefined' ? { ...pre, [key]: obj[key] } : { ...pre }), {});

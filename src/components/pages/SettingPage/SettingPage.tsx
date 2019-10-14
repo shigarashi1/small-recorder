@@ -35,6 +35,7 @@ const getRows = (tabIndex: number, data: { categories: TCategory[]; targets: TTa
     _docId: v.id,
     id: i + 1,
     ...toPickKeysObject(v, ['category', 'count', 'term']),
+    category: (data.categories.find(vv => vv.id === v.category) || { name: '' }).name,
   }));
   return tabIndex === 0 ? categories : targets;
 };

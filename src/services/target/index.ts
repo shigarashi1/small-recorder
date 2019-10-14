@@ -28,7 +28,7 @@ const onChangedTargets = (
   return (
     getCollection('targets')
       .where('user', '==', userRef)
-      // .orderBy('updatedAt', 'asc') // TODO: indexを貼る必要がある
+      // .orderBy('createdAt', 'asc') // TODO: indexを貼る必要がある
       .onSnapshot(query, error, completed)
   );
 };
@@ -48,6 +48,7 @@ const updateTarget = async (id: string, params: NestedPartial<Omit<TTarget, 'id'
   const updatedAt = getServerTime();
   const { count, term } = params;
   const category = params.category ? toDocRef('categories', params.category) : undefined;
+  console.log(category);
   const data = toOmitUndefinedValueKey({ count, term, category });
   return getCollection('targets')
     .doc(id)
