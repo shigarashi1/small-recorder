@@ -28,7 +28,7 @@ const errorHandler: Epic<AnyAction, Action<IError> | Action<void>, AppState> = (
         ];
       }
       return [
-        errorActions.setSystemError(error.error), //
+        errorActions.setSystemError(error), //
         loadingActions.end(),
       ];
     }),

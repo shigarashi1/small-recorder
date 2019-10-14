@@ -49,7 +49,7 @@ const onChangedUser = (
     getCollection('users')
       .where('uid', '==', uid)
       // .orderBy('updatedAt', 'desc') // TODO: indexを貼る必要がある
-      .limit(3)
+      // .limit(3)
       .onSnapshot(query, error, completed)
   );
 };

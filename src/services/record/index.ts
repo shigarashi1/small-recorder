@@ -59,8 +59,8 @@ const onChangedRecords = (
   return (
     getCollection('records')
       .where('user', '==', userRef)
-      .where('date', '>=', params.from)
-      .where('date', '<=', params.to)
+      // .where('date', '>=', params.from)
+      // .where('date', '<=', params.to)
       // .orderBy('updatedAt', 'desc') // TODO: indexを貼る必要がある
       .onSnapshot(query, error, completed)
   );

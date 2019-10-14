@@ -28,12 +28,12 @@ export type TBusinessError = {
 // reducers
 type TErrorState = {
   systemErrors: IError[];
-  budinessErrors: TBusinessError[];
+  businessErrors: TBusinessError[];
 };
 
 const initialState: TErrorState = {
   systemErrors: [],
-  budinessErrors: [],
+  businessErrors: [],
 };
 
 const reducers = reducerWithInitialState(initialState)
@@ -41,16 +41,16 @@ const reducers = reducerWithInitialState(initialState)
   .case(actions.clearSystemError, (state, payload) => ({ ...state, systemErrors: [] }))
   .case(actions.setBusinessError, (state, payload) => {
     const newError: TBusinessError = {
-      id: generateId(state.budinessErrors),
+      id: generateId(state.businessErrors),
       error: payload,
     };
     return {
       ...state,
-      budinessErrors: [...state.budinessErrors, newError],
+      businessErrors: [...state.businessErrors, newError],
     };
   })
   .case(actions.clearBusinessError, (state, payload) => ({
     ...state,
-    budinessErrors: [...state.budinessErrors.filter(v => v.id !== payload)],
+    businessErrors: [...state.businessErrors.filter(v => v.id !== payload)],
   }));
 export const errorReducers = reducers;

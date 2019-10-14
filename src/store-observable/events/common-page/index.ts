@@ -18,6 +18,7 @@ export const commonPageActions = {
   onPushKeyboard: ac<TKeyboardKey>('onPushKeyboard'),
   onTogleSidebar: ac<boolean>('onTogleSidebar'),
   onClearSnack: ac<number>('onClearSnack'),
+  onClearError: ac<void>('onClearError'),
 };
 
 // onSignOut
@@ -38,6 +39,12 @@ const onClearSnack: Epic<AnyAction, Action<number>, AppState> = (action$, store)
     ofAction(commonPageActions.onClearSnack),
     map(({ payload }) => errorActions.clearBusinessError(payload)),
   );
+
+const onClearError: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+  action$.pipe(
+    ofAction(commonPageActions.onClearError),
+    map(({ payload }) => errorActions.clearSystemError()),
+  );
 //
 // onShowInfoDialog
 // onShowOkCancelDialog
@@ -47,4 +54,4 @@ const onClearSnack: Epic<AnyAction, Action<number>, AppState> = (action$, store)
 // onCloseKeyboard
 // onShowSnackbar
 
-export const commonPageEpics = combineEpics(onSignOut, onTogleSidebar, onClearSnack);
+export const commonPageEpics = combineEpics(onSignOut, onTogleSidebar, onClearSnack, onClearError);

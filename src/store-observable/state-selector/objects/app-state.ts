@@ -80,6 +80,6 @@ class AppStateSelector {
   }
 
   get businessErrors() {
-    return this.state.error.budinessErrors;
+    return this.state.error.businessErrors;
   }
 }

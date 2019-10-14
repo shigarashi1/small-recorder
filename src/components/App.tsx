@@ -9,6 +9,8 @@ import MainTemplate from './templates/MainTemplate/MainTemplate';
 import AppRouterGuard from '../containers/others/AppRouterGuard';
 import LoadingSpiner from '../containers/others/LoadingSpiner';
 import SnackStacker from '../containers/components/SnackStacker';
+import ErrorDialog from '../containers/components/dialogs/ErrorDialog';
+import ErrorBoundary from './molecules/ErrorBoundary/ErrorBoundary';
 
 const store = configureStore({});
 
@@ -25,7 +27,11 @@ class App extends Component {
             </AppRouterGuard>
           </Switch>
         </Router>
-        <SnackStacker />
+        {/* 共通部品 */}
+        <ErrorBoundary>
+          <SnackStacker />
+          <ErrorDialog />
+        </ErrorBoundary>
       </Provider>
     );
   }
