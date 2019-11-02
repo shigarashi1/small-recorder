@@ -1,5 +1,5 @@
 import { TCategory, TTarget, TRecord, TUser } from '../../types/firebase';
-import { IError } from '../../types/error';
+import { IError } from '../../types';
 
 export const isIError = (value: any): value is IError =>
   value.hasOwnProperty('code') && value.hasOwnProperty('message');

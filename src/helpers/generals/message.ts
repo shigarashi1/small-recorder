@@ -1,30 +1,22 @@
-import { TMessageType } from '../../types/error';
-import { IMessage } from '../../types/message';
-import { INFO_MESSAGES, WARN_MESSAGES, ERROR_MESSAGES } from '../../lookups/message';
+import { TErrorCode, TWarmCode, TInfoCode, TLangCode, getLabel, getMessageObj } from '../../i18n';
+import { IError } from '../../types';
 
-// FIXME: カリー化する
-export const getMessage = (type: TMessageType, targetCode: string, value: string[] = []): IMessage => {
-  const messageList = getMessageList(type);
-  const { code, message } = findMessage(targetCode, messageList, type);
-  return { code, message: replaceMessage(message, value) };
+const getErrorMessage = (code: TErrorCode) => (langCode: TLangCode) => getLabel(langCode, getMessageObj.error(code));
+
+const getWarmMessage = (code: TWarmCode) => (langCode: TLangCode) => getLabel(langCode, getMessageObj.warm(code));
+
+const getInfoMessage = (code: TInfoCode) => (langCode: TLangCode) => getLabel(langCode, getMessageObj.info(code));
+
+export const getMessage = {
+  error: getErrorMessage,
+  warm: getWarmMessage,
+  info: getInfoMessage,
 };
 
-const getMessageList = (type: TMessageType): IMessage[] => {
-  switch (type) {
-    case 'info':
-      return INFO_MESSAGES;
-    case 'warn':
-      return WARN_MESSAGES;
-    default:
-      return ERROR_MESSAGES;
-  }
-};
+export const replaceMessage = (message: string) => (params: string[] = []) =>
+  params.reduce((pre, cur, i) => pre.replace(`{${i}}`, cur), message);
 
-const findMessage = (code: string, messageList: IMessage[], type: TMessageType): IMessage =>
-  messageList.find(v => v.code === code) || {
-    code: 'unknown',
-    message: `not found message. type: ${type}, code: ${code}`,
-  };
-
-const replaceMessage = (message: string, value: string[]): string =>
-  value.reduce((pre, cur, i) => pre.replace(`{${i}}`, cur), message);
+export const toError = (code: string, message: string, params: string[] = []): IError => ({
+  code,
+  message: replaceMessage(message)(params),
+});

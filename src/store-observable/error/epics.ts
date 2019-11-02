@@ -5,7 +5,7 @@ import { mergeMap, tap } from 'rxjs/operators';
 import { AppState } from '../../store';
 import { errorActions } from '.';
 import { ApiError, SystemError, BusinessError } from '../../models/error';
-import { IError } from '../../types/error';
+import { IError } from '../../types';
 import { loadingActions } from '../utilities';
 import Logger from '../../helpers/generals/logger';
 

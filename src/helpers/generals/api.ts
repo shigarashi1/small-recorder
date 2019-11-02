@@ -6,7 +6,7 @@ export function interceptResponse(response: Response): Promise<any> | undefined 
   }
 
   if (response.statusText) {
-    throw new ApiError(response.statusText);
+    throw new ApiError('0000');
   }
 
   response.json().then((res: any) => {

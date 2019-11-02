@@ -1,18 +1,20 @@
-import { IError, TMessageType } from '../../types/error';
-import { getMessage } from '../../helpers/generals/message';
+import { getMessage, toError } from '../../helpers/generals/message';
+import { IError } from '../../types';
+import { TLangCode, TErrorCode } from '../../i18n';
 
-export class ErrorBase extends Error {
+export class ErrorBase<T = TErrorCode> extends Error {
   get error() {
     return this._error;
   }
 
   protected _error: IError;
 
-  constructor(error: any, type: TMessageType = 'err') {
+  constructor(error: T | any, params: string[] = [], langCode: TLangCode = 'jp') {
     super();
     if (typeof error === 'string') {
-      const { code, message } = getMessage(type, error);
-      this._error = { code, message };
+      const code = error as TErrorCode;
+      const message = getMessage.error(code)(langCode);
+      this._error = toError(code, message, params);
       return;
     }
 

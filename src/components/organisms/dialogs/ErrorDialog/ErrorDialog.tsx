@@ -6,7 +6,7 @@ import styles from './ErrorDialog.module.scss';
 import BaseDialog from '../BaseDialog/BaseDialog';
 
 import { TErrorDialogProps } from '../../../../containers/components/dialogs/ErrorDialog';
-import { IError } from '../../../../types/error';
+import { IError } from '../../../../types';
 
 type TProps = TErrorDialogProps;
 

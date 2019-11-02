@@ -4,6 +4,11 @@ export type NestedPartial<T> = {
   [K in keyof T]?: T[K] extends Array<infer R> ? Array<NestedPartial<R>> : NestedPartial<T[K]>;
 };
 
+export interface IError {
+  code: string;
+  message: string;
+}
+
 export enum EPath {
   Home = '/',
   Login = '/login',
@@ -20,8 +25,15 @@ export enum EPath {
 }
 
 export type TMode = 'CREATE' | 'EDIT' | 'DELETE';
-export const Mode: ObjectIndexes<TMode> = {
-  create: 'CREATE',
-  edit: 'EDIT',
-  delete: 'DELETE',
+export const Mode = {
+  create: 'CREATE' as TMode,
+  edit: 'EDIT' as TMode,
+  delete: 'DELETE' as TMode,
 };
+
+export type TI18nObj = {
+  jp: string;
+  en?: string;
+};
+
+export type TMaster<TCode = string, TValue = string> = Array<{ code: TCode; value: TValue }>;

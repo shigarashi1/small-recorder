@@ -1,7 +1,7 @@
 import { actionCreatorFactory } from 'typescript-fsa';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 //
-import { IError } from '../../types/error';
+import { IError } from '../../types';
 import { generateId } from '../../helpers/generals';
 
 export type THandleError = {
