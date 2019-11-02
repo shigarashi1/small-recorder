@@ -30,44 +30,14 @@ $ npm run build
 $ npm run test
 ```
 
-<!-- npm install
-// --save
-npm install --save  \
- redux \
- react-redux \
- @material-ui/core \
- @material-ui/styles \
- react-router \
- react-router-dom \
- react-test-renderer \
- firebase \
- lodash \
- node-sass \
- redux-thunk \
- reselect
+## 残タスク
 
-// --D
-npm install -D  \
- @types/react-redux \
- @types/react-router \
- @types/react-router-dom \
- @types/react-test-renderer \
- @types/enzyme \
- enzyme \
- @types/enzyme-adapter-react-16 \
- enzyme-adapter-react-16 \
- @types/lodash \
- @types/redux-mock-store \
- redux-mock-store \
- react-docgen-typescript-loader \
- husky \
- lint-staged \
- prettier \
- stylelint \
- tslint \
- tslint-config-prettier \
- tslint-react
-
-//
-@types/fetch-mock
-fetch-mock -->
+[ ] message のカリー化
+[ ] settingPage の調整
+[ ] user の登録
+[ ] メール未認証ユーザーへの通知画面
+[ ] recordPage の作成
+[ ] snackbar の設定
+[ ] batch 処理の構築
+[ ] i18n の導入
+[ ] 言語変更用をコンポーネント作成
