@@ -11,7 +11,7 @@ import CategoryDialog from '../../organisms/dialogs/CategoryDialog/CategoryDialo
 import SettingTable from '../../organisms/SettingTable/SettingTable';
 //
 import { TPageProps } from '../../../containers/pages/SettingPage';
-import { toPickKeysObject } from '../../../helpers/conv-object';
+import { pickKeysObject } from '../../../helpers/conv-object';
 import { TTarget, TCategory } from '../../../types/firebase';
 import { Nullable, TMode, Mode } from '../../../types';
 import TargetDialog from '../../organisms/dialogs/TargetDialog/TargetDialog';
@@ -30,12 +30,12 @@ const getRows = (tabIndex: number, data: { categories: TCategory[]; targets: TTa
     .map((v, i) => ({
       _docId: v.id,
       id: i + 1,
-      ...toPickKeysObject(v, ['name']),
+      ...pickKeysObject(v, ['name']),
     }));
   const targets = data.targets.map((v, i) => ({
     _docId: v.id,
     id: i + 1,
-    ...toPickKeysObject(v, ['category', 'count', 'term']),
+    ...pickKeysObject(v, ['category', 'count', 'term']),
     category: (data.categories.find(vv => vv.id === v.category) || { name: '' }).name,
   }));
   return tabIndex === 0 ? categories : targets;

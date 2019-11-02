@@ -1,4 +1,3 @@
-import { IApiResponseError } from '../../types/api';
 import { ApiError } from '../../models/error';
 
 export function interceptResponse(response: Response): Promise<any> | undefined {
@@ -10,7 +9,7 @@ export function interceptResponse(response: Response): Promise<any> | undefined 
     throw new ApiError(response.statusText);
   }
 
-  response.json().then((res: IApiResponseError) => {
+  response.json().then((res: any) => {
     throw new ApiError(res.errors[0]);
   });
 }

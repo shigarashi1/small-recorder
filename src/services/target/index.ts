@@ -3,7 +3,7 @@ import { ApiError } from '../../models/error';
 import { NestedPartial } from '../../types';
 import { TTarget } from '../../types/firebase';
 import { toTargets, blankFunc } from '../tools';
-import { toOmitUndefinedValueKey } from '../../helpers/conv-object';
+import { omitUndefinedValueKeys } from '../../helpers/conv-object';
 
 const readTargets = async (userId: string) => {
   const userRef = toDocRef('users', userId);
@@ -49,7 +49,7 @@ const updateTarget = async (id: string, params: NestedPartial<Omit<TTarget, 'id'
   const { count, term } = params;
   const category = params.category ? toDocRef('categories', params.category) : undefined;
   console.log(category);
-  const data = toOmitUndefinedValueKey({ count, term, category });
+  const data = omitUndefinedValueKeys({ count, term, category });
   return getCollection('targets')
     .doc(id)
     .update({ ...data, updatedAt })

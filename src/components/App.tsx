@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Router, Switch } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 //
 import { configureStore } from '../store-observable';
@@ -18,17 +18,15 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router history={history}>
-          <Switch>
-            <AppRouterGuard>
-              <LoadingSpiner>
-                <MainTemplate />
-              </LoadingSpiner>
-            </AppRouterGuard>
-          </Switch>
-        </Router>
-        {/* 共通部品 */}
         <ErrorBoundary>
+          <Router history={history}>
+            <LoadingSpiner>
+              <AppRouterGuard>
+                <MainTemplate />
+              </AppRouterGuard>
+            </LoadingSpiner>
+          </Router>
+          {/* 共通部品 */}
           <SnackStacker />
           <ErrorDialog />
         </ErrorBoundary>

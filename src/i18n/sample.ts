@@ -1,7 +1,6 @@
-export interface ILangItem {
+export interface ILangObj {
   jp: string;
   en?: string;
-  zh?: string;
 }
 
 export const Sample1Page = {
@@ -31,7 +30,7 @@ export const LANG_RESOURCE = {
   Sample2Page,
 };
 
-export const getLabel = (code: keyof ILangItem, resource: ILangItem): string => {
+export const getLabel = (code: keyof ILangObj, resource: ILangObj): string => {
   return typeof resource[code] !== 'undefined' ? String(resource[code]) : resource.jp;
 };
 

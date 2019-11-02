@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { CircularProgress } from '@material-ui/core';
 
 import styles from './LoadingSpiner.module.scss';
@@ -7,13 +7,7 @@ type TProps = {
   isLoading: boolean;
 };
 
-const LoadingSpiner: React.FC<TProps> = ({ isLoading: loading, children }) => {
-  const [isLoading, setLoading] = useState(loading);
-
-  useEffect(() => {
-    setLoading(loading);
-  }, [loading]);
-
+const LoadingSpiner: React.FC<TProps> = ({ isLoading, children }) => {
   return (
     <React.Fragment>
       {isLoading ? (

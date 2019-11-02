@@ -21,12 +21,9 @@ const AppRouterGuard: React.FC<TProps> = ({ isSignedIn, children, onChangedAuth 
       .catch(err => Logger.log('auto login failture'));
   }, [onChangedAuth]);
 
-  if (isSignedIn && children) {
-    return <React.Fragment> {children} </React.Fragment>;
-  }
-
   return (
     <React.Fragment>
+      {isSignedIn && children ? children : null}
       <Route exact={true} path={EPath.Login} component={LoginPageTemplate} />
       <Redirect from="/" to={EPath.Login} />
     </React.Fragment>

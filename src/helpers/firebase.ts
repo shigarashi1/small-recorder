@@ -22,15 +22,8 @@ export const editArray = <T extends TBase>(arr: T[], data: T, isDelete = false):
   const excludedArr = arr.filter(v => v.id !== data.id);
   // delete
   if (isDelete) {
-    if (isCategoryType(data)) {
-      const newData = {
-        ...data,
-        hasDeleted: true,
-      };
-      return [...arr, newData];
-    }
     return [...excludedArr];
   }
   // update
-  return [...excludedArr, data].sort((a, b) => +a - +b);
+  return [...excludedArr, data].sort((a, b) => +String(a.id) - +String(b.id));
 };

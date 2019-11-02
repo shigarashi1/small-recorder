@@ -21,7 +21,7 @@ const DateSelector: React.FC<TProps> = (props: TProps) => {
   return (
     <div id={styles.container}>
       <div className={styles.arrowButton}>
-        <Button onClick={removeDay}>
+        <Button onClick={backDay}>
           <Icon>keyboard_arrow_left</Icon>
         </Button>
       </div>
@@ -29,7 +29,7 @@ const DateSelector: React.FC<TProps> = (props: TProps) => {
         <InputDate {...props} />
       </div>
       <div className={styles.arrowButton}>
-        <Button onClick={addDay}>
+        <Button onClick={nextDay}>
           <Icon>keyboard_arrow_right</Icon>
         </Button>
       </div>
@@ -51,12 +51,12 @@ const DateSelector: React.FC<TProps> = (props: TProps) => {
     );
   }
 
-  function addDay() {
+  function nextDay() {
     const value = selectedDate ? selectedDate : new Date();
     onChangeDate(addDays(value, 1));
   }
 
-  function removeDay() {
+  function backDay() {
     const value = selectedDate ? selectedDate : new Date();
     onChangeDate(addDays(value, -1));
   }

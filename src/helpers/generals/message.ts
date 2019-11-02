@@ -2,6 +2,7 @@ import { TMessageType } from '../../types/error';
 import { IMessage } from '../../types/message';
 import { INFO_MESSAGES, WARN_MESSAGES, ERROR_MESSAGES } from '../../lookups/message';
 
+// FIXME: カリー化する
 export const getMessage = (type: TMessageType, targetCode: string, value: string[] = []): IMessage => {
   const messageList = getMessageList(type);
   const { code, message } = findMessage(targetCode, messageList, type);

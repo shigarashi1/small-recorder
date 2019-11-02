@@ -5,14 +5,6 @@ export interface IDialogBase {
   onClose: () => void;
 }
 
-export interface IInformationDialog {
-  hasOpen: boolean;
-  contexts: string;
-  title?: string;
-  actionName?: string;
-  onAction?: () => void;
-}
-
 export type TInfoDialog = IDialogBase;
 export type TOkCancelDialog = IDialogBase & {
   onOk: () => void;
