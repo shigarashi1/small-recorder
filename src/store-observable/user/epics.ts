@@ -38,4 +38,13 @@ const readUser: Epic<
     }),
   );
 
-export const userEpics = combineEpics(readUser);
+const createUser: Epic<AnyAction, Action<void>, AppState> = (action$, store) =>
+  action$.pipe(
+    ofAction(userActions.create.started),
+    map(({ payload }) => {
+      return { payload };
+    }),
+    mergeMap(action => []),
+  );
+
+export const userEpics = combineEpics(readUser, createUser);

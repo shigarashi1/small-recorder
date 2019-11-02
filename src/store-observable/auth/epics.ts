@@ -63,7 +63,12 @@ const signUp: Epic<
       if (res instanceof BusinessError || res instanceof ApiError) {
         return [errorActions.handle({ error: res }), authActions.signUp.failed({ params: payload, error: {} })];
       }
-      Logger.log('signUp', { user: res, username: payload.username });
+      if (!res.user) {
+        return [];
+      }
+
+      Logger.log('signUp', { uid: res.user.uid, username: payload.username });
+
       // TODO: ユーザーを登録する
       return [];
     }),
