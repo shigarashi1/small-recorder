@@ -14,6 +14,7 @@ import {
 import { omitKeysObject } from '../../helpers/conv-object';
 import { Nullable } from '../../types';
 import Logger from '../../helpers/generals/logger';
+import { by } from '../../helpers/generals';
 
 const toStoreType = <T extends TFirestoreBase, K extends TBase>(
   id: string,
@@ -23,7 +24,7 @@ const toStoreType = <T extends TFirestoreBase, K extends TBase>(
 
 // user
 export const toUser = (uid: string, q: QuerySnapshot): Nullable<TUser> =>
-  q.docs.map(v => toStoreType<FirebaseUser, TUser>(v.id, v.data())).find(v => v.uid === uid) || null;
+  q.docs.map(v => toStoreType<FirebaseUser, TUser>(v.id, v.data())).find(by('uid')(uid)) || null;
 
 // category
 export const toCategories = (q: QuerySnapshot): TCategory[] =>
