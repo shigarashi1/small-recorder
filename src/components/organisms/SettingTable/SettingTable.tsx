@@ -34,12 +34,15 @@ const getTableData = (data: Omit<TProps, 'onAction'>): { headers: string[]; rows
   if (tab === ESettingTableTab.category) {
     const rows = categories
       .filter(v => canShowDeleted || !v.hasDeleted)
-      .map((v, i) => ({
-        docId: String(v.id),
-        cells: [String(i + 1), v.name, v.hasDeleted ? '済' : ''],
-      }));
-    const headers = ['No.', 'カテゴリ名', '削除済'];
-    return { rows, headers };
+      .map((v, i) => {
+        const cells = [String(i + 1), v.name];
+        return {
+          docId: String(v.id),
+          cells: canShowDeleted ? [...cells, v.hasDeleted ? '済' : ''] : cells,
+        };
+      });
+    const headers = ['No.', 'カテゴリ名'];
+    return { rows, headers: canShowDeleted ? [...headers, '削除済'] : headers };
   }
   if (tab === ESettingTableTab.target) {
     const getCategory = findCategory(categories);
@@ -49,7 +52,7 @@ const getTableData = (data: Omit<TProps, 'onAction'>): { headers: string[]; rows
         docId: String(v.id),
         cells: [String(i + 1), getCategory(v.category).name, v.term, String(v.count)],
       }));
-    const headers = ['No.', 'カテゴリ名', '期間', '回数'];
+    const headers = ['No.', 'カテゴリ名', '期間', '目標回数'];
     return { rows, headers };
   }
   return { headers: [], rows: [] };
@@ -58,8 +61,8 @@ const getTableData = (data: Omit<TProps, 'onAction'>): { headers: string[]; rows
 const SettingTable: React.FC<TProps> = (props: TProps) => {
   const { headers, rows } = getTableData({ ...props });
 
-  const onAction = (mode: TMode, row: any) => () => {
-    props.onAction(mode, row._docId);
+  const onAction = (mode: TMode, docId: string) => () => {
+    props.onAction(mode, docId);
   };
 
   return (
