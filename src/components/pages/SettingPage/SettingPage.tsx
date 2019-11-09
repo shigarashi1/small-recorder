@@ -4,60 +4,33 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 //
 import styles from './SettingPage.module.scss';
 //
 import CategoryDialog from '../../organisms/dialogs/CategoryDialog/CategoryDialog';
 import SettingTable from '../../organisms/SettingTable/SettingTable';
+import TargetDialog from '../../organisms/dialogs/TargetDialog/TargetDialog';
 //
 import { TPageProps } from '../../../containers/pages/SettingPage';
-import { pickKeysObject } from '../../../helpers/conv-object';
 import { TTarget, TCategory } from '../../../types/firebase';
-import { Nullable, TMode, Mode } from '../../../types';
-import TargetDialog from '../../organisms/dialogs/TargetDialog/TargetDialog';
-import Logger from '../../../helpers/generals/logger';
-
-enum ETab {
-  category,
-  target,
-}
+import { Nullable, TMode, Mode, ESettingTableTab } from '../../../types';
+import { by } from '../../../helpers/generals';
 
 const LABELS = ['Record Category', 'Record Target'];
-
-const getRows = (tabIndex: number, data: { categories: TCategory[]; targets: TTarget[] }): any[] => {
-  const categories = data.categories
-    .filter(v => !v.hasDeleted) // TODO:論理削除もあとで表示できるようにする
-    .map((v, i) => ({
-      _docId: v.id,
-      id: i + 1,
-      ...pickKeysObject(v, ['name']),
-    }));
-  const targets = data.targets.map((v, i) => ({
-    _docId: v.id,
-    id: i + 1,
-    ...pickKeysObject(v, ['category', 'count', 'term']),
-    category: (data.categories.find(vv => vv.id === v.category) || { name: '' }).name,
-  }));
-  return tabIndex === 0 ? categories : targets;
-};
-
-const getYesNoDialogData = (context: string, onYes: () => void, onNo: () => void, onClose: () => void) => ({
-  hasOpen: true,
-  title: '確認',
-  context,
-  onYes,
-  onNo,
-  onClose,
-});
 
 type TProps = TPageProps;
 
 const SettingPage: React.FC<TProps> = (props: TProps) => {
-  const [tabIndex, setTabIndex] = useState(0);
-  // Category
+  const [tabIndex, setTabIndex] = useState(ESettingTableTab.category);
+  // dialogs
   const [hasOpenedCategory, setHasOpenedCategory] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<Nullable<TCategory>>(null);
   const [hasOpenedTarget, setHasOpenedTarget] = useState(false);
+  // checkbox
+  const [canShowDeleted, setCanShowDeleted] = useState(false);
+  // filteredData
+  const [selectedCategory, setSelectedCategory] = useState<Nullable<TCategory>>(null);
   const [selectedTarget, setSelectedTarget] = useState<Nullable<TTarget>>(null);
 
   const onCloseCategoryDialog = () => {
@@ -68,16 +41,18 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
     setHasOpenedTarget(false);
   };
 
+  const onCloseYesNoDialog = () => {
+    props.onCloseYesNoDialog();
+  };
+
   const onChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
-    if (tabIndex === newValue) {
-      return;
-    } else {
+    if (tabIndex !== newValue) {
       setTabIndex(newValue);
     }
   };
 
   const onShowCreateMode = () => {
-    if (tabIndex === ETab.category) {
+    if (tabIndex === ESettingTableTab.category) {
       setSelectedCategory(null);
       setHasOpenedCategory(true);
     } else {
@@ -86,9 +61,37 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
     }
   };
 
+  const getYesNoDialogData = (id: string) => {
+    if (tabIndex === ESettingTableTab.category) {
+      const { name } = props.categories.find(by('id')(id)) || { name: '' };
+      return {
+        hasOpen: true,
+        title: 'confirmation',
+        context: `${name}を削除しますか`,
+        onYes: () => {
+          props.deleteCategory({ id });
+        },
+        onNo: onCloseYesNoDialog,
+        onClose: onCloseYesNoDialog,
+      };
+    } else {
+      const { term, count } = props.targets.find(by('id')(id)) || { term: '', count: '' };
+      return {
+        hasOpen: true,
+        title: 'confirmation',
+        context: `${term} ${count}を削除しますか`,
+        onYes: () => {
+          props.deleteTarget({ id });
+        },
+        onNo: onCloseYesNoDialog,
+        onClose: onCloseYesNoDialog,
+      };
+    }
+  };
+
   const onActionTable = (mode: TMode, id: string) => {
     if (mode === Mode.edit) {
-      if (tabIndex === ETab.category) {
+      if (tabIndex === ESettingTableTab.category) {
         const category = props.categories.find(v => v.id === id) || null;
         setSelectedCategory(category);
         setHasOpenedCategory(true);
@@ -98,25 +101,13 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
         setHasOpenedTarget(true);
       }
     } else {
-      if (tabIndex === ETab.category) {
-        Logger.log('delete', id);
-        const { name } = props.categories.find(v => v.id === id) || { name: '' };
-        const onDelete = () => {
-          props.deleteCategory({ id });
-        };
-        const onClose = () => {
-          props.onCloseYesNoDialog();
-        };
-        const data = getYesNoDialogData(`${name}を削除しますか？`, onDelete, onClose, onClose);
-        props.onShowYesNoDialog(data);
-      } else {
-        Logger.log('delete', id);
-      }
+      const data = getYesNoDialogData(id);
+      props.onShowYesNoDialog(data);
     }
   };
 
   const onActionCategory = (v: TCategory) => {
-    if (v.id !== null && v.id !== '') {
+    if (v.id) {
       props.updateCategory({ id: String(v.id), name: v.name });
     } else {
       props.createCategory({ name: v.name });
@@ -125,14 +116,17 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
 
   const onActionTarget = (v: TTarget) => {
     const { id, count, category, term } = v;
-    if (id !== null && id !== '') {
+    if (id) {
       props.updateTarget({ id, data: { count, category, term } });
     } else {
       props.createTarget({ count, category, term });
     }
   };
 
-  const rows = getRows(tabIndex, { categories: props.categories, targets: props.targets });
+  const onChangeCanShowDeleted = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCanShowDeleted(!canShowDeleted);
+  };
+
   return (
     <React.Fragment>
       <div id={styles.root}>
@@ -152,12 +146,16 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
         </div>
         <div className={styles.contents}>
           <div className={styles.btnWrapper}>
+            <FormControlLabel
+              control={<Checkbox checked={canShowDeleted} onChange={onChangeCanShowDeleted} value="canShowDeleted" />}
+              label="Show deleted categories"
+            />
             <Button onClick={onShowCreateMode} color="primary" variant="contained">
               create
             </Button>
           </div>
           <div className={styles.table}>
-            <SettingTable rows={rows} onAction={onActionTable} />
+            <SettingTable {...props} tab={tabIndex} canShowDeleted={canShowDeleted} onAction={onActionTable} />
           </div>
         </div>
       </div>

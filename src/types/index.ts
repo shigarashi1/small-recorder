@@ -37,3 +37,8 @@ export type TI18nObj = {
 };
 
 export type TMaster<TCode = string, TValue = string> = Array<{ code: TCode; value: TValue }>;
+
+export enum ESettingTableTab {
+  category,
+  target,
+}

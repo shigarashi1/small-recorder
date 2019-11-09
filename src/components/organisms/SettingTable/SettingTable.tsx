@@ -9,23 +9,54 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 import styles from './SettingTable.module.scss';
-import { TMode, Mode } from '../../../types';
+import { TMode, Mode, ESettingTableTab } from '../../../types';
+import { TCategory, TTarget } from '../../../types/firebase';
+import { by } from '../../../helpers/generals';
 
-interface IProps {
-  rows: any[];
+type TProps = {
+  categories: TCategory[];
+  targets: TTarget[];
+  tab: ESettingTableTab;
+  canShowDeleted: boolean;
   onAction: (mode: TMode, id: string) => void;
-}
+};
 
-const getHeaderName = (rows: any[]) =>
-  rows.length > 0
-    ? Object.keys(rows[0])
-        .map(v => v)
-        .filter(v => v !== '_docId')
-    : [];
+type TRow = {
+  docId: string;
+  cells: string[];
+};
 
-const SettingTable: React.FC<IProps> = (props: IProps) => {
-  const { rows } = props;
-  const headers = getHeaderName(rows);
+const findCategory = (categories: TCategory[]) => (id: string) =>
+  categories.find(by('id')(id)) || { name: '', hasDeleted: true };
+
+const getTableData = (data: Omit<TProps, 'onAction'>): { headers: string[]; rows: TRow[] } => {
+  const { tab, categories, targets, canShowDeleted } = data;
+  if (tab === ESettingTableTab.category) {
+    const rows = categories
+      .filter(v => canShowDeleted || !v.hasDeleted)
+      .map((v, i) => ({
+        docId: String(v.id),
+        cells: [String(i + 1), v.name, v.hasDeleted ? '済' : ''],
+      }));
+    const headers = ['No.', 'カテゴリ名', '削除済'];
+    return { rows, headers };
+  }
+  if (tab === ESettingTableTab.target) {
+    const getCategory = findCategory(categories);
+    const rows = targets
+      .filter(v => canShowDeleted || !getCategory(v.category).hasDeleted)
+      .map((v, i) => ({
+        docId: String(v.id),
+        cells: [String(i + 1), getCategory(v.category).name, v.term, String(v.count)],
+      }));
+    const headers = ['No.', 'カテゴリ名', '期間', '回数'];
+    return { rows, headers };
+  }
+  return { headers: [], rows: [] };
+};
+
+const SettingTable: React.FC<TProps> = (props: TProps) => {
+  const { headers, rows } = getTableData({ ...props });
 
   const onAction = (mode: TMode, row: any) => () => {
     props.onAction(mode, row._docId);
@@ -46,14 +77,14 @@ const SettingTable: React.FC<IProps> = (props: IProps) => {
           <TableBody>
             {rows.map((row, rowIndex) => (
               <TableRow key={rowIndex}>
-                {headers.map((header, index) => (
-                  <TableCell key={index}>{row[header]}</TableCell>
+                {row.cells.map((cell, cellIndex) => (
+                  <TableCell key={cellIndex}>{cell}</TableCell>
                 ))}
                 <TableCell className={styles.actionCell}>
-                  <Fab id={styles.root} onClick={onAction(Mode.edit, row)} size="small" color="primary">
+                  <Fab id={styles.root} onClick={onAction(Mode.edit, row.docId)} size="small" color="primary">
                     <Icon>edit</Icon>
                   </Fab>
-                  <Fab id={styles.root} onClick={onAction(Mode.delete, row)} size="small" color="secondary">
+                  <Fab id={styles.root} onClick={onAction(Mode.delete, row.docId)} size="small" color="secondary">
                     <Icon>delete</Icon>
                   </Fab>
                 </TableCell>
