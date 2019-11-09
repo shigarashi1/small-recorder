@@ -19,8 +19,11 @@ const readRecords = async (userId: string, from: string, to: string) => {
 const createRecord = async (params: Omit<TRecord, 'id'>) => {
   const serverTime = getServerTime();
   const { date, record } = params;
-  const user = toDocRef('users', params.user);
-  const category = toDocRef('categories', params.category);
+  const user = toDocRef('users', typeof params.user === 'string' ? params.user : params.user.id || '');
+  const category = toDocRef(
+    'categories',
+    typeof params.category === 'string' ? params.category : params.category.id || '',
+  );
   const data = { date, record, user, category, createdAt: serverTime, updatedAt: serverTime };
   return getCollection('records')
     .add(data)
@@ -29,7 +32,9 @@ const createRecord = async (params: Omit<TRecord, 'id'>) => {
 
 const updateRecord = async (id: string, params: NestedPartial<Omit<TRecord, 'id' | 'user'>>) => {
   const updatedAt = getServerTime();
-  const category = params.category ? toDocRef('categories', params.category) : undefined;
+  const category = params.category
+    ? toDocRef('categories', typeof params.category === 'string' ? params.category : params.category.id || '')
+    : undefined;
   const data = { ...params, category };
   return getCollection('targets')
     .doc(id)

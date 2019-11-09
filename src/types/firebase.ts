@@ -10,6 +10,7 @@ type TTargetTerm = 'day' | 'week' | 'month';
 export type Firestore<T> = Omit<T, 'id'> & TFirestoreBase;
 
 export type TBase = {
+  // FIXME: Nullableは辞めたいね。。。
   id: Nullable<string>;
 };
 
@@ -35,8 +36,8 @@ export type TTarget = TBase & {
 export type FirebaseTarget = Firestore<TTarget>;
 
 export type TRecord = TBase & {
-  user: string;
-  category: string;
+  user: string | TUser;
+  category: string | TCategory;
   date: string;
   record: string;
 };

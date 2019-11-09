@@ -20,7 +20,7 @@ interface IProps {
   onAction: (v: TTarget) => void;
 }
 
-const getTitle = (id: Nullable<string>) => (id !== null && id !== '' ? 'Edit' : 'Create');
+const getTitle = (id: Nullable<string>) => (!!id ? 'Edit' : 'Create');
 
 const getTarget = (v: Nullable<TTarget>) => v || ({ id: '', count: 0, term: 'day', category: '' } as TTarget);
 
@@ -37,6 +37,7 @@ const TargetDialog: React.FC<IProps> = (props: IProps) => {
     setTarget({ ...target, [key]: value });
   };
 
+  // FIXME: onChangeValueに統合
   const onChangeNumber = (key: keyof TTarget) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = +e.target.value || 0;
     setTarget({ ...target, [key]: value });
@@ -84,7 +85,6 @@ const TargetDialog: React.FC<IProps> = (props: IProps) => {
           </FormControl>
           {/* count */}
           <FormControl className={styles.formControl}>
-            {/* TODO: 数値入力用のを作る */}
             <TextField className={styles.text} value={target.count} onChange={onChangeNumber('count')} label="Count" />
           </FormControl>
           {/* term */}

@@ -84,10 +84,10 @@ const SettingTable: React.FC<TProps> = (props: TProps) => {
                   <TableCell key={cellIndex}>{cell}</TableCell>
                 ))}
                 <TableCell className={styles.actionCell}>
-                  <Fab id={styles.root} onClick={onAction(Mode.edit, row.docId)} size="small" color="primary">
+                  <Fab onClick={onAction(Mode.edit, row.docId)} size="small" color="primary">
                     <Icon>edit</Icon>
                   </Fab>
-                  <Fab id={styles.root} onClick={onAction(Mode.delete, row.docId)} size="small" color="secondary">
+                  <Fab onClick={onAction(Mode.delete, row.docId)} size="small" color="secondary">
                     <Icon>delete</Icon>
                   </Fab>
                 </TableCell>

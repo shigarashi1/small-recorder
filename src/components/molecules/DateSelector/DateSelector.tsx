@@ -1,19 +1,18 @@
 import React from 'react';
+import { addDays } from 'date-fns';
+
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 
 import styles from './DateSelector.module.scss';
 import InputDate, { IProps as DateProps } from '../../atoms/InputDate/InputDate';
 
-import { addDays } from 'date-fns';
-
-interface IProps {
+type TProps = DateProps & {
   showToday: boolean;
   maltiButtonLabel?: string;
   onMaltiButtonClick?: () => void;
-}
-
-type TProps = IProps & DateProps;
+};
 
 const DateSelector: React.FC<TProps> = (props: TProps) => {
   const { selectedDate, onChangeDate, maltiButtonLabel, onMaltiButtonClick } = props;
@@ -21,30 +20,26 @@ const DateSelector: React.FC<TProps> = (props: TProps) => {
   return (
     <div id={styles.container}>
       <div className={styles.arrowButton}>
-        <Button onClick={backDay}>
+        <IconButton onClick={backDay} size="small">
           <Icon>keyboard_arrow_left</Icon>
-        </Button>
+        </IconButton>
       </div>
       <div className={styles.inputDate}>
         <InputDate {...props} />
       </div>
       <div className={styles.arrowButton}>
-        <Button onClick={nextDay}>
+        <IconButton onClick={nextDay} size="small">
           <Icon>keyboard_arrow_right</Icon>
-        </Button>
+        </IconButton>
       </div>
       {renderMaltiButton()}
     </div>
   );
 
   function renderMaltiButton() {
-    if (!maltiButtonLabel || !onMaltiButtonClick) {
-      return null;
-    }
-
-    return (
+    return !maltiButtonLabel || !onMaltiButtonClick ? null : (
       <div className={styles.button}>
-        <Button onClick={onMaltiButtonClick} variant="contained" color="primary">
+        <Button onClick={onMaltiButtonClick} variant="contained" color="primary" size="small">
           {maltiButtonLabel}
         </Button>
       </div>

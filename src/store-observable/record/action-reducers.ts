@@ -31,13 +31,12 @@ export const recordActions = actions;
 // reducers
 interface IRecordState {
   records: TRecord[];
-  date: TDateRange;
+  dateRange: TDateRange;
 }
 
 const initialState: IRecordState = {
   records: [],
-  date: {
-    // FIXME:
+  dateRange: {
     from: '',
     to: '',
   },

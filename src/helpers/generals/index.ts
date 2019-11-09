@@ -9,4 +9,6 @@ export const delayFunction = async <T>(func: () => T, ms: number = 100): Promise
 export const generateId = <T extends { id: number }>(array: T[]) =>
   array.length !== 0 ? Math.max(...array.map(v => v.id)) : 0;
 
-export const by = <T>(key: keyof T) => (val: any) => (data: T) => typeof val !== 'object' && data[key] === val;
+export const by = <T>(key: keyof T) => (v: any) => {
+  return (value: T): boolean => typeof v !== 'object' && value[key] === v;
+};

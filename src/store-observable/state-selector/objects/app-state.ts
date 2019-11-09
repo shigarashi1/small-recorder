@@ -62,7 +62,7 @@ class AppStateSelector {
   }
 
   get recordDateRange() {
-    return this.state.record.date;
+    return this.state.record.dateRange;
   }
 
   // utility
