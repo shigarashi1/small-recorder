@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect, Route, withRouter, RouteComponentProps } from 'react-router';
 
 import LoginPageTemplate from '../components/templates/LoginTemplate/LoginTemplate';
@@ -11,6 +11,7 @@ import Logger from '../helpers/generals/logger';
 type TProps = TRouterGuardProps & RouteComponentProps;
 
 const AppRouterGuard: React.FC<TProps> = ({ isSignedIn, children, onChangedAuth }) => {
+  const [hasAutoSignIn, setHasAutoSignIn] = useState(false);
   useEffect(() => {
     AuthenticationService.getAuthState()
       .then(user => {
@@ -18,14 +19,15 @@ const AppRouterGuard: React.FC<TProps> = ({ isSignedIn, children, onChangedAuth 
           onChangedAuth(user);
         }
       })
-      .catch(err => Logger.log('auto login failture'));
+      .catch(err => Logger.log('auto login failture'))
+      .finally(() => setHasAutoSignIn(true));
   }, [onChangedAuth]);
 
   return (
     <React.Fragment>
       {isSignedIn && children ? children : null}
+      {hasAutoSignIn ? <Redirect from="/" to={EPath.Login} /> : null}
       <Route exact={true} path={EPath.Login} component={LoginPageTemplate} />
-      <Redirect from="/" to={EPath.Login} />
     </React.Fragment>
   );
 };
