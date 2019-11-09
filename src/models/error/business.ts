@@ -8,7 +8,7 @@ import { getMessage, toError } from '../../helpers/generals/message';
 export class BusinessError extends ErrorBase<TWarmCode> {
   // eslint-disable-next-line
   constructor(code: TWarmCode, params: string[] = [], langCode: TLangCode = 'jp') {
-    super('');
+    super('0000');
     const message = getMessage.warm(code)(langCode);
     this._error = toError(code, message, params);
   }

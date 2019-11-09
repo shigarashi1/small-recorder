@@ -2,9 +2,7 @@ import { TErrorCode, TWarmCode, TInfoCode, TLangCode, getLabel, getMessageObj } 
 import { IError } from '../../types';
 
 const getErrorMessage = (code: TErrorCode) => (langCode: TLangCode) => getLabel(langCode, getMessageObj.error(code));
-
 const getWarmMessage = (code: TWarmCode) => (langCode: TLangCode) => getLabel(langCode, getMessageObj.warm(code));
-
 const getInfoMessage = (code: TInfoCode) => (langCode: TLangCode) => getLabel(langCode, getMessageObj.info(code));
 
 export const getMessage = {

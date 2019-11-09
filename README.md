@@ -33,6 +33,7 @@ $ npm run test
 ## 残タスク
 
 - [ ] message のカリー化
+	- [ ] messageもっといい感じにしたいよねー
 - [ ] settingPage の調整
 - [ ] user の登録
 - [ ] メール未認証ユーザーへの通知画面

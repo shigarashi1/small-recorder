@@ -24,7 +24,7 @@ const toStoreType = <T extends TFirestoreBase, K extends TBase>(
 
 // user
 export const toUser = (uid: string, q: QuerySnapshot): Nullable<TUser> =>
-  q.docs.map(v => toStoreType<FirebaseUser, TUser>(v.id, v.data())).find(by('uid')(uid)) || null;
+  q.docs.map(v => toStoreType<FirebaseUser, TUser>(v.id, v.data())).find(by<TUser>('uid')(uid)) || null;
 
 // category
 export const toCategories = (q: QuerySnapshot): TCategory[] =>

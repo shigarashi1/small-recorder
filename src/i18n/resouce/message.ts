@@ -1,34 +1,34 @@
 const error = {
   '0000': {
-    jp: '',
+    jp: '不明なエラーが発生しました. message: {0}, stacktrace: {1}',
     en: 'Unknown System Error.\nmessage: {0}, stacktrace: {1}',
   },
   '0001': {
-    jp: '',
+    jp: '不明なエラーが発生しました. message: {0}',
     en: 'System Error. message: {0}',
   },
   '0002': {
     jp: 'ログインに失敗しました.',
-    en: '',
+    en: 'failture login.',
   },
   '0003': {
     jp: 'ユーザーの作成に失敗しました.',
-    en: '',
+    en: 'failture create user.',
   },
   '0004': {
     jp: 'ログアウトに失敗しました.',
-    en: '',
+    en: 'failture logout.',
   },
 };
 
 const warm = {
   '0000': {
-    jp: '',
+    jp: '不正な操作です.',
     en: 'Bussiness Error. message: {0}',
   },
   '0001': {
     jp: 'パスワードが一致しません.',
-    en: '',
+    en: 'not correct password confirm.',
   },
   '0002': {
     jp: '',

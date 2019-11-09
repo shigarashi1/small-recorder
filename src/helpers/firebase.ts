@@ -1,9 +1,8 @@
-import { isCategoryType } from './generals/type-guard';
 import { TBase } from '../types/firebase';
 
 export const getMaxId = <T extends TBase>(arr: T[]): string => {
   if (arr.length === 0) {
-    return '1';
+    return '0';
   }
   return String(Math.max(...arr.map(v => (v.id !== null ? +v.id : 0))));
 };
