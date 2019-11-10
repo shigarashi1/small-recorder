@@ -21,7 +21,7 @@ export type TDateRange = {
 const ac = actionCreatorFactory('[record]');
 const actions = {
   setData: ac<TRecord[]>('setData'),
-  setDateRange: ac<TDateRange>(''),
+  setDateRange: ac<TDateRange>('setDateRange'),
   create: ac.async<TCreateRecord, {}, {}>('create'),
   update: ac.async<TUpdateRecord, {}, {}>('update'),
   delete: ac.async<TDeleteRecord, {}, {}>('delete'),
@@ -45,11 +45,11 @@ const initialState: IRecordState = {
 const reducers = reducerWithInitialState(initialState)
   .case(actions.setData, (state, payload) => ({
     ...state,
-    records: payload,
+    records: [...payload],
   }))
   .case(actions.setDateRange, (state, payload) => ({
     ...state,
-    date: { ...payload },
+    dateRange: { ...payload },
   }));
 
 export const recordReducers = reducers;

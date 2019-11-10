@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
+import Fab from '@material-ui/core/Fab';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -18,38 +19,41 @@ import DateSelector from '../../molecules/DateSelector/DateSelector';
 
 import styles from './RecordPage.module.scss';
 
+import { Nullable } from '../../../types';
 import { TRecord } from '../../../types/firebase';
 import { TPageProps } from '../../../containers/pages/RecordPage';
-import { Nullable } from '../../../types';
-import Fab from '@material-ui/core/Fab';
-import Logger from '../../../helpers/generals/logger';
 
 type TProps = TPageProps;
 
-const initialRecord = {
-  id: '',
-  user: '',
+const initialFormState = {
   category: '',
-  date: new Date(),
   record: '',
 };
 
 const RecordPage: React.FC<TProps> = (props: TProps) => {
-  const [formValue, setFormValue] = useState({ ...initialRecord });
+  const { changeDate, createRecord } = props;
+  const [displayDate, setDisplayDate] = useState(new Date());
+  const [formState, setFormState] = useState({ ...initialFormState });
+
+  const setToday = () => {
+    onChangeDate(null);
+  };
+
+  const onChangeDate = (date: Nullable<Date>) => {
+    setDisplayDate(date || new Date());
+  };
+
+  useEffect(() => {
+    changeDate({ date: displayDate });
+  }, [changeDate, displayDate]);
 
   const onChangeValue = (key: keyof TRecord) => (e: React.ChangeEvent<any>) => {
     const value = e.target.value || '';
-    setFormValue({ ...formValue, [key]: value });
+    setFormState({ ...formState, [key]: value });
   };
 
-  const onChangeDate = (v: Nullable<Date>) => {
-    const date = v ? v : new Date();
-    Logger.log('onChangeDate', date.toString() === 'Invalid Date');
-    setFormValue({ ...formValue, date });
-  };
-
-  const setToday = () => {
-    setFormValue({ ...formValue, date: new Date() });
+  const onCreateRecord = () => {
+    createRecord({ ...formState });
   };
 
   return (
@@ -68,7 +72,7 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
               <CardContent className={styles.content}>
                 <FormControl className={styles.formControl}>
                   <DateSelector
-                    selectedDate={formValue.date}
+                    selectedDate={displayDate}
                     showToday={true}
                     onChangeDate={onChangeDate}
                     maltiButtonLabel="Today"
@@ -92,7 +96,7 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                   <FormControl className={styles.formControl}>
                     <InputLabel htmlFor="category">Category</InputLabel>
                     <Select
-                      value={formValue.category}
+                      value={formState.category}
                       onChange={onChangeValue('category')}
                       inputProps={{
                         name: 'Category',
@@ -110,13 +114,13 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                   <FormControl className={styles.formControl}>
                     <TextField
                       className={styles.text}
-                      value={formValue.record}
+                      value={formState.record}
                       onChange={onChangeValue('record')}
                       label="Record"
                     />
                   </FormControl>
                   <div className={styles.btnWrapper}>
-                    <Fab size="small" color="primary">
+                    <Fab onClick={onCreateRecord} size="small" color="primary">
                       <Icon>post_add</Icon>
                     </Fab>
                   </div>

@@ -3,12 +3,7 @@ import { loginPageEpics } from './login-page';
 import { commonPageEpics } from './common-page';
 import { backgroundEpics } from './background';
 import { settingPageEpics } from './setting-page';
-
-// ===== background =====
-// onChangeUser
-// onChangeRecords
-// onChangeCategories
-// onChangeTargets
+import { recordPageEpics } from './record-page';
 
 // ===== record page =====
 // onCreateRecord
@@ -17,12 +12,6 @@ import { settingPageEpics } from './setting-page';
 // onChangeFilter
 
 // ===== setting page =====
-// onCreateCategory
-// onEditCategory
-// onDeleteCategory
-// onCreateTarget
-// onEditTarget
-// onDeleteTarget
 // onEditUser
 // onDeleteUser
 
@@ -32,4 +21,10 @@ import { settingPageEpics } from './setting-page';
 // ===== query page =====
 // onChangeFilter
 
-export const eventListenerEpics = combineEpics(loginPageEpics, commonPageEpics, backgroundEpics, settingPageEpics);
+export const eventListenerEpics = combineEpics(
+  loginPageEpics,
+  commonPageEpics,
+  backgroundEpics,
+  settingPageEpics,
+  recordPageEpics,
+);

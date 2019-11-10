@@ -4,7 +4,7 @@ import { MESSAGES } from './resouce';
 export type TLangCode = keyof TI18nObj;
 export type TErrorCode = keyof typeof MESSAGES.error;
 export type TWarmCode = keyof typeof MESSAGES.warm;
-export type TInfoCode = keyof typeof MESSAGES.warm;
+export type TInfoCode = keyof typeof MESSAGES.info;
 
 /**
  * ext: const title = getLabel('jp', LANG_RESOURCE.Sample1Page.title);

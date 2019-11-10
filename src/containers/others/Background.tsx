@@ -7,8 +7,6 @@ import { getState } from '../../store-observable/state-selector';
 import { backgroundActions } from '../../store-observable/events/background';
 //
 import { AuthenticationService, UserService, TargetService, CategoryService, RecordService } from '../../services';
-//
-import Logger from '../../helpers/generals/logger';
 
 function mapStateToProps(state: AppState) {
   return {
@@ -71,8 +69,7 @@ const Background: React.FC<TProps> = ({
     };
   }, [userId, dateRange, onChangedRecords, onThrowError]);
 
-  Logger.log('Background render');
-  return <React.Fragment />;
+  return null;
 };
 
 export default connect(

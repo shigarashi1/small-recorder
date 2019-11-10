@@ -35,8 +35,12 @@ const warm = {
     en: '',
   },
   '0003': {
-    jp: '',
-    en: '',
+    jp: 'カテゴリを選択してください.',
+    en: 'please select category.',
+  },
+  '0004': {
+    jp: '記録を入力してください.',
+    en: 'please input record.',
   },
 };
 

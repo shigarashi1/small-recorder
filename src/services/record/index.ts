@@ -2,7 +2,8 @@ import { TRecord } from '../../types/firebase';
 import { NestedPartial } from '../../types';
 import { getCollection, getServerTime, toDocRef, QuerySnapshot } from '../../lib/firebase';
 import { ApiError } from '../../models/error';
-import { toRecords, blankFunc } from '../tools';
+import { toRecords } from '../tools';
+import Logger from '../../helpers/generals/logger';
 
 const readRecords = async (userId: string, from: string, to: string) => {
   const userRef = toDocRef('users', userId);
@@ -56,17 +57,21 @@ const onChangedRecords = (
   error: (err: any) => void,
   completed?: () => void,
 ) => {
-  if (userId === '') {
-    return blankFunc;
+  if (!userId || !params.from || !params.to) {
+    return () => {
+      Logger.log(`not enough onChanged Paramaters`);
+    };
   }
   const query = (q: QuerySnapshot) => next(toRecords(q));
   const userRef = toDocRef('users', userId);
+  Logger.log(`onChanged Paramaters`, userRef, params);
   return (
     getCollection('records')
       .where('user', '==', userRef)
       // .where('date', '>=', params.from)
       // .where('date', '<=', params.to)
-      // .orderBy('updatedAt', 'desc') // TODO: indexを貼る必要がある
+      // .orderBy('date', 'asc')
+      // .orderBy('createAt', 'asc')
       .onSnapshot(query, error, completed)
   );
 };
