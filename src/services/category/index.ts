@@ -24,12 +24,10 @@ const onChangedCategories = (
   }
   const query = (q: QuerySnapshot) => next(toCategories(q));
   const userRef = toDocRef('users', userId);
-  return (
-    getCollection('categories')
-      .where('user', '==', userRef)
-      // .orderBy('updatedAt', 'asc') // TODO: indexを貼る必要がある
-      .onSnapshot(query, error, completed)
-  );
+  return getCollection('categories')
+    .where('user', '==', userRef)
+    .orderBy('createdAt', 'desc')
+    .onSnapshot(query, error, completed);
 };
 
 const createCategory = async (params: Omit<TCategory, 'id' | 'hasDeleted'>) => {

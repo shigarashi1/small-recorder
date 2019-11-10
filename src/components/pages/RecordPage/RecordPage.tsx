@@ -31,9 +31,15 @@ const initialFormState = {
 };
 
 const RecordPage: React.FC<TProps> = (props: TProps) => {
-  const { changeDate, createRecord } = props;
+  const { changeDate, createRecord, records } = props;
   const [displayDate, setDisplayDate] = useState(new Date());
   const [formState, setFormState] = useState({ ...initialFormState });
+
+  // record追加後に削除する
+  // FIXME: 登録完了後に初期化したいのであれば、formStateはreduxに持つしかない気が。。。
+  useEffect(() => {
+    setFormState({ ...initialFormState });
+  }, [records]);
 
   const setToday = () => {
     onChangeDate(null);
@@ -127,6 +133,15 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                 </div>
               </ExpansionPanelDetails>
             </ExpansionPanel>
+          </Grid>
+          <Grid item={true} xs={12} sm={6} md={4}>
+            {props.records.map((v, i) => (
+              <p key={i}>
+                {Object.keys(v)
+                  .map(k => k as keyof TRecord)
+                  .reduce((acc, cur) => acc + `${cur}: ${v[cur]}`, '')}
+              </p>
+            ))}
           </Grid>
         </Grid>
       </div>

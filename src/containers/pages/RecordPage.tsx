@@ -11,6 +11,7 @@ function mapStateToProps(state: AppState) {
   return {
     categories: getState.lookups.categories(state).filter(v => !v.hasDeleted),
     targets: getState.lookups.targets(state),
+    records: getState.record.records(state),
   };
 }
 

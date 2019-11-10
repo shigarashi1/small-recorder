@@ -25,7 +25,7 @@ const createRecord = async (params: Omit<TRecord, 'id'>) => {
     'categories',
     typeof params.category === 'string' ? params.category : params.category.id || '',
   );
-  const data = { date, record, user, category, createdAt: serverTime, updatedAt: serverTime };
+  const data = { date: +date, record, user, category, createdAt: serverTime, updatedAt: serverTime };
   return getCollection('records')
     .add(data)
     .catch(err => new ApiError(err));
@@ -65,15 +65,13 @@ const onChangedRecords = (
   const query = (q: QuerySnapshot) => next(toRecords(q));
   const userRef = toDocRef('users', userId);
   Logger.log(`onChanged Paramaters`, userRef, params);
-  return (
-    getCollection('records')
-      .where('user', '==', userRef)
-      // .where('date', '>=', params.from)
-      // .where('date', '<=', params.to)
-      // .orderBy('date', 'asc')
-      // .orderBy('createAt', 'asc')
-      .onSnapshot(query, error, completed)
-  );
+  return getCollection('records')
+    .where('user', '==', userRef)
+    .where('date', '<=', +params.to)
+    .where('date', '>=', +params.from)
+    .orderBy('date')
+    .orderBy('createdAt', 'desc')
+    .onSnapshot(query, error, completed);
 };
 
 export const RecordService = {

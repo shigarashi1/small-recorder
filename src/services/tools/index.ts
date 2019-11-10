@@ -46,7 +46,12 @@ export const toRecords = (q: QuerySnapshot): TRecord[] => {
   }));
   Logger.log('Records population', array);
   return array.map(v =>
-    toStoreType<FirebaseRecord, TRecord>(v.id, { ...v.data, user: v.user.id, category: v.category.id }),
+    toStoreType<FirebaseRecord, TRecord>(v.id, {
+      ...v.data,
+      date: String(v.data.date),
+      user: v.user.id,
+      category: v.category.id,
+    }),
   );
 };
 

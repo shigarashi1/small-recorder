@@ -24,12 +24,10 @@ const onChangedTargets = (
   }
   const query = (q: QuerySnapshot) => next(toTargets(q));
   const userRef = toDocRef('users', userId);
-  return (
-    getCollection('targets')
-      .where('user', '==', userRef)
-      // .orderBy('createdAt', 'asc') // TODO: indexを貼る必要がある
-      .onSnapshot(query, error, completed)
-  );
+  return getCollection('targets')
+    .where('user', '==', userRef)
+    .orderBy('createdAt', 'desc')
+    .onSnapshot(query, error, completed);
 };
 
 const createTarget = async (params: Omit<TTarget, 'id'>) => {

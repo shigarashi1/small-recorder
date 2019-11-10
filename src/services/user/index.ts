@@ -45,13 +45,9 @@ const onChangedUser = (
   if (uid === '') {
     return blankFunc;
   }
-  return (
-    getCollection('users')
-      .where('uid', '==', uid)
-      // .orderBy('updatedAt', 'desc') // TODO: indexを貼る必要がある
-      // .limit(3)
-      .onSnapshot(query, error, completed)
-  );
+  return getCollection('users')
+    .where('uid', '==', uid)
+    .onSnapshot(query, error, completed);
 };
 
 export const UserService = {
