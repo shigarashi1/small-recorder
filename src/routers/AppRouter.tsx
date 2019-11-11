@@ -9,6 +9,7 @@ import SearchPage from '../containers/pages/SearchPage';
 import SettingPage from '../containers/pages/SettingPage';
 import SamplePageTemplate from '../components/templates/SamplePageTemplate/SamplePageTemplate';
 import { EPath } from '../types/index';
+import config from '../configuration/config';
 
 class AppRouter extends Component {
   render() {
@@ -21,7 +22,7 @@ class AppRouter extends Component {
         <Route exact={true} path={EPath.Search} component={SearchPage} />
         <Route exact={true} path={EPath.Setting} component={SettingPage} />
         <Route exact={false} path={EPath.Sample} component={SamplePageTemplate} />
-        <Redirect from="/" to={EPath.Home} />
+        {config.isDev ? null : <Redirect from="/" to={EPath.Home} />}
       </Switch>
     );
   }

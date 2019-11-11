@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 import Fab from '@material-ui/core/Fab';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -22,6 +24,7 @@ import styles from './RecordPage.module.scss';
 import { Nullable } from '../../../types';
 import { TRecord } from '../../../types/firebase';
 import { TPageProps } from '../../../containers/pages/RecordPage';
+import { by } from '../../../helpers/generals';
 
 type TProps = TPageProps;
 
@@ -31,23 +34,26 @@ const initialFormState = {
 };
 
 const RecordPage: React.FC<TProps> = (props: TProps) => {
-  const { changeDate, createRecord, records } = props;
+  // FIXME: 下記は全てReduxへ
   const [displayDate, setDisplayDate] = useState(new Date());
   const [formState, setFormState] = useState({ ...initialFormState });
+  const [modifyId, setModifyId] = useState('');
+  const [recordText, setRecordText] = useState('');
 
-  // record追加後に削除する
-  // FIXME: 登録完了後に初期化したいのであれば、formStateはreduxに持つしかない気が。。。
-  useEffect(() => {
-    setFormState({ ...initialFormState });
-  }, [records]);
-
-  const setToday = () => {
-    onChangeDate(null);
-  };
+  const { changeDate, createRecord, records } = props;
+  const selectableCategories = props.categories.filter(v => !v.hasDeleted);
+  const showableCategories = props.categories.filter(v => records.map(vv => String(vv.category)).includes(v.id || ''));
 
   const onChangeDate = (date: Nullable<Date>) => {
     setDisplayDate(date || new Date());
   };
+
+  // record追加後に削除する
+  // FIXME: 登録完了後に初期化したいのであれば、formStateはreduxに持つしかない気が。。。
+  // 初期化するのはrecordだけでよくないか？
+  useEffect(() => {
+    setFormState({ ...initialFormState });
+  }, [records, setFormState]);
 
   useEffect(() => {
     changeDate({ date: displayDate });
@@ -60,6 +66,50 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
 
   const onCreateRecord = () => {
     createRecord({ ...formState });
+  };
+
+  const onSetToday = () => {
+    onChangeDate(null);
+  };
+
+  const onCloseYesNoDialog = () => {
+    props.onCloseYesNoDialog();
+  };
+
+  const getRecordText = (id: string): string => (records.find(by('id')(id)) || { record: '' }).record;
+
+  const onTogleEdit = (id: string) => () => {
+    const record = getRecordText(id);
+    if (id !== modifyId) {
+      setModifyId(id);
+      setRecordText(record);
+    } else {
+      if (record !== recordText) {
+        props.updateRecord({ id, record: recordText });
+      }
+      setModifyId('');
+      setRecordText('');
+    }
+  };
+
+  const onEditRecord = (e: React.ChangeEvent<any>) => {
+    const value = e.target.value || '';
+    setRecordText(value);
+  };
+
+  const onConfirmDelete = (id: string) => () => {
+    const record = getRecordText(id);
+    const data = {
+      hasOpen: true,
+      title: '確認',
+      context: `"${record}" を削除しますか`,
+      onYes: () => {
+        props.deleteRecord({ id });
+      },
+      onNo: onCloseYesNoDialog,
+      onClose: onCloseYesNoDialog,
+    };
+    props.onShowYesNoDialog(data);
   };
 
   return (
@@ -82,7 +132,7 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                     showToday={true}
                     onChangeDate={onChangeDate}
                     maltiButtonLabel="Today"
-                    onMaltiButtonClick={setToday}
+                    onMaltiButtonClick={onSetToday}
                     margin="none"
                   />
                 </FormControl>
@@ -109,7 +159,7 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                         id: 'category',
                       }}
                     >
-                      {props.categories.map((v, i) => (
+                      {selectableCategories.map((v, i) => (
                         <MenuItem key={i} value={String(v.id)}>
                           {v.name}
                         </MenuItem>
@@ -134,15 +184,66 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
               </ExpansionPanelDetails>
             </ExpansionPanel>
           </Grid>
-          <Grid item={true} xs={12} sm={6} md={4}>
-            {props.records.map((v, i) => (
-              <p key={i}>
-                {Object.keys(v)
-                  .map(k => k as keyof TRecord)
-                  .reduce((acc, cur) => acc + `${cur}: ${v[cur]}`, '')}
-              </p>
-            ))}
-          </Grid>
+          {showableCategories.map((category, i) => (
+            <Grid key={i} item={true} xs={12} sm={6} md={4}>
+              <ExpansionPanel defaultExpanded={true} square={true}>
+                <ExpansionPanelSummary
+                  expandIcon={<Icon>expand_more_icon</Icon>}
+                  aria-controls={`expand-record${i}`}
+                  id={`expand-record${i}`}
+                >
+                  <Typography variant="h5">{category.name}</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  <div className={styles.detail}>
+                    <List component="div" className={styles.list}>
+                      {records.filter(by('category')(category.id)).map((v, index) => (
+                        <ListItem key={index} className={styles.listItem}>
+                          <div className={styles.record}>
+                            {v.id !== modifyId ? (
+                              <p onClick={onTogleEdit(String(v.id))}>{v.record}</p>
+                            ) : (
+                              <TextField
+                                className={styles.text}
+                                value={recordText}
+                                onChange={onEditRecord}
+                                autoFocus={true}
+                                // FocusOutで更新
+                                onBlur={onTogleEdit(String(v.id))}
+                                variant="outlined"
+                                label="Edit Record"
+                              />
+                            )}
+                          </div>
+                          {/* space節約の為にeditボタンは廃止
+                          <div className={styles.action}>
+                            <Fab onClick={onTogleEdit(String(v.id))} size="small" color="primary">
+                              <Icon>edit</Icon>
+                            </Fab>
+                          </div> */}
+                          <div className={styles.action}>
+                            {/* // TODO: Stringを外す */}
+                            <Fab onClick={onConfirmDelete(String(v.id))} size="small" color="secondary">
+                              <Icon>delete</Icon>
+                            </Fab>
+                          </div>
+                        </ListItem>
+                      ))}
+                      <ListItem className={styles.listItem}>
+                        <TextField
+                          className={styles.text}
+                          fullWidth={true}
+                          // FocusOutで投稿
+                          // onBlur={onTogleEdit(String(v.id))}
+                          label="New Record"
+                        />
+                      </ListItem>
+                    </List>
+                  </div>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+            </Grid>
+          ))}
         </Grid>
       </div>
     </div>

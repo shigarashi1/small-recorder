@@ -9,7 +9,7 @@ import { recordPageActions } from '../../store-observable/events/record-page';
 
 function mapStateToProps(state: AppState) {
   return {
-    categories: getState.lookups.categories(state).filter(v => !v.hasDeleted),
+    categories: getState.lookups.categories(state),
     targets: getState.lookups.targets(state),
     records: getState.record.records(state),
   };

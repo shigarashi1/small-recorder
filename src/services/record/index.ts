@@ -64,7 +64,6 @@ const onChangedRecords = (
   }
   const query = (q: QuerySnapshot) => next(toRecords(q));
   const userRef = toDocRef('users', userId);
-  Logger.log(`onChanged Paramaters`, userRef, params);
   return getCollection('records')
     .where('user', '==', userRef)
     .where('date', '<=', +params.to)

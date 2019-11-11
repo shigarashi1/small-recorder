@@ -13,7 +13,9 @@ import YesNoDialog from '../../../containers/components/dialogs/YesNoDialog';
 const MainTemplate: React.FC<{}> = props => {
   return (
     <div id={styles.template}>
-      <Header />
+      <ErrorBoundary>
+        <Header />
+      </ErrorBoundary>
       <div className={styles.container}>
         <ErrorBoundary>
           <AppRouter />
@@ -26,10 +28,12 @@ const MainTemplate: React.FC<{}> = props => {
   function renderUtilities() {
     return (
       <React.Fragment>
-        <Background />
-        <Sidebar />
-        <NumberKeyboard />
-        <YesNoDialog />
+        <ErrorBoundary>
+          <Background />
+          <Sidebar />
+          <NumberKeyboard />
+          <YesNoDialog />
+        </ErrorBoundary>
       </React.Fragment>
     );
   }

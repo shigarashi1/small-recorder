@@ -31,4 +31,23 @@
       justify-content: flex-end;
     }
   }
+  .detail {
+    width: 100%;
+    .listItem {
+      width: 100%;
+      padding: 8px 0;
+      $width-action: 45px;
+      $width-record: calc(100% - #{$width-action});
+      .record {
+        width: $width-record;
+        .text {
+          width: 100%;
+          padding-right: 5px;
+        }
+      }
+      .action {
+        width: $width-action;
+      }
+    }
+  }
 }

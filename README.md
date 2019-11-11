@@ -33,7 +33,14 @@ $ npm run test
 ## 残タスク
 
 - [ ] message のカリー化
-	- [ ] messageもっといい感じにしたいよねー
+- [ ] message もっといい感じにしたいよねー
+
+  [ ] Type の id の Nullable を廃止する
+
+  [ ] type には population したまま渡してあげるようにする
+
+  [ ] sidebar に Selected ListItem を利用する
+
 - [ ] settingPage の調整
 - [ ] user の登録
 - [ ] メール未認証ユーザーへの通知画面
