@@ -34,11 +34,13 @@ const initialFormState = {
 };
 
 const RecordPage: React.FC<TProps> = (props: TProps) => {
-  // FIXME: 下記は全てReduxへ
   const [displayDate, setDisplayDate] = useState(new Date());
+
+  // FIXME: 下記は全てReduxへ
   const [formState, setFormState] = useState({ ...initialFormState });
   const [modifyId, setModifyId] = useState('');
   const [recordText, setRecordText] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const { changeDate, createRecord, records } = props;
   const selectableCategories = props.categories.filter(v => !v.hasDeleted);
@@ -66,6 +68,16 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
 
   const onCreateRecord = () => {
     createRecord({ ...formState });
+  };
+
+  const onSetCategoryRef = (id: string) => () => {
+    setSelectedCategory(id);
+  };
+
+  const onCreateRecordByCategory = (category: string) => () => {
+    createRecord({ record: recordText, category });
+    setRecordText('');
+    setSelectedCategory('');
   };
 
   const onSetToday = () => {
@@ -233,8 +245,11 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                         <TextField
                           className={styles.text}
                           fullWidth={true}
+                          value={category.id !== selectedCategory ? '' : recordText}
+                          onChange={onEditRecord}
+                          onFocus={onSetCategoryRef(String(category.id))}
                           // FocusOutで投稿
-                          // onBlur={onTogleEdit(String(v.id))}
+                          onBlur={onCreateRecordByCategory(String(category.id))}
                           label="New Record"
                         />
                       </ListItem>
