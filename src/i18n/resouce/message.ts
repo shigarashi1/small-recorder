@@ -42,6 +42,10 @@ const warm = {
     jp: '記録を入力してください.',
     en: 'please input record.',
   },
+  '0005': {
+    jp: '削除対象となる記録がありません.',
+    en: 'not found record.',
+  },
 };
 
 const info = {

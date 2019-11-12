@@ -4,6 +4,7 @@ import { getCollection, getServerTime, toDocRef, QuerySnapshot } from '../../lib
 import { ApiError } from '../../models/error';
 import { toRecords } from '../tools';
 import Logger from '../../helpers/generals/logger';
+import { omitUndefinedValueKeys } from '../../helpers/conv-object';
 
 const readRecords = async (userId: string, from: string, to: string) => {
   const userRef = toDocRef('users', userId);
@@ -33,11 +34,12 @@ const createRecord = async (params: Omit<TRecord, 'id'>) => {
 
 const updateRecord = async (id: string, params: NestedPartial<Omit<TRecord, 'id' | 'user'>>) => {
   const updatedAt = getServerTime();
-  const category = params.category
-    ? toDocRef('categories', typeof params.category === 'string' ? params.category : params.category.id || '')
-    : undefined;
-  const data = { ...params, category };
-  return getCollection('targets')
+  const category =
+    typeof params.category !== 'undefined'
+      ? toDocRef('categories', typeof params.category === 'string' ? params.category : params.category.id || '')
+      : undefined;
+  const data = omitUndefinedValueKeys({ ...params, category });
+  return getCollection('records')
     .doc(id)
     .update({ ...data, updatedAt })
     .catch(err => new ApiError(err));

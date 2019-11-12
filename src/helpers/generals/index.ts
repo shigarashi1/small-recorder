@@ -27,3 +27,11 @@ export const matchCondition = <T1, T2 = undefined>(
   }
   return ret;
 };
+
+export const matchConditionAll = <T1, T2 = undefined>(
+  conditions: Array<[T1, boolean]>,
+  defaultValue: T1 | T2,
+): T1 | T1[] | T2 => {
+  const retList = conditions.filter(v => !!v[1]).map(v => v[0]);
+  return retList.length > 0 ? retList : defaultValue;
+};

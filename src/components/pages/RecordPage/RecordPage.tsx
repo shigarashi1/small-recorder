@@ -75,6 +75,9 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
   };
 
   const onCreateRecordByCategory = (category: string) => () => {
+    if (!recordText) {
+      return;
+    }
     createRecord({ record: recordText, category });
     setRecordText('');
     setSelectedCategory('');

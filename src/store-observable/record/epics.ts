@@ -10,6 +10,7 @@ import { WrapAction } from '../types';
 import { errorActions } from '../error';
 import { THandleError } from '../error/action-reducers';
 import { ApiError } from '../../models/error';
+import { loadingActions } from '../utilities';
 
 // epics
 const createRecord: Epic<
@@ -42,24 +43,55 @@ const createRecord: Epic<
 
 const updateRecord: Epic<
   AnyAction,
-  Action<void> | Action<Parameters<typeof recordActions.update.done>[0]>,
+  | Action<THandleError>
+  | Action<Parameters<typeof recordActions.update.done>[0]>
+  | Action<Parameters<typeof recordActions.update.failed>[0]>,
   AppState
 > = (action$, store) =>
   action$.pipe(
     ofAction(recordActions.update.started),
-    map(({ payload }) => payload),
-    mergeMap(action => []),
+    mergeMap(async ({ payload }) => {
+      const { id, data } = payload;
+      const res = await RecordService.updateRecord(id, data);
+      return { payload, res };
+    }),
+    mergeMap(({ res, payload }) => {
+      if (res instanceof ApiError) {
+        return [
+          errorActions.handle({ error: res }), //
+          recordActions.update.failed({ params: payload, error: {} }),
+        ];
+      }
+      return [recordActions.update.done({ params: payload, result: {} })];
+    }),
   );
 
 const deleteRecord: Epic<
   AnyAction,
-  Action<void> | Action<Parameters<typeof recordActions.delete.done>[0]>,
+  | Action<void>
+  | Action<THandleError>
+  | Action<Parameters<typeof recordActions.delete.done>[0]>
+  | Action<Parameters<typeof recordActions.delete.failed>[0]>,
   AppState
 > = (action$, store) =>
   action$.pipe(
     ofAction(recordActions.delete.started),
-    map(({ payload }) => payload),
-    mergeMap(action => []),
+    mergeMap(async ({ payload }) => {
+      const res = await RecordService.deleteRecord(payload.id);
+      return { payload, res };
+    }),
+    mergeMap(({ res, payload }) => {
+      if (res instanceof ApiError) {
+        return [
+          errorActions.handle({ error: res }), //
+          recordActions.delete.failed({ params: payload, error: {} }),
+        ];
+      }
+      return [
+        loadingActions.end(), // なぜか知らないが、ローディングが消えないので.
+        recordActions.delete.done({ params: payload, result: {} }),
+      ];
+    }),
   );
 
 export const recordEpics = combineEpics(createRecord, updateRecord, deleteRecord);

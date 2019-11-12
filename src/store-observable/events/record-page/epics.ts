@@ -4,7 +4,7 @@ import { ofAction } from 'typescript-fsa-redux-observable-of-action';
 import { map, filter, debounceTime } from 'rxjs/operators';
 import { AppState } from '../../../store';
 import { recordPageActions } from '.';
-import { isInvalidDate, matchCondition } from '../../../helpers/generals';
+import { isInvalidDate, matchCondition, by } from '../../../helpers/generals';
 import { formatDate, isPast } from '../../../helpers/generals/date';
 import { recordActions } from '../../record';
 import { TDateRange } from '../../record/action-reducers';
@@ -52,4 +52,45 @@ const createRecord: Epic<
     }),
   );
 
-export const recordPageEpics = combineEpics(changeDate, createRecord);
+const deleteRecord: Epic<
+  AnyAction,
+  Action<void> | WrapAction<typeof recordActions.delete.started> | Action<THandleError>,
+  AppState
+> = (action$, store) =>
+  action$.pipe(
+    ofAction(recordPageActions.deleteRecord),
+    debounceTime(200),
+    map(({ payload }) => {
+      const stateSelector = appStateSelector(store.value);
+      const records = stateSelector.records;
+      return { payload, records };
+    }),
+    map(({ payload, records }) => {
+      const { id } = payload;
+      const errorCode = matchCondition<TWarmCode>([['0005', !id], ['0005', !records.find(by('id')(id))]], undefined);
+      if (errorCode) {
+        return errorActions.handle({ error: new BusinessError(errorCode) });
+      }
+      return recordActions.delete.started({ id });
+    }),
+  );
+
+const updateRecord: Epic<
+  AnyAction,
+  Action<void> | WrapAction<typeof recordActions.update.started> | Action<THandleError>,
+  AppState
+> = (action$, store) =>
+  action$.pipe(
+    ofAction(recordPageActions.updateRecord),
+    debounceTime(200),
+    map(({ payload }) => {
+      const { id, record } = payload;
+      const errorCode = matchCondition<TWarmCode>([['0005', !id], ['0005', !record]], undefined);
+      if (errorCode) {
+        return errorActions.handle({ error: new BusinessError(errorCode) });
+      }
+      return recordActions.update.started({ id, data: { record } });
+    }),
+  );
+
+export const recordPageEpics = combineEpics(changeDate, createRecord, updateRecord, deleteRecord);
