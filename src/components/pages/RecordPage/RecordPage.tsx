@@ -220,7 +220,6 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                                 value={recordText}
                                 onChange={onEditRecord}
                                 autoFocus={true}
-                                // FocusOutで更新
                                 onBlur={onTogleEdit(String(v.id))}
                                 variant="outlined"
                                 label="Edit Record"
@@ -248,7 +247,6 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                           value={category.id !== selectedCategory ? '' : recordText}
                           onChange={onEditRecord}
                           onFocus={onSetCategoryRef(String(category.id))}
-                          // FocusOutで投稿
                           onBlur={onCreateRecordByCategory(String(category.id))}
                           label="New Record"
                         />
