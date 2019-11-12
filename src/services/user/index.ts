@@ -7,6 +7,7 @@ import { toUser, blankFunc } from '../tools';
 const readUser = async (uid: string) => {
   return await getCollection('users')
     .where('uid', '==', uid)
+    .orderBy('createdAt')
     .get()
     .then(q => toUser(uid, q))
     .catch(err => new ApiError(err));
@@ -47,6 +48,7 @@ const onChangedUser = (
   }
   return getCollection('users')
     .where('uid', '==', uid)
+    .orderBy('createdAt')
     .onSnapshot(query, error, completed);
 };
 

@@ -69,7 +69,7 @@ const onChangedRecords = (
     .where('date', '<=', +params.to)
     .where('date', '>=', +params.from)
     .orderBy('date')
-    .orderBy('createdAt', 'desc')
+    .orderBy('createdAt')
     .onSnapshot(query, error, completed);
 };
 

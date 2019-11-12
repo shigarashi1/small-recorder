@@ -26,7 +26,7 @@ const onChangedTargets = (
   const userRef = toDocRef('users', userId);
   return getCollection('targets')
     .where('user', '==', userRef)
-    .orderBy('createdAt', 'desc')
+    .orderBy('createdAt')
     .onSnapshot(query, error, completed);
 };
 

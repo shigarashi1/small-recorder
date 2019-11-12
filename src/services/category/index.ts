@@ -26,7 +26,7 @@ const onChangedCategories = (
   const userRef = toDocRef('users', userId);
   return getCollection('categories')
     .where('user', '==', userRef)
-    .orderBy('createdAt', 'desc')
+    .orderBy('createdAt')
     .onSnapshot(query, error, completed);
 };
 
