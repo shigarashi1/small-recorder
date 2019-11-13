@@ -11,7 +11,7 @@ import config from '../configuration/config';
 
 type TProps = TRouterGuardProps & RouteComponentProps;
 
-const AppRouterGuard: React.FC<TProps> = ({ isSignedIn, children, onChangedAuth }) => {
+const AppRouterGuard: React.FC<TProps> = ({ isSignedIn, uid, userId, children, onChangedAuth }) => {
   const [hasAutoSignIn, setHasAutoSignIn] = useState(false);
   useEffect(() => {
     AuthenticationService.getAuthState()
@@ -22,7 +22,7 @@ const AppRouterGuard: React.FC<TProps> = ({ isSignedIn, children, onChangedAuth 
       })
       .catch(err => Logger.log('auto login failture'))
       .finally(() => setHasAutoSignIn(true));
-  }, [onChangedAuth]);
+  }, [onChangedAuth, uid, userId]);
 
   if (!hasAutoSignIn) {
     return null;

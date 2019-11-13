@@ -32,20 +32,28 @@ $ npm run test
 
 ## 残タスク
 
-- [ ] message のカリー化
-- [ ] message もっといい感じにしたいよねー
+- [x] Type の id の Nullable を廃止する
+- [x] user の登録
 
-  [ ] Type の id の Nullable を廃止する
+- [ ] type には population したまま渡してあげるようにする
 
-  [ ] type には population したまま渡してあげるようにする
+- [ ] reportPage の設定
+- [ ] searchPage の設定
 
-  [ ] sidebar に Selected ListItem を利用する
+- [ ] settingPage、recordPage の調整（ダイアログとかを redux 経由にする）
 
-- [ ] settingPage の調整
-- [ ] user の登録
-- [ ] メール未認証ユーザーへの通知画面
-- [ ] recordPage の作成
-- [ ] snackbar の設定
-- [ ] batch 処理の構築
-- [ ] i18n の導入
+- [ ] loading の調整
+
 - [ ] 言語変更用をコンポーネント作成
+
+- [ ] message もっといい感じにしたい
+
+- [ ] i18n の導入
+
+- [ ] username 　変更できるようにする
+- [ ] user の削除ができるようにする
+
+- [ ] user 削除時に batch でユーザーのデータを消す
+
+- [ ] snackbar で複数のメッセージを表示できるようにする
+- [ ] メール未認証ユーザーへの通知画面

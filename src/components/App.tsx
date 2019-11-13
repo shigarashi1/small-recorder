@@ -11,6 +11,7 @@ import LoadingSpiner from '../containers/others/LoadingSpiner';
 import SnackStacker from '../containers/components/SnackStacker';
 import ErrorDialog from '../containers/components/dialogs/ErrorDialog';
 import ErrorBoundary from './molecules/ErrorBoundary/ErrorBoundary';
+import InformationDialog from '../containers/components/dialogs/InfoDialog';
 
 const store = configureStore({});
 
@@ -21,14 +22,19 @@ class App extends Component {
         <ErrorBoundary>
           <Router history={history}>
             <LoadingSpiner>
-              <AppRouterGuard>
-                <MainTemplate />
-              </AppRouterGuard>
+              <ErrorBoundary>
+                <AppRouterGuard>
+                  <MainTemplate />
+                </AppRouterGuard>
+              </ErrorBoundary>
             </LoadingSpiner>
           </Router>
           {/* 共通部品 */}
-          <SnackStacker />
-          <ErrorDialog />
+          <ErrorBoundary>
+            <SnackStacker />
+            <ErrorDialog />
+            <InformationDialog />
+          </ErrorBoundary>
         </ErrorBoundary>
       </Provider>
     );

@@ -69,6 +69,10 @@ export const getState = {
         appStateSelector,
         selector => selector.selectionDialogData,
       ),
+      info: createSelector(
+        appStateSelector,
+        selector => selector.infoDialog,
+      ),
     },
   },
   // error

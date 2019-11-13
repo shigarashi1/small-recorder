@@ -5,7 +5,7 @@ import { mergeMap } from 'rxjs/operators';
 import { AppState } from '../../store';
 import { authActions } from '.';
 import { AuthenticationService } from '../../services/auth';
-import { ApiError, BusinessError } from '../../models/error';
+import { ApiError } from '../../models/error';
 import { replace, CallHistoryMethodAction } from 'connected-react-router';
 import { EPath } from '../../types';
 import { userActions } from '../user';
@@ -13,7 +13,6 @@ import { rootActions } from '../actions';
 import { errorActions } from '../error';
 import { THandleError } from '../error/action-reducers';
 import { WrapAction } from '../types';
-import Logger from '../../helpers/generals/logger';
 
 const signIn: Epic<
   AnyAction,
@@ -26,51 +25,58 @@ const signIn: Epic<
   action$.pipe(
     ofAction(authActions.signIn.started),
     mergeMap(async ({ payload }) => {
-      const res = await AuthenticationService.signIn(payload.email, payload.password);
+      const { email, password } = payload;
+      const res = await AuthenticationService.signIn(email, password);
       return { payload, res };
     }),
     mergeMap(({ payload, res }) => {
       if (res instanceof ApiError) {
-        return [errorActions.handle({ error: res }), authActions.signIn.failed({ params: payload, error: {} })];
+        return [
+          errorActions.handle({ error: res }), //
+          authActions.signIn.failed({ params: payload, error: {} }),
+        ];
       }
       const { user } = res;
       return [
         authActions.signIn.done({ params: payload, result: { user } }),
-        // userActions.read.started({}) // MEMO: backgroundで自動読み込みにしたので不要
+        userActions.read.started({}), // MEMO: backgroundで自動読み込みにしたので不要
       ];
     }),
   );
 
 const signUp: Epic<
   AnyAction,
-  Action<THandleError> | Action<void> | WrapAction<typeof authActions.signUp.failed>,
+  | Action<THandleError>
+  | Action<void>
+  | WrapAction<typeof userActions.create.started>
+  | WrapAction<typeof authActions.signUp.failed>
+  | WrapAction<typeof authActions.signUp.done>,
   AppState
 > = (action$, store) =>
   action$.pipe(
     ofAction(authActions.signUp.started),
     mergeMap(async ({ payload }) => {
-      const { email, password, confirmation } = payload;
-      // TODO: emailとかのバリデーションを実行する
-      if (password !== confirmation) {
-        // FIXME: これはpageのactionに移動
-        const businessError = new BusinessError('0001');
-        return { payload, res: businessError };
-      }
+      const { email, password } = payload;
       const res = await AuthenticationService.signUp(email, password);
       return { payload, res };
     }),
     mergeMap(({ payload, res }) => {
-      if (res instanceof BusinessError || res instanceof ApiError) {
-        return [errorActions.handle({ error: res }), authActions.signUp.failed({ params: payload, error: {} })];
+      if (res instanceof ApiError) {
+        return [
+          errorActions.handle({ error: res }), //
+          authActions.signUp.failed({ params: payload, error: {} }),
+        ];
       }
-      if (!res.user) {
-        return [];
+      if (!res.user || !res.user.uid) {
+        return [
+          errorActions.handle({ error: new ApiError('0003') }), //
+          authActions.signUp.failed({ params: payload, error: {} }),
+        ];
       }
-
-      Logger.log('signUp', { uid: res.user.uid, username: payload.username });
-
-      // TODO: ユーザーを登録する
-      return [];
+      return [
+        authActions.signUp.done({ params: payload, result: {} }), //
+        userActions.create.started({ uid: res.user.uid, username: payload.username }),
+      ];
     }),
   );
 

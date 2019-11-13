@@ -19,6 +19,6 @@ const initialState: TInfoDialog = {
   onClose: () => console.log('close'),
 };
 const reducers = reducerWithInitialState(initialState)
-  .case(actions.show, (state, payload) => ({ ...state, payload }))
+  .case(actions.show, (state, payload) => ({ ...state, ...payload }))
   .case(actions.close, (state, payload) => ({ ...initialState }));
 export const infoDialogReducers = reducers;

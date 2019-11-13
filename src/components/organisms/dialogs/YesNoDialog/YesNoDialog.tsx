@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 
 import styles from './YesNoDialog.module.scss';
@@ -9,28 +9,25 @@ import { TYesNoDialogProps } from '../../../../containers/components/dialogs/Yes
 
 type TProps = TYesNoDialogProps;
 
-const YesNoDialog: React.FC<TProps> = (props: TProps) => {
-  const [state, setState] = useState(props);
-  useEffect(() => {
-    setState(props);
-  }, [props]);
-
-  const { hasOpen, onClose, title, context } = state;
-
-  const onYes = () => {
-    props.onYes();
-    props.onClose();
+const YesNoDialog: React.FC<TProps> = ({ hasOpen, title, context, onCloseYesNoDialog, onYes, onNo }) => {
+  const onClose = () => {
+    onCloseYesNoDialog();
   };
 
-  const onNo = () => {
-    props.onNo();
-    props.onClose();
+  const onSelectYes = () => {
+    onYes();
+    onClose();
+  };
+
+  const onSelectNo = () => {
+    onNo();
+    onClose();
   };
 
   const buttonChildren = (
     <div className={styles.btnWrapper}>
-      <Button onClick={onNo}>No</Button>
-      <Button onClick={onYes}>Yes</Button>
+      <Button onClick={onSelectNo}>No</Button>
+      <Button onClick={onSelectYes}>Yes</Button>
     </div>
   );
 

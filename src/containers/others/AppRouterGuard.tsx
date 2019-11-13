@@ -10,6 +10,8 @@ import { backgroundActions } from '../../store-observable/events/background';
 function mapStateToProps(state: AppState) {
   return {
     isSignedIn: getState.auth.isSignedIn(state),
+    uid: getState.auth.uid(state),
+    userId: getState.user.id(state),
   };
 }
 

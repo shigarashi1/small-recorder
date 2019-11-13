@@ -7,8 +7,8 @@ import { TUser } from '../../types/firebase';
 const ac = actionCreatorFactory('[users]');
 const actions = {
   setData: ac<Nullable<TUser>>('setData'),
-  read: ac.async<{}, { user: TUser }, {}>('read'),
-  create: ac.async<{}, {}, {}>('create'),
+  read: ac.async<{ uid?: string }, { user: TUser }, {}>('read'),
+  create: ac.async<Pick<TUser, 'uid' | 'username'>, {}, {}>('create'),
   delete: ac.async<{}, {}, {}>('delete'),
   update: ac.async<{}, {}, {}>('update'),
 };

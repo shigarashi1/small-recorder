@@ -19,6 +19,10 @@ const error = {
     jp: 'ログアウトに失敗しました.',
     en: 'failture logout.',
   },
+  '0005': {
+    jp: 'ユーザー情報の取得に失敗しました.',
+    en: 'failture get users data.',
+  },
 };
 
 const warm = {
@@ -31,8 +35,8 @@ const warm = {
     en: 'not correct password confirm.',
   },
   '0002': {
-    jp: '',
-    en: '',
+    jp: '名前を入力してください.',
+    en: 'please input name.',
   },
   '0003': {
     jp: 'カテゴリを選択してください.',
@@ -45,6 +49,18 @@ const warm = {
   '0005': {
     jp: '削除対象となる記録がありません.',
     en: 'not found record.',
+  },
+  '0006': {
+    jp: 'emailを入力してください.',
+    en: 'please input email.',
+  },
+  '0008': {
+    jp: 'passwordは8桁以上入力してください.',
+    en: 'Please enter at least 8 digits for password. ',
+  },
+  '0009': {
+    jp: 'passwordを入力してください.',
+    en: 'please input password.',
   },
 };
 

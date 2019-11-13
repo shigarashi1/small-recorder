@@ -4,16 +4,14 @@ import Button from '@material-ui/core/Button';
 import styles from './InformationDialog.module.scss';
 
 import BaseDialog from '../BaseDialog/BaseDialog';
+import { TInfoDialogProps } from '../../../../containers/components/dialogs/InfoDialog';
 
-interface IProps {
-  hasOpen: boolean;
-  onClose: () => void;
-  title: string;
-  context: string;
-}
+type TProps = TInfoDialogProps;
 
-const InformationDialog: React.FC<IProps> = (props: IProps) => {
-  const { hasOpen, onClose, title, context } = props;
+const InformationDialog: React.FC<TProps> = ({ hasOpen, title, context, onCloseInfoDialog }) => {
+  const onClose = () => {
+    onCloseInfoDialog();
+  };
 
   const buttonChildren = (
     <div className={styles.btnWrapper}>
