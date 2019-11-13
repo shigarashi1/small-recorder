@@ -1,4 +1,6 @@
-import { TBase } from '../types/firebase';
+import * as R from 'ramda';
+import { TBase, TDocIdOrObject } from '../types/firebase';
+import { NestedPartial } from '../types';
 
 export const getMaxId = <T extends TBase>(arr: T[]): string => {
   if (arr.length === 0) {
@@ -26,3 +28,9 @@ export const editArray = <T extends TBase>(arr: T[], data: T, isDelete = false):
   // update
   return [...excludedArr, data].sort((a, b) => +String(a.id) - +String(b.id));
 };
+
+export const getDocId = <T extends TBase>(idOrObject: TDocIdOrObject<T>): string =>
+  typeof idOrObject === 'string' ? idOrObject : idOrObject.id;
+
+export const getDocIdPartial = <T extends TBase>(idOrObject?: TDocIdOrObject<NestedPartial<T>>): string | undefined =>
+  !idOrObject || typeof idOrObject === 'string' ? idOrObject : R.path(['id'], idOrObject);

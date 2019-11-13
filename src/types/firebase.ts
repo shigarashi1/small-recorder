@@ -1,17 +1,16 @@
 import { ServerTimestamp } from '../lib/firebase';
-import { Nullable } from './index';
 
+export type TDocIdOrObject<T> = T | string;
 export type TFirestoreBase = {
-  createdAt?: Nullable<ServerTimestamp>;
-  updatedAt?: Nullable<ServerTimestamp>;
+  createdAt: ServerTimestamp;
+  updatedAt: ServerTimestamp;
 };
 
 type TTargetTerm = 'day' | 'week' | 'month';
 export type Firestore<T> = Omit<T, 'id'> & TFirestoreBase;
 
 export type TBase = {
-  // FIXME: Nullableは辞めたいね。。。
-  id: Nullable<string>;
+  id: string;
 };
 
 export type TUser = TBase & {
@@ -21,23 +20,23 @@ export type TUser = TBase & {
 export type FirebaseUser = Firestore<TUser>;
 
 export type TCategory = TBase & {
-  user: string;
+  user: TDocIdOrObject<TUser>;
   name: string;
   hasDeleted: boolean;
 };
 export type FirebaseCategory = Firestore<TCategory>;
 
 export type TTarget = TBase & {
-  user: string;
-  category: string;
+  user: TDocIdOrObject<TUser>;
+  category: TDocIdOrObject<TCategory>;
   count: number;
   term: TTargetTerm;
 };
 export type FirebaseTarget = Firestore<TTarget>;
 
 export type TRecord = TBase & {
-  user: string | TUser;
-  category: string | TCategory;
+  user: TDocIdOrObject<TUser>;
+  category: TDocIdOrObject<TCategory>;
   date: string;
   record: string;
 };

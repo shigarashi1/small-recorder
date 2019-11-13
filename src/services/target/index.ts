@@ -3,6 +3,7 @@ import { ApiError } from '../../models/error';
 import { NestedPartial } from '../../types';
 import { TTarget } from '../../types/firebase';
 import { toTargets, blankFunc } from '../tools';
+import { getDocId, getDocIdPartial } from '../../helpers/firebase';
 
 const readTargets = async (userId: string) => {
   const userRef = toDocRef('users', userId);
@@ -33,8 +34,8 @@ const onChangedTargets = (
 const createTarget = async (params: Omit<TTarget, 'id'>) => {
   const serverTime = getServerTime();
   const { count, term } = params;
-  const user = toDocRef('users', params.user);
-  const category = toDocRef('categories', params.category);
+  const user = toDocRef('users', getDocId(params.user));
+  const category = toDocRef('categories', getDocId(params.category));
   const data = { count, term, user, category, createdAt: serverTime, updatedAt: serverTime };
   return getCollection('targets')
     .add(data)
@@ -43,7 +44,8 @@ const createTarget = async (params: Omit<TTarget, 'id'>) => {
 
 const updateTarget = async (id: string, params: NestedPartial<Omit<TTarget, 'id' | 'user'>>) => {
   const updatedAt = getServerTime();
-  const category = params.category ? toDocRef('categories', params.category) : undefined;
+  const categoryId = getDocIdPartial(params.category);
+  const category = categoryId ? toDocRef('categories', categoryId) : undefined;
   const data = {
     ...params,
     category,

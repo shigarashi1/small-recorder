@@ -10,8 +10,9 @@ import TableRow from '@material-ui/core/TableRow';
 
 import styles from './SettingTable.module.scss';
 import { TMode, Mode, ESettingTableTab } from '../../../types';
-import { TCategory, TTarget } from '../../../types/firebase';
+import { TCategory, TTarget, TDocIdOrObject } from '../../../types/firebase';
 import { by } from '../../../helpers/generals';
+import { getDocId } from '../../../helpers/firebase';
 
 type TProps = {
   categories: TCategory[];
@@ -26,8 +27,8 @@ type TRow = {
   cells: string[];
 };
 
-const findCategory = (categories: TCategory[]) => (id: string) =>
-  categories.find(by('id')(id)) || { name: '', hasDeleted: true };
+const findCategory = (categories: TCategory[]) => (id: TDocIdOrObject<TCategory>) =>
+  categories.find(by('id')(getDocId(id))) || { name: '', hasDeleted: true };
 
 const getTableData = (data: Omit<TProps, 'onAction'>): { headers: string[]; rows: TRow[] } => {
   const { tab, categories, targets, canShowDeleted } = data;

@@ -3,6 +3,7 @@ import { TCategory } from '../../types/firebase';
 import { ApiError } from '../../models/error';
 import { NestedPartial } from '../../types';
 import { toCategories, blankFunc } from '../tools';
+import { getDocId } from '../../helpers/firebase';
 
 const readCategories = async (params: { userId: string }) => {
   const userRef = toDocRef('users', params.userId);
@@ -32,7 +33,7 @@ const onChangedCategories = (
 
 const createCategory = async (params: Omit<TCategory, 'id' | 'hasDeleted'>) => {
   const serverTime = getServerTime();
-  const user = toDocRef('users', params.user);
+  const user = toDocRef('users', getDocId(params.user));
   const data = { user, name: params.name, hasDeleted: false, createdAt: serverTime, updatedAt: serverTime };
   return getCollection('categories')
     .add(data)

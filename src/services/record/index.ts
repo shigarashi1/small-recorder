@@ -5,6 +5,8 @@ import { ApiError } from '../../models/error';
 import { toRecords } from '../tools';
 import Logger from '../../helpers/generals/logger';
 import { omitUndefinedValueKeys } from '../../helpers/conv-object';
+import { getDocId, getDocIdPartial } from '../../helpers/firebase';
+import { TDateRange } from '../../store-observable/record/action-reducers';
 
 const readRecords = async (userId: string, from: string, to: string) => {
   const userRef = toDocRef('users', userId);
@@ -21,11 +23,8 @@ const readRecords = async (userId: string, from: string, to: string) => {
 const createRecord = async (params: Omit<TRecord, 'id'>) => {
   const serverTime = getServerTime();
   const { date, record } = params;
-  const user = toDocRef('users', typeof params.user === 'string' ? params.user : params.user.id || '');
-  const category = toDocRef(
-    'categories',
-    typeof params.category === 'string' ? params.category : params.category.id || '',
-  );
+  const user = toDocRef('users', getDocId(params.user));
+  const category = toDocRef('categories', getDocId(params.category));
   const data = { date: +date, record, user, category, createdAt: serverTime, updatedAt: serverTime };
   return getCollection('records')
     .add(data)
@@ -34,10 +33,8 @@ const createRecord = async (params: Omit<TRecord, 'id'>) => {
 
 const updateRecord = async (id: string, params: NestedPartial<Omit<TRecord, 'id' | 'user'>>) => {
   const updatedAt = getServerTime();
-  const category =
-    typeof params.category !== 'undefined'
-      ? toDocRef('categories', typeof params.category === 'string' ? params.category : params.category.id || '')
-      : undefined;
+  const categoryId = getDocIdPartial(params.category);
+  const category = categoryId ? toDocRef('categories', categoryId) : undefined;
   const data = omitUndefinedValueKeys({ ...params, category });
   return getCollection('records')
     .doc(id)
@@ -54,7 +51,7 @@ const deleteRecord = async (id: string) => {
 
 const onChangedRecords = (
   userId: string,
-  params: { from: string; to: string },
+  params: TDateRange,
   next: (records: TRecord[]) => void,
   error: (err: any) => void,
   completed?: () => void,

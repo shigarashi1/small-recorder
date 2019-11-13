@@ -41,19 +41,15 @@ export const toRecords = (q: QuerySnapshot): TRecord[] => {
   const array = q.docs.map(v => ({
     id: v.id,
     data: v.data(),
-    user: toStoreType<FirebaseUser, TUser>(v.get('user').id, { ...v.get('user').data }),
-    category: toStoreType<FirebaseCategory, TCategory>(v.get('category').id, {
-      ...v.get('category').data,
-      user: v.get('user').id,
-    }),
+    user: v.get('user').id,
+    category: v.get('category').id,
   }));
-  Logger.log('Records population', array);
   return array.map(v =>
     toStoreType<FirebaseRecord, TRecord>(v.id, {
       ...v.data,
       date: String(v.data.date),
-      user: v.user.id,
-      category: v.category.id,
+      user: v.user,
+      category: v.category,
     }),
   );
 };
