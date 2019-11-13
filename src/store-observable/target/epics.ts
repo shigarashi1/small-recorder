@@ -9,6 +9,7 @@ import { appStateSelector } from '../state-selector';
 import { TargetService } from '../../services';
 import { THandleError, errorActions } from '../error/action-reducers';
 import { ApiError } from '../../models/error';
+import { loadingActions } from '../utilities';
 
 // epics
 const createTarget: Epic<
@@ -91,7 +92,10 @@ const deleteTarget: Epic<
           targetActions.delete.failed({ params: payload, error: {} }),
         ];
       }
-      return [targetActions.delete.done({ params: payload, result: {} })];
+      return [
+        loadingActions.end(), // 削除の場合、ローディングが消えないので.
+        targetActions.delete.done({ params: payload, result: {} }),
+      ];
     }),
   );
 

@@ -88,7 +88,7 @@ const deleteRecord: Epic<
         ];
       }
       return [
-        loadingActions.end(), // なぜか知らないが、ローディングが消えないので.
+        loadingActions.end(), // 削除の場合、ローディングが消えないので.
         recordActions.delete.done({ params: payload, result: {} }),
       ];
     }),
