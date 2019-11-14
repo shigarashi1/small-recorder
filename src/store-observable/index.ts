@@ -7,7 +7,7 @@ import history from '../helpers/history';
 import { AppState } from '../store';
 import { sampleReducers, sampleEpics } from './_sample-src';
 import { utilityReducers } from './utilities';
-import { eventListenerEpics } from './events';
+import { eventListenerEpics } from './pages';
 import { authReducers, authEpics } from './auth';
 import { userReducers, userEpics } from './user';
 import { categoryReducers, categoryEpics } from './category';

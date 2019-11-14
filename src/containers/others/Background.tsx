@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { AppState } from '../../store';
 import { getState } from '../../store-observable/state-selector';
-import { backgroundActions } from '../../store-observable/events/background';
+import { backgroundActions } from '../../store-observable/pages/background';
 //
 import { AuthenticationService, UserService, TargetService, CategoryService, RecordService } from '../../services';
 

@@ -3,7 +3,7 @@ import { Epic, combineEpics } from 'redux-observable';
 import { ofAction } from 'typescript-fsa-redux-observable-of-action';
 import { map, filter, debounceTime } from 'rxjs/operators';
 import { AppState } from '../../../store';
-import { recordPageActions } from '.';
+import { recordPageActions } from '../record-page';
 import { isInvalidDate, matchCondition, by } from '../../../helpers/generals';
 import { formatDate, isPast } from '../../../helpers/generals/date';
 import { recordActions } from '../../record';

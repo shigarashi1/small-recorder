@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 
 import LoginPage from '../../components/pages/LoginPage/LoginPage';
-import { loginPageActions } from '../../store-observable/events/login-page';
-import { commonPageActions } from '../../store-observable/events/common-page';
+import { loginPageActions } from '../../store-observable/pages/login-page';
+import { commonPageActions } from '../../store-observable/pages/common-page';
 import { AppState } from '../../store';
 
 function mapStateToProps(state: AppState) {

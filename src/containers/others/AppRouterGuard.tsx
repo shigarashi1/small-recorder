@@ -5,7 +5,7 @@ import { AppState } from '../../store';
 import { getState } from '../../store-observable/state-selector';
 
 import AppRouterGuard from '../../guards/AppRouterGuard';
-import { backgroundActions } from '../../store-observable/events/background';
+import { backgroundActions } from '../../store-observable/pages/background';
 
 function mapStateToProps(state: AppState) {
   return {

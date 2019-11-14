@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 
 import { AppState } from '../../../store';
-import { commonPageActions } from '../../../store-observable/events/common-page';
+import { commonPageActions } from '../../../store-observable/pages/common-page';
 import { getState } from '../../../store-observable/state-selector';
 
 import YesNoDialog from '../../../components/organisms/dialogs/YesNoDialog/YesNoDialog';

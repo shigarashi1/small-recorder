@@ -4,7 +4,7 @@ import { Dispatch, bindActionCreators } from 'redux';
 import Sidebar from '../../components/organisms/Sidebar/Sidebar';
 
 import { AppState } from '../../store';
-import { commonPageActions } from '../../store-observable/events/common-page';
+import { commonPageActions } from '../../store-observable/pages/common-page';
 import { getState } from '../../store-observable/state-selector';
 
 function mapStateToProps(state: AppState) {
