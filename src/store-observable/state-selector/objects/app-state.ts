@@ -1,4 +1,7 @@
 import { AppState } from '../../../store';
+import { path } from '../../../helpers/generals';
+import { populate } from '../../../helpers/firebase';
+import { INITIAL_CATEGORY, INITIAL_USER, INITIAL_DATE_RANGE } from '../../../lookups/initial-object';
 
 export const appStateSelector = (state: AppState) => new AppStateSelector(state);
 
@@ -35,34 +38,64 @@ class AppStateSelector {
 
   // user
   get user() {
-    return this.state.user.user ? this.state.user.user : null;
+    return path(this.state.user, 'user');
   }
 
   get userId() {
-    return this.user && this.user.id ? this.user.id : '';
+    return (this.user && path(this.user, 'id')) || '';
   }
 
   get username() {
-    return this.user ? this.user.username : '';
+    return (this.user && path(this.user, 'username')) || '';
   }
 
   // category
+  get categoryState() {
+    return path(this.state, 'category');
+  }
+
   get categories() {
-    return this.state.category.categories;
+    return this.categoryState ? path(this.categoryState, 'categories') || [] : [];
+  }
+
+  get populatedCategories() {
+    return this.categories.map(populate('user', [this.user || INITIAL_USER], INITIAL_USER));
   }
 
   // target
+  get targetState() {
+    return path(this.state, 'target');
+  }
+
   get targets() {
-    return this.state.target.targets;
+    return this.targetState ? path(this.targetState, 'targets') || [] : [];
+  }
+
+  get populatedTargets() {
+    return this.targets
+      .map(populate('category', this.categories, INITIAL_CATEGORY))
+      .map(populate('user', [this.user || INITIAL_USER], INITIAL_USER));
   }
 
   // records
+  get recordState() {
+    return path(this.state, 'record');
+  }
+
   get records() {
-    return this.state.record.records;
+    return this.recordState ? path(this.recordState, 'records') || [] : [];
   }
 
   get recordDateRange() {
-    return this.state.record.dateRange;
+    return this.recordState
+      ? path(this.recordState, 'dateRange') || { ...INITIAL_DATE_RANGE }
+      : { ...INITIAL_DATE_RANGE };
+  }
+
+  get populatedRecords() {
+    return this.records
+      .map(populate('category', this.categories, INITIAL_CATEGORY))
+      .map(populate('user', [this.user || INITIAL_USER], INITIAL_USER));
   }
 
   // utility

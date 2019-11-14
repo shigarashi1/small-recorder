@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 import { TBase, TDocIdOrObject } from '../types/firebase';
 import { NestedPartial } from '../types';
+import { by } from './generals';
 
 export const getMaxId = <T extends TBase>(arr: T[]): string => {
   if (arr.length === 0) {
@@ -34,3 +35,10 @@ export const getDocId = <T extends TBase>(idOrObject: TDocIdOrObject<T>): string
 
 export const getDocIdPartial = <T extends TBase>(idOrObject?: TDocIdOrObject<NestedPartial<T>>): string | undefined =>
   !idOrObject || typeof idOrObject === 'string' ? idOrObject : R.path(['id'], idOrObject);
+
+export const populate = <T extends TBase, K extends keyof T, P extends TBase>(key: K, objs: P[], defaultObj: P) => (
+  obj: T,
+) =>
+  typeof obj[key] !== 'string'
+    ? obj
+    : { ...obj, [key]: objs.find(by('id')(String(obj[key]))) || { ...defaultObj, [key]: String(obj[key]) } };

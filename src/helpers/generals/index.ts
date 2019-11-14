@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 export * from './date';
 
 export const delayFunction = async <T>(func: () => T, ms: number = 100): Promise<T> => {
@@ -35,3 +36,5 @@ export const matchConditionAll = <T1, T2 = undefined>(
   const retList = conditions.filter(v => !!v[1]).map(v => v[0]);
   return retList.length > 0 ? retList : defaultValue;
 };
+
+export const path = <T, K extends keyof T>(obj: T, key: K) => R.path<T[K]>([String(key)], obj);
