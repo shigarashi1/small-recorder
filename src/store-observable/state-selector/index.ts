@@ -31,9 +31,17 @@ export const getState = {
       appStateSelector,
       selector => selector.categories,
     ),
+    populatedCategories: createSelector(
+      appStateSelector,
+      selector => selector.populatedCategories,
+    ),
     targets: createSelector(
       appStateSelector,
       selector => selector.targets,
+    ),
+    populatedTargets: createSelector(
+      appStateSelector,
+      selector => selector.populatedTargets,
     ),
   },
   // record
@@ -41,6 +49,10 @@ export const getState = {
     records: createSelector(
       appStateSelector,
       selector => selector.records,
+    ),
+    populatedRecords: createSelector(
+      appStateSelector,
+      selector => selector.populatedRecords,
     ),
     dateRange: createSelector(
       appStateSelector,
@@ -74,6 +86,12 @@ export const getState = {
         selector => selector.infoDialog,
       ),
     },
+  },
+  pages: {
+    reportPageState: createSelector(
+      appStateSelector,
+      selector => selector.reportPageState,
+    ),
   },
   // error
   error: {

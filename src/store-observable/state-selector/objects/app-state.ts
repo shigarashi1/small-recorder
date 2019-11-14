@@ -119,4 +119,9 @@ class AppStateSelector {
   get businessErrors() {
     return this.state.error.businessErrors;
   }
+
+  // reportPage
+  get reportPageState() {
+    return path(this.state.page, 'report');
+  }
 }

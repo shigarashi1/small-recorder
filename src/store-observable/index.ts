@@ -7,7 +7,7 @@ import history from '../helpers/history';
 import { AppState } from '../store';
 import { sampleReducers, sampleEpics } from './_sample-src';
 import { utilityReducers } from './utilities';
-import { eventListenerEpics } from './pages';
+import { eventListenerEpics, pageReducer } from './pages';
 import { authReducers, authEpics } from './auth';
 import { userReducers, userEpics } from './user';
 import { categoryReducers, categoryEpics } from './category';
@@ -26,6 +26,7 @@ export const reducers = combineReducers({
   target: targetReducers,
   record: recordReducers,
   error: errorReducers,
+  page: pageReducer,
   // sample is not used
   sample: sampleReducers,
 });

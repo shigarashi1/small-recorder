@@ -4,22 +4,8 @@ import { commonPageEpics } from './common-page';
 import { backgroundEpics } from './background';
 import { settingPageEpics } from './setting-page';
 import { recordPageEpics } from './record-page';
-
-// ===== record page =====
-// onCreateRecord
-// onEditRecord
-// onDeleteRecord
-// onChangeFilter
-
-// ===== setting page =====
-// onEditUser
-// onDeleteUser
-
-// ===== reports page =====
-// onChangeFilter
-
-// ===== query page =====
-// onChangeFilter
+import { reportPageEpics, reportPageReducers } from './report-page';
+import { combineReducers } from 'redux';
 
 export const eventListenerEpics = combineEpics(
   loginPageEpics,
@@ -27,4 +13,7 @@ export const eventListenerEpics = combineEpics(
   backgroundEpics,
   settingPageEpics,
   recordPageEpics,
+  reportPageEpics,
 );
+
+export const pageReducer = combineReducers({ report: reportPageReducers });

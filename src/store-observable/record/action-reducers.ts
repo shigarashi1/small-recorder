@@ -12,9 +12,9 @@ export type TUpdateRecord = {
 export type TDeleteRecord = {
   id: string;
 };
-export type TDateRange = {
-  from: string;
-  to: string;
+export type TDateRange<T = string> = {
+  from: T;
+  to: T;
 };
 
 // actions
