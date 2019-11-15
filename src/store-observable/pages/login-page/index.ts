@@ -6,7 +6,7 @@ import { map, debounceTime } from 'rxjs/operators';
 import { AppState } from '../../../store';
 import { authActions } from '../../auth';
 import { TSignIn, TSignUp } from '../../auth/action-reducers';
-import { WrapAction } from '../../../types/action';
+import { WrapAction } from '../../../types/actions';
 import { matchCondition } from '../../../helpers/generals';
 import { TWarmCode } from '../../../i18n';
 import { errorActions } from '../../error';

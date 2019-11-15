@@ -6,7 +6,7 @@ import { AppState } from '../../store';
 import { recordActions } from '.';
 import { appStateSelector } from '../state-selector';
 import { RecordService } from '../../services';
-import { WrapAction } from '../../types/action';
+import { WrapAction } from '../../types/actions';
 import { errorActions } from '../error';
 import { THandleError } from '../error/action-reducers';
 import { ApiError } from '../../models/error';
