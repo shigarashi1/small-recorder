@@ -1,26 +1,16 @@
 import { actionCreatorFactory } from 'typescript-fsa';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
-import { TRecord } from '../../types/firebase';
-import { NestedPartial, TDateRange } from '../../types';
-
-// type
-export type TCreateRecord = Omit<TRecord, 'id' | 'user'>;
-export type TUpdateRecord = {
-  id: string;
-  data: NestedPartial<TCreateRecord>;
-};
-export type TDeleteRecord = {
-  id: string;
-};
+import { TRecord, TUpdateRecord, TCreateRecord, NestIdData, OmitUser } from '../../types/firebase';
+import { TDateRange } from '../../types';
 
 // actions
 const ac = actionCreatorFactory('[record]');
 const actions = {
   setData: ac<TRecord[]>('setData'),
   setDateRange: ac<TDateRange>('setDateRange'),
-  create: ac.async<TCreateRecord, {}, {}>('create'),
-  update: ac.async<TUpdateRecord, {}, {}>('update'),
-  delete: ac.async<TDeleteRecord, {}, {}>('delete'),
+  create: ac.async<OmitUser<TCreateRecord>, {}, {}>('create'),
+  update: ac.async<NestIdData<TUpdateRecord>, {}, {}>('update'),
+  delete: ac.async<{ id: string }, {}, {}>('delete'),
 };
 export const recordActions = actions;
 

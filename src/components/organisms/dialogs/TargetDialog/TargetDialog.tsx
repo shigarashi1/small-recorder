@@ -11,6 +11,8 @@ import { Nullable } from '../../../../types';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import { INITIAL_TARGET } from '../../../../lookups/initial-object';
+import { cloneDeep } from 'lodash';
 
 interface IProps {
   hasOpen: boolean;
@@ -22,7 +24,7 @@ interface IProps {
 
 const getTitle = (id: Nullable<string>) => (!!id ? 'Edit' : 'Create');
 
-const getTarget = (v: Nullable<TTarget>) => v || ({ id: '', count: 0, term: 'day', category: '' } as TTarget);
+const getTarget = (v: Nullable<TTarget>) => v || cloneDeep(INITIAL_TARGET);
 
 const TargetDialog: React.FC<IProps> = (props: IProps) => {
   const [target, setTarget] = useState(getTarget(props.target));

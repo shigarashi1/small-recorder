@@ -1,12 +1,11 @@
 import { getCollection, QuerySnapshot, getServerTime, toDocRef } from '../../lib/firebase';
 import { ApiError } from '../../models/error';
-import { NestedPartial } from '../../types';
-import { TTarget } from '../../types/firebase';
+import { TTarget, TReadTarget, TCreateTarget, TUpdateTarget } from '../../types/firebase';
 import { toTargets, blankFunc } from '../tools';
 import { getDocId, getDocIdPartial } from '../../helpers/firebase';
 
-const readTargets = async (userId: string) => {
-  const userRef = toDocRef('users', userId);
+const readTargets = async (params: TReadTarget) => {
+  const userRef = toDocRef('users', params.user);
   return await getCollection('categories')
     .where('user', '==', userRef)
     .get()
@@ -15,23 +14,23 @@ const readTargets = async (userId: string) => {
 };
 
 const onChangedTargets = (
-  userId: string,
+  params: TReadTarget,
   next: (targets: TTarget[]) => void,
   error: (err: any) => void,
   completed?: () => void,
 ) => {
-  if (userId === '') {
+  if (!params.user) {
     return blankFunc;
   }
   const query = (q: QuerySnapshot) => next(toTargets(q));
-  const userRef = toDocRef('users', userId);
+  const userRef = toDocRef('users', params.user);
   return getCollection('targets')
     .where('user', '==', userRef)
     .orderBy('createdAt')
     .onSnapshot(query, error, completed);
 };
 
-const createTarget = async (params: Omit<TTarget, 'id'>) => {
+const createTarget = async (params: TCreateTarget) => {
   const serverTime = getServerTime();
   const { count, term } = params;
   const user = toDocRef('users', getDocId(params.user));
@@ -42,7 +41,7 @@ const createTarget = async (params: Omit<TTarget, 'id'>) => {
     .catch(err => new ApiError(err));
 };
 
-const updateTarget = async (id: string, params: NestedPartial<Omit<TTarget, 'id' | 'user'>>) => {
+const updateTarget = async (id: string, params: TUpdateTarget) => {
   const updatedAt = getServerTime();
   const categoryId = getDocIdPartial(params.category);
   const category = categoryId ? toDocRef('categories', categoryId) : undefined;

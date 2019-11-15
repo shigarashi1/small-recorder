@@ -1,31 +1,31 @@
-import { TUser } from '../../types/firebase';
-import { Nullable, NestedPartial } from '../../types';
+import { TUser, TCreateUser, TUpdateUser, TReadUser } from '../../types/firebase';
 import { getCollection, QuerySnapshot, getServerTime } from '../../lib/firebase';
 import { ApiError } from '../../models/error';
 import { toUser, blankFunc } from '../tools';
+import { Nullable } from '../../types';
 
-const readUser = async (uid: string) => {
+const readUser = async (params: TReadUser) => {
   return await getCollection('users')
-    .where('uid', '==', uid)
+    .where('uid', '==', params.uid)
     .orderBy('createdAt')
     .get()
-    .then(q => toUser(uid, q))
+    .then(q => toUser(params.uid, q))
     .catch(err => new ApiError(err));
 };
 
-const createUser = async (uid: string, username: string) => {
+const createUser = async (params: TCreateUser) => {
   const serverTime = getServerTime();
-  const data = { uid, username, createdAt: serverTime, updatedAt: serverTime };
+  const data = { ...params, createdAt: serverTime, updatedAt: serverTime };
   return getCollection('users')
     .add(data)
     .catch(err => new ApiError(err));
 };
 
-const updateUser = async (id: string, param: NestedPartial<Omit<TUser, 'id'>>) => {
+const updateUser = async (id: string, params: TUpdateUser) => {
   const updatedAt = getServerTime();
   return getCollection('users')
     .doc(id)
-    .update({ ...param, updatedAt })
+    .update({ ...params, updatedAt })
     .catch(err => new ApiError(err));
 };
 
@@ -37,17 +37,17 @@ const deleteUser = async (id: string) => {
 };
 
 const onChangedUser = (
-  uid: string,
+  params: TReadUser,
   next: (user: Nullable<TUser>) => void,
   error: (err: any) => void,
   completed?: () => void,
 ) => {
-  const query = (q: QuerySnapshot) => next(toUser(uid, q));
-  if (uid === '') {
+  const query = (q: QuerySnapshot) => next(toUser(params.uid, q));
+  if (!params.uid) {
     return blankFunc;
   }
   return getCollection('users')
-    .where('uid', '==', uid)
+    .where('uid', '==', params.uid)
     .orderBy('createdAt')
     .onSnapshot(query, error, completed);
 };

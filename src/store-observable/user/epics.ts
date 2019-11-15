@@ -33,7 +33,7 @@ const readUser: Epic<
       return { payload, uid };
     }),
     mergeMap(async ({ payload, uid }) => {
-      const res = await UserService.readUser(uid);
+      const res = await UserService.readUser({ uid });
       return { payload, res };
     }),
     mergeMap(({ payload, res }) => {
@@ -70,7 +70,7 @@ const createUser: Epic<
     ofAction(userActions.create.started),
     mergeMap(async ({ payload }) => {
       const { uid, username } = payload;
-      const res = await UserService.createUser(uid, username);
+      const res = await UserService.createUser({ uid, username });
       return { payload, res };
     }),
     mergeMap(({ payload, res }) => {

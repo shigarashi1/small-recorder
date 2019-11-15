@@ -25,7 +25,7 @@ const readCategories: Epic<
     }),
     filter(({ userId }) => userId !== '' && userId !== null),
     mergeMap(async ({ payload, userId }) => {
-      const res = await CategoryService.readCategories({ userId: String(userId) });
+      const res = await CategoryService.readCategories({ user: userId });
       return { payload, res };
     }),
     mergeMap(({ payload, res }) => {

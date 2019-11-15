@@ -45,25 +45,31 @@ const Background: React.FC<TProps> = ({
 
   // user
   useEffect(() => {
-    const subscription = UserService.onChangedUser(uid, onChangedUser, onThrowError);
+    const subscription = UserService.onChangedUser({ uid }, onChangedUser, onThrowError);
     return () => {
       subscription();
     };
   }, [uid, onChangedUser, onThrowError]);
 
-  // category, target
+  // category
   useEffect(() => {
-    const categorySubscription = CategoryService.onChangedCategories(userId, onChangedCategories, onThrowError);
-    const targetSubscription = TargetService.onChangedTargets(userId, onChangedTargets, onThrowError);
+    const subscription = CategoryService.onChangedCategories({ user: userId }, onChangedCategories, onThrowError);
     return () => {
-      categorySubscription();
-      targetSubscription();
+      subscription();
     };
-  }, [userId, onThrowError, onChangedCategories, onChangedTargets]);
+  }, [userId, onThrowError, onChangedCategories]);
+
+  // target
+  useEffect(() => {
+    const subscription = TargetService.onChangedTargets({ user: userId }, onChangedTargets, onThrowError);
+    return () => {
+      subscription();
+    };
+  }, [userId, onThrowError, onChangedTargets]);
 
   // records
   useEffect(() => {
-    const subscription = RecordService.onChangedRecords(userId, dateRange, onChangedRecords, onThrowError);
+    const subscription = RecordService.onChangedRecords({ ...dateRange, user: userId }, onChangedRecords, onThrowError);
     return () => {
       subscription();
     };

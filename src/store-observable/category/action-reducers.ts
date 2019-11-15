@@ -1,22 +1,15 @@
 import { actionCreatorFactory } from 'typescript-fsa';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
-import { TCategory } from '../../types/firebase';
-import { NestedPartial } from '../../types';
-
-// action param type
-export type TCreateCategory = Pick<TCategory, 'name'>;
-export type TUpdateCategory = { id: string; data: NestedPartial<TCreateCategory> };
-export type TReadCategories = { userId?: string };
-export type TDeleteCategory = { id: string };
+import { TCategory, OmitUser, TCreateCategory, TUpdateCategory, TReadCategory, NestIdData } from '../../types/firebase';
 
 // actions
 const ac = actionCreatorFactory('[category]');
 const actions = {
   setData: ac<TCategory[]>('setData'),
-  create: ac.async<TCreateCategory, {}, {}>('create'),
-  update: ac.async<TUpdateCategory, {}, {}>('update'),
-  read: ac.async<TReadCategories, {}, {}>('read'),
-  delete: ac.async<TDeleteCategory, {}, {}>('delete'),
+  create: ac.async<OmitUser<TCreateCategory>, {}, {}>('create'),
+  update: ac.async<NestIdData<TUpdateCategory>, {}, {}>('update'),
+  read: ac.async<TReadCategory, {}, {}>('read'),
+  delete: ac.async<{ id: string }, {}, {}>('delete'),
 };
 export const categoryActions = actions;
 
