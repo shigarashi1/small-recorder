@@ -1,7 +1,7 @@
 import { actionCreatorFactory } from 'typescript-fsa';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 import { TRecord } from '../../types/firebase';
-import { NestedPartial } from '../../types';
+import { NestedPartial, TDateRange } from '../../types';
 
 // type
 export type TCreateRecord = Omit<TRecord, 'id' | 'user'>;
@@ -11,10 +11,6 @@ export type TUpdateRecord = {
 };
 export type TDeleteRecord = {
   id: string;
-};
-export type TDateRange<T = string> = {
-  from: T;
-  to: T;
 };
 
 // actions

@@ -42,3 +42,8 @@ export enum ESettingTableTab {
   category,
   target,
 }
+
+export type TDateRange<T = string> = {
+  from: T;
+  to: T;
+};

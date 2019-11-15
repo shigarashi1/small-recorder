@@ -6,10 +6,17 @@ import { AppState } from '../../../store';
 import { reportPageActions } from '.';
 import { appStateSelector } from '../../state-selector';
 import { TReportPage } from './action-reducers';
-import { getThisDateRange, toDateRange, isInvalidDate, getDateRange } from '../../../helpers/generals';
+import {
+  getThisDateRange,
+  toDateRange,
+  isValidDate,
+  getDateRange,
+  getStartDate,
+  getEndDate,
+} from '../../../helpers/generals';
 import { recordActions } from '../../record';
-import { TDateRange } from '../../record/action-reducers';
 import { addMonths, addWeeks } from 'date-fns';
+import { TDateRange } from '../../../types';
 
 // epics
 const load: Epic<AnyAction, Action<TDateRange>, AppState> = (action$, store) =>
@@ -22,8 +29,15 @@ const load: Epic<AnyAction, Action<TDateRange>, AppState> = (action$, store) =>
     filter(({ reportPageState }) => reportPageState !== undefined),
     map(obj => {
       const { isMonth, dateRange } = obj.reportPageState as TReportPage;
-      if (isInvalidDate(dateRange.from) || isInvalidDate(dateRange.to)) {
-        recordActions.setDateRange({ ...toDateRange(getThisDateRange(isMonth)) });
+      if (!isValidDate(dateRange.from) || !isValidDate(dateRange.to)) {
+        recordActions.setDateRange({
+          ...toDateRange(
+            getThisDateRange({
+              from: getStartDate(isMonth),
+              to: getEndDate(isMonth),
+            }),
+          ),
+        });
       }
       return recordActions.setDateRange({ ...toDateRange(dateRange) });
     }),
@@ -32,7 +46,7 @@ const load: Epic<AnyAction, Action<TDateRange>, AppState> = (action$, store) =>
 const setDate: Epic<AnyAction, Action<TDateRange>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(reportPageActions.setDate),
-    filter(({ payload }) => !isInvalidDate(payload.date)),
+    filter(({ payload }) => !isValidDate(payload.date)),
     map(({ payload }) => {
       const { reportPageState } = appStateSelector(store.value);
       return { payload, reportPageState };
@@ -59,7 +73,10 @@ const setThisWeekOrMonth: Epic<AnyAction, Action<TDateRange>, AppState> = (actio
     filter(({ reportPageState }) => reportPageState !== undefined),
     map(obj => {
       const { isMonth } = obj.reportPageState as TReportPage;
-      const dateRange = getThisDateRange(isMonth);
+      const dateRange = getThisDateRange({
+        from: getStartDate(isMonth),
+        to: getEndDate(isMonth),
+      });
       return recordActions.setDateRange({ ...toDateRange(dateRange) });
     }),
   );

@@ -39,6 +39,7 @@ $ npm run test
 
 - [ ] reportPage の設定
 - [ ] searchPage の設定
+- [ ] ListItemText
 
 - [ ] settingPage、recordPage の調整（ダイアログとかを redux 経由にする）
 

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Fab from '@material-ui/core/Fab';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -243,6 +244,7 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                           </div>
                         </ListItem>
                       ))}
+                      <Divider />
                       <ListItem className={styles.listItem}>
                         <TextField
                           className={styles.text}

@@ -4,20 +4,20 @@ import { ofAction } from 'typescript-fsa-redux-observable-of-action';
 import { map, filter, debounceTime } from 'rxjs/operators';
 import { AppState } from '../../../store';
 import { recordPageActions } from '../record-page';
-import { isInvalidDate, matchCondition, by } from '../../../helpers/generals';
+import { isValidDate, matchCondition, by } from '../../../helpers/generals';
 import { formatDate, isPast } from '../../../helpers/generals/date';
 import { recordActions } from '../../record';
-import { TDateRange } from '../../record/action-reducers';
 import { appStateSelector } from '../../state-selector';
 import { WrapAction } from '../../types';
 import { THandleError, errorActions } from '../../error/action-reducers';
 import { BusinessError } from '../../../models/error';
 import { TWarmCode } from '../../../i18n';
+import { TDateRange } from '../../../types';
 
 const changeDate: Epic<AnyAction, Action<TDateRange>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(recordPageActions.changeDate),
-    filter(({ payload }) => !isInvalidDate(payload.date) && isPast(payload.date)),
+    filter(({ payload }) => isValidDate(payload.date) && isPast(payload.date)),
     debounceTime(400),
     map(({ payload }) => {
       const date = formatDate(payload.date);

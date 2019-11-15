@@ -1,5 +1,5 @@
 import { TTarget, TCategory, TUser, TRecord } from '../types/firebase';
-import { TDateRange } from '../store-observable/record/action-reducers';
+import { TDateRange } from '../types';
 
 export const INITIAL_USER: TUser = { id: '', uid: '', username: '' };
 export const INITIAL_TARGET: TTarget = { id: '', category: '', user: '', count: 0, term: 'day' };

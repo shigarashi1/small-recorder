@@ -11,14 +11,16 @@ import {
   addMonths,
   addWeeks,
 } from 'date-fns';
-import { DATE_FORMAT } from '../../lookups/date';
-import { TDateRange } from '../../store-observable/record/action-reducers';
+import { DATE_FORMAT, DATE_DISPLAY_FORMAT } from '../../lookups/date';
+import { TDateRange } from '../../types';
 
 const today = new Date();
 
-export const isInvalidDate = (date: Date) => date.toString() === 'Invalid Date';
+export const isValidDate = (date: Date) => date.toString() !== 'Invalid Date';
 export const parseDate = (dateString: string) => parse(dateString, DATE_FORMAT, today);
 export const formatDate = (date: Date) => format(date, DATE_FORMAT);
+export const toDisplayDate = (date: Date | string) =>
+  typeof date === 'string' ? format(parseDate(date), DATE_DISPLAY_FORMAT) : format(date, DATE_DISPLAY_FORMAT);
 export const isFuture = (date: Date) => isAfter(date, today);
 export const isPast = (date: Date) => isBefore(date, addDays(today, 1));
 
@@ -26,6 +28,9 @@ export const getStartOfWeek = (date: Date = today) => startOfWeek(date);
 export const getEndOfWeek = (date: Date = today) => endOfWeek(date);
 export const getStartOfMonth = (date: Date = today) => startOfMonth(date);
 export const getEndOfMonth = (date: Date = today) => endOfMonth(date);
+
+export const getStartDate = (isMonth: boolean) => (isMonth ? getStartOfMonth : getStartOfWeek);
+export const getEndDate = (isMonth: boolean) => (isMonth ? getEndOfMonth : getEndOfWeek);
 
 export const getAddMonths = (amount: number, date: Date = today) => addMonths(date, amount);
 export const getAddWeeks = (amount: number, date: Date = today) => addWeeks(date, amount);
@@ -47,9 +52,15 @@ export function toDateRange(range: TDateRange<string> | TDateRange<Date>) {
       };
 }
 
-export const getThisDateRange = (isMonth: boolean, date: Date = today) => ({
-  from: isMonth ? getStartOfMonth(date) : getStartOfWeek(date),
-  to: isMonth ? getEndOfMonth(date) : getEndOfWeek(date),
+export const getThisDateRange = (
+  func: {
+    from: (date?: Date) => Date;
+    to: (date?: Date) => Date;
+  },
+  date: Date = today,
+) => ({
+  from: func.from(date),
+  to: func.to(date),
 });
 
 export const getDateRange = (

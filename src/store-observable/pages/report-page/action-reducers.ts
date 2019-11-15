@@ -1,7 +1,7 @@
 import { actionCreatorFactory } from 'typescript-fsa';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
-import { getStartOfWeek, getEndOfWeek, getStartOfMonth, getEndOfMonth } from '../../../helpers/generals';
-import { TDateRange } from '../../record/action-reducers';
+import { getStartOfWeek, getEndOfWeek, getThisDateRange, getStartDate, getEndDate } from '../../../helpers/generals';
+import { TDateRange } from '../../../types';
 
 // actions
 const ac = actionCreatorFactory('[---- ReportsPage]');
@@ -35,9 +35,10 @@ const reducers = reducerWithInitialState(initialState)
   .case(actions.setThisWeekOrMonth, (state, payload) => ({
     ...state,
     dateRange: {
-      ...state.dateRange,
-      from: state.isMonth ? getStartOfMonth() : getStartOfWeek(),
-      to: state.isMonth ? getEndOfMonth() : getEndOfWeek(),
+      ...getThisDateRange({
+        from: getStartDate(state.isMonth),
+        to: getEndDate(state.isMonth),
+      }),
     },
   }))
   .case(actions.togleTerm, (state, payload) => ({ ...state, isMonth: !state.isMonth }));

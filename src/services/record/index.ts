@@ -1,12 +1,11 @@
 import { TRecord } from '../../types/firebase';
-import { NestedPartial } from '../../types';
+import { NestedPartial, TDateRange } from '../../types';
 import { getCollection, getServerTime, toDocRef, QuerySnapshot } from '../../lib/firebase';
 import { ApiError } from '../../models/error';
 import { toRecords } from '../tools';
 import Logger from '../../helpers/generals/logger';
 import { omitUndefinedValueKeys } from '../../helpers/conv-object';
 import { getDocId, getDocIdPartial } from '../../helpers/firebase';
-import { TDateRange } from '../../store-observable/record/action-reducers';
 
 const readRecords = async (userId: string, from: string, to: string) => {
   const userRef = toDocRef('users', userId);

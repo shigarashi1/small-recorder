@@ -46,7 +46,7 @@ const InputDate: React.FC<IProps> = (props: IProps) => {
 InputDate.defaultProps = {
   margin: 'normal',
   disabled: false,
-  disableFuture: true,
+  disableFuture: false,
   inputVariant: 'standard',
 };
 
