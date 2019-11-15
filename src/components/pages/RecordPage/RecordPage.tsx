@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
+import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -143,14 +147,17 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
               <CardHeader className={styles.header} title="Record Date" />
               <CardContent className={styles.content}>
                 <FormControl className={styles.formControl}>
-                  <DateSelector
-                    selectedDate={displayDate}
-                    showToday={true}
-                    onChangeDate={onChangeDate}
-                    maltiButtonLabel="Today"
-                    onMaltiButtonClick={onSetToday}
-                    margin="none"
-                  />
+                  <DateSelector selectedDate={displayDate} onChangeDate={onChangeDate} margin="none">
+                    <Button
+                      className={styles.today}
+                      onClick={onSetToday}
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                    >
+                      Today
+                    </Button>
+                  </DateSelector>
                 </FormControl>
               </CardContent>
             </Card>
@@ -214,13 +221,24 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                   <div className={styles.detail}>
                     <List component="div" className={styles.list}>
                       {records.filter(by('category')(category.id)).map((v, index) => (
-                        <ListItem key={index} className={styles.listItem}>
-                          <div className={styles.record}>
+                        <React.Fragment key={index}>
+                          <ListItem className={styles.listItem}>
                             {v.id !== modifyId ? (
-                              <p onClick={onTogleEdit(String(v.id))}>{v.record}</p>
+                              <React.Fragment>
+                                <ListItemText
+                                  className={styles.record}
+                                  onClick={onTogleEdit(String(v.id))}
+                                  primary={`${index + 1}. ${v.record}`}
+                                />
+                                <ListItemSecondaryAction>
+                                  <IconButton onClick={onConfirmDelete(String(v.id))} edge="end" aria-label="comments">
+                                    <Icon color="secondary">delete</Icon>
+                                  </IconButton>
+                                </ListItemSecondaryAction>
+                              </React.Fragment>
                             ) : (
                               <TextField
-                                className={styles.text}
+                                className={styles.record}
                                 value={recordText}
                                 onChange={onEditRecord}
                                 autoFocus={true}
@@ -229,22 +247,10 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                                 label="Edit Record"
                               />
                             )}
-                          </div>
-                          {/* space節約の為にeditボタンは廃止
-                          <div className={styles.action}>
-                            <Fab onClick={onTogleEdit(String(v.id))} size="small" color="primary">
-                              <Icon>edit</Icon>
-                            </Fab>
-                          </div> */}
-                          <div className={styles.action}>
-                            {/* // TODO: Stringを外す */}
-                            <Fab onClick={onConfirmDelete(String(v.id))} size="small" color="secondary">
-                              <Icon>delete</Icon>
-                            </Fab>
-                          </div>
-                        </ListItem>
+                          </ListItem>
+                          <Divider />
+                        </React.Fragment>
                       ))}
-                      <Divider />
                       <ListItem className={styles.listItem}>
                         <TextField
                           className={styles.text}

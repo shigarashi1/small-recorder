@@ -1,20 +1,26 @@
 $width-input-date: 150px;
 $width-arrow-button: 40px;
-$width-button: calc(100% - #{$width-arrow-button} * 2 - #{$width-input-date});
+$width-button: 100px;
 
 // @types
 #container {
-  width: 100%;
+  max-width: 330px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  // .arrowButton {
-  //   width: $width-arrow-button;
-  // }
+  align-items: center;
+  .input {
+    width: calc(100% - #{$width-button});
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .arrowButton {
+    width: $width-arrow-button;
+  }
   .inputDate {
     width: $width-input-date;
   }
-  // .button {
-  //   width: $width-button;
-  // }
+  .side {
+    width: $width-button;
+  }
 }

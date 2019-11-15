@@ -8,6 +8,9 @@
   }
   .formControl {
     width: 100%;
+    .today {
+      margin-right: 10px;
+    }
   }
   .contents {
     width: 100%;
@@ -39,11 +42,7 @@
       $width-action: 45px;
       $width-record: calc(100% - #{$width-action});
       .record {
-        width: $width-record;
-        .text {
-          width: 100%;
-          padding-right: 5px;
-        }
+        width: 100%;
       }
       .action {
         width: $width-action;
