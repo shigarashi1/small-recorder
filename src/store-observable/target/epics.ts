@@ -4,7 +4,7 @@ import { ofAction } from 'typescript-fsa-redux-observable-of-action';
 import { mergeMap, map, filter } from 'rxjs/operators';
 import { AppState } from '../../store';
 import { targetActions } from '.';
-import { WrapAction } from '../types';
+import { WrapAction } from '../../types/action';
 import { appStateSelector } from '../state-selector';
 import { TargetService } from '../../services';
 import { THandleError, errorActions } from '../error/action-reducers';

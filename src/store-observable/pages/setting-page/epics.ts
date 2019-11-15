@@ -5,7 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { AppState } from '../../../store';
 import { settingPageActions } from './actions';
 import { categoryActions } from '../../category';
-import { WrapAction } from '../../types';
+import { WrapAction } from '../../../types/action';
 import Logger from '../../../helpers/generals/logger';
 import { targetActions } from '../../target';
 

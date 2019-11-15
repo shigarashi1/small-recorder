@@ -8,7 +8,7 @@ import { isValidDate, matchCondition, by } from '../../../helpers/generals';
 import { formatDate, isPast } from '../../../helpers/generals/date';
 import { recordActions } from '../../record';
 import { appStateSelector } from '../../state-selector';
-import { WrapAction } from '../../types';
+import { WrapAction } from '../../../types/action';
 import { THandleError, errorActions } from '../../error/action-reducers';
 import { BusinessError } from '../../../models/error';
 import { TWarmCode } from '../../../i18n';

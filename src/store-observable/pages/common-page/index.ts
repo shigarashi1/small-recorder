@@ -6,7 +6,7 @@ import { AppState } from '../../../store';
 import { TKeyboardKey } from '../../../types/components/number-keyboard';
 import { authActions } from '../../auth';
 import { sidebarActions, yesNoDialogActions, infoDialogActions } from '../../utilities';
-import { WrapAction } from '../../types';
+import { WrapAction } from '../../../types/action';
 import { errorActions } from '../../error';
 import { TYesNoDialog, TInfoDialog } from '../../../types/components/dialog';
 

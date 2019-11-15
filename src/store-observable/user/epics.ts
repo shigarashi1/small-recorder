@@ -10,7 +10,7 @@ import { appStateSelector } from '../state-selector/objects/app-state';
 import { UserService } from '../../services/user';
 import { ApiError } from '../../models/error';
 import { THandleError, errorActions } from '../error/action-reducers';
-import { WrapAction } from '../types';
+import { WrapAction } from '../../types/action';
 import { TInfoDialog } from '../../types/components/dialog';
 import { infoDialogActions } from '../utilities';
 import Logger from '../../helpers/generals/logger';

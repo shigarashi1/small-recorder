@@ -12,7 +12,7 @@ import { userActions } from '../user';
 import { rootActions } from '../actions';
 import { errorActions } from '../error';
 import { THandleError } from '../error/action-reducers';
-import { WrapAction } from '../types';
+import { WrapAction } from '../../types/action';
 
 const signIn: Epic<
   AnyAction,
