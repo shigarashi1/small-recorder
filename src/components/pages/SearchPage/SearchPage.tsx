@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { keys } from 'ramda';
+import { keys, descend, ascend, prop, sort } from 'ramda';
 
 import styles from './SearchPage.module.scss';
 
@@ -18,17 +18,19 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import DateSelector from '../../molecules/DateSelector/DateSelector';
+import SearchTable from '../../organisms/SearchTable/SearchTable';
 
 import { TPageProps } from '../../../containers/pages/SearchPage';
 import { TDateRange, Nullable, OrderBy } from '../../../types';
-import Logger from '../../../helpers/generals/logger';
 import { TSearchPage } from '../../../store-observable/pages/search-page/action-reducers';
 import { matchCondition } from '../../../helpers/generals';
+import { getDocId, findDocObj } from '../../../helpers/firebase';
+import { INITIAL_CATEGORY } from '../../../lookups/initial-object';
+import { TRecord } from '../../../types/firebase';
 
 type TProps = TPageProps;
 
 const SearchPage: React.FC<TProps> = (props: TProps) => {
-  Logger.log('SearchPage', props);
   const { load, pageState } = props;
 
   useEffect(() => {
@@ -67,7 +69,31 @@ const SearchPage: React.FC<TProps> = (props: TProps) => {
 
   const selectableCategories = pageState.canShowDeletedCategory
     ? [...props.categories]
-    : props.categories.filter(v => !!v.hasDeleted);
+    : props.categories.filter(v => !v.hasDeleted);
+
+  const sortKey = matchCondition(
+    [
+      ['date', pageState.orderBy === OrderBy.Date], //
+      ['category', pageState.orderBy === OrderBy.Category], //
+      ['record', pageState.orderBy === OrderBy.Record], //
+    ],
+    'date',
+  );
+
+  const filterRecord = (records: TRecord[]) =>
+    records
+      .filter(v => !pageState.category || pageState.category === getDocId(v.category))
+      .filter(
+        v => pageState.canShowDeletedCategory || !findDocObj(props.categories, INITIAL_CATEGORY)(v.category).hasDeleted,
+      )
+      .filter(v => !pageState.record || v.record.includes(pageState.record));
+
+  const getSortField = (key: string) =>
+    pageState.orderBy === OrderBy.Category
+      ? (obj: TRecord) => findDocObj(props.categories, INITIAL_CATEGORY)(prop('category', obj)).name
+      : prop(key);
+  const sortFunc = pageState.isDesc ? descend(getSortField(sortKey)) : ascend(getSortField(sortKey));
+  const sortedRecords = sort(sortFunc, filterRecord(props.records));
 
   return (
     <div id={styles.root}>
@@ -174,6 +200,9 @@ const SearchPage: React.FC<TProps> = (props: TProps) => {
                 </div>
               </ExpansionPanelDetails>
             </ExpansionPanel>
+          </Grid>
+          <Grid item={true} xs={12} sm={12} md={12} lg={8}>
+            <SearchTable categories={props.categories} targets={props.targets} records={sortedRecords} />
           </Grid>
         </Grid>
       </div>

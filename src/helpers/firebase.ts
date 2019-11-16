@@ -42,3 +42,6 @@ export const populate = <T extends TBase, K extends keyof T, P extends TBase>(ke
   typeof obj[key] !== 'string'
     ? obj
     : { ...obj, [key]: objs.find(by('id')(String(obj[key]))) || { ...defaultObj, [key]: String(obj[key]) } };
+
+export const findDocObj = <T extends TBase>(objects: T[], defaultObj: T) => (obj: TDocIdOrObject<T>) =>
+  typeof obj !== 'string' ? obj : objects.find(by('id')(getDocId(obj))) || { ...defaultObj };
