@@ -1,7 +1,7 @@
 import { Action, AnyAction } from 'typescript-fsa';
 import { Epic, combineEpics } from 'redux-observable';
 import { ofAction } from 'typescript-fsa-redux-observable-of-action';
-import { map, mergeMap, filter, debounceTime } from 'rxjs/operators';
+import { map, filter, debounceTime } from 'rxjs/operators';
 import { AppState } from '../../../store';
 import { searchPageActions } from '.';
 import { appStateSelector } from '../../state-selector';
@@ -76,5 +76,7 @@ const setDate: Epic<AnyAction, Action<TDateRange>, AppState> = (action$, store) 
       });
     }),
   );
+
+// TODO: カテゴリ選択時に削除ずみでないものととかの時ない奴があれば未設定にする必要がある
 
 export const searchPageEpics = combineEpics(load, setToday, setDate);

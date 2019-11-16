@@ -39,11 +39,19 @@ $ npm run test
 - [ ] searchPage の設定
 - [x] ListItemText
 
+- [ ] login でも sidebar を表示する
+- [ ] sidebar に権限チェックをつけて manual は表示できるようにする
+- [ ] deploy 後は sample は表示できないようにする
+- [ ] pagetitle は別コンポーネントにして main template に追加する
+- [ ] auth データの調整。必要なデータのみを pickup する
+- [ ] background でページ幅や高さを取得して redux で管理する
+- [ ] url に応じて、browseTab を変更できるようにする
+- [ ] 上記を元にページの表示を切り替えられるようにする
 - [ ] settingPage、recordPage の調整（ダイアログとかを redux 経由にする）
 
 - [ ] snackbar で複数のメッセージを表示できるようにする
 
-- [ ] table 上で編集できるようにする
+- [ ] settingPage の table 上で編集できるようにする
 
 - [ ] loading の調整
 

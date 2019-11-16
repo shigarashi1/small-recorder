@@ -47,3 +47,10 @@ export type TDateRange<T = string> = {
   from: T;
   to: T;
 };
+
+export const OrderBy = {
+  Date: 'Date',
+  Category: 'Category',
+  Record: 'Record',
+};
+export type TOrderBy = keyof typeof OrderBy;

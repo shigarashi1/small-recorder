@@ -1,1 +1,37 @@
 // @types
+$selector-margin: 0 0 10px 10px;
+
+#root {
+  .content {
+    .formControl {
+      width: 100%;
+    }
+    .dateSelector {
+      margin: $selector-margin;
+    }
+    .category {
+      margin: $selector-margin;
+      .check {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+    .record {
+      margin: $selector-margin;
+      margin-bottom: 20px;
+    }
+    .orderBy {
+      margin: $selector-margin;
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      .select {
+        width: 150px;
+      }
+      .check {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+}
