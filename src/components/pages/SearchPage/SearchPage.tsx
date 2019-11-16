@@ -4,9 +4,10 @@ import { keys } from 'ramda';
 import styles from './SearchPage.module.scss';
 
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
+import Icon from '@material-ui/core/Icon';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
@@ -77,94 +78,102 @@ const SearchPage: React.FC<TProps> = (props: TProps) => {
       </div>
       <div className={styles.contents}>
         <Grid container={true} spacing={2} alignContent="flex-start" justify="flex-start">
-          <Grid item={true} xs={12} sm={6} md={4}>
-            <Card className={styles.card} square={true}>
-              <CardHeader className={styles.header} title="Filter" />
-              <CardContent className={styles.content}>
-                <Typography variant="subtitle1">Date From</Typography>
-                <div className={styles.dateSelector}>
-                  <DateSelector
-                    selectedDate={pageState.dateRange.from}
-                    onChangeDate={onChangeDate('from')}
-                    margin="none"
-                  >
-                    <Button onClick={onToday('from')} variant="contained" color="primary" size="small">
-                      Today
-                    </Button>
-                  </DateSelector>
-                </div>
-                <Typography variant="subtitle1">Date To</Typography>
-                <div className={styles.dateSelector}>
-                  <DateSelector selectedDate={pageState.dateRange.to} onChangeDate={onChangeDate('to')} margin="none">
-                    <Button onClick={onToday('to')} variant="contained" color="primary" size="small">
-                      Today
-                    </Button>
-                  </DateSelector>
-                </div>
-                <Typography variant="subtitle1">Category</Typography>
-                <div className={styles.category}>
-                  <div className={styles.select}>
-                    {/* category */}
+          <Grid item={true} xs={12} sm={8} md={6} lg={4}>
+            <ExpansionPanel defaultExpanded={true} square={true}>
+              <ExpansionPanelSummary
+                expandIcon={<Icon>expand_more_icon</Icon>}
+                aria-controls={`expand-record-filter`}
+                id={`expand-record-filter`}
+              >
+                <Typography variant="h5">Filter</Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <div className={styles.content}>
+                  <Typography variant="subtitle1">Date From</Typography>
+                  <div className={styles.dateSelector}>
+                    <DateSelector
+                      selectedDate={pageState.dateRange.from}
+                      onChangeDate={onChangeDate('from')}
+                      margin="none"
+                    >
+                      <Button onClick={onToday('from')} variant="contained" color="primary" size="small">
+                        Today
+                      </Button>
+                    </DateSelector>
+                  </div>
+                  <Typography variant="subtitle1">Date To</Typography>
+                  <div className={styles.dateSelector}>
+                    <DateSelector selectedDate={pageState.dateRange.to} onChangeDate={onChangeDate('to')} margin="none">
+                      <Button onClick={onToday('to')} variant="contained" color="primary" size="small">
+                        Today
+                      </Button>
+                    </DateSelector>
+                  </div>
+                  <Typography variant="subtitle1">Category</Typography>
+                  <div className={styles.category}>
+                    <div className={styles.select}>
+                      {/* category */}
+                      <FormControl className={styles.formControl}>
+                        <Select value={pageState.category} onChange={onChangeState('category')}>
+                          <MenuItem value={''}>{''}</MenuItem>
+                          {selectableCategories.map((v, i) => (
+                            <MenuItem key={i} value={String(v.id)}>
+                              {v.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <div className={styles.check}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={!pageState.canShowDeletedCategory}
+                            onChange={onChangeState('canShowDeletedCategory')}
+                            value="canShowDeletedCategory"
+                          />
+                        }
+                        label="not include deleted"
+                      />
+                    </div>
+                  </div>
+                  <Typography variant="subtitle1">Record</Typography>
+                  <div className={styles.record}>
                     <FormControl className={styles.formControl}>
-                      <Select value={pageState.category} onChange={onChangeState('category')}>
-                        <MenuItem value={''}>{''}</MenuItem>
-                        {selectableCategories.map((v, i) => (
-                          <MenuItem key={i} value={String(v.id)}>
-                            {v.name}
-                          </MenuItem>
-                        ))}
-                      </Select>
+                      <TextField
+                        className={styles.text}
+                        value={pageState.record}
+                        onChange={onChangeState('record')}
+                        fullWidth={true}
+                        label="Record"
+                      />
                     </FormControl>
                   </div>
-                  <div className={styles.check}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={!pageState.canShowDeletedCategory}
-                          onChange={onChangeState('canShowDeletedCategory')}
-                          value="canShowDeletedCategory"
-                        />
-                      }
-                      label="not include deleted"
-                    />
+                  <Typography variant="subtitle1">OrderBy</Typography>
+                  <div className={styles.orderBy}>
+                    <div className={styles.select}>
+                      <FormControl className={styles.formControl}>
+                        <Select value={pageState.orderBy} onChange={onChangeState('orderBy')}>
+                          {keys(OrderBy).map((v, i) => (
+                            <MenuItem key={i} value={String(v)}>
+                              {v}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <div className={styles.check}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox checked={pageState.isDesc} onChange={onChangeState('isDesc')} value="isDesc" />
+                        }
+                        label="Desc"
+                      />
+                    </div>
                   </div>
                 </div>
-                <Typography variant="subtitle1">Record</Typography>
-                <div className={styles.record}>
-                  <FormControl className={styles.formControl}>
-                    <TextField
-                      className={styles.text}
-                      value={pageState.record}
-                      onChange={onChangeState('record')}
-                      fullWidth={true}
-                      label="Record"
-                    />
-                  </FormControl>
-                </div>
-                <Typography variant="subtitle1">OrderBy</Typography>
-                <div className={styles.orderBy}>
-                  <div className={styles.select}>
-                    <FormControl className={styles.formControl}>
-                      <Select value={pageState.orderBy} onChange={onChangeState('orderBy')}>
-                        {keys(OrderBy).map((v, i) => (
-                          <MenuItem key={i} value={String(v)}>
-                            {v}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </div>
-                  <div className={styles.check}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox checked={pageState.isDesc} onChange={onChangeState('isDesc')} value="isDesc" />
-                      }
-                      label="Desc"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
           </Grid>
         </Grid>
       </div>
