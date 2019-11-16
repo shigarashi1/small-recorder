@@ -18,7 +18,7 @@ const today = new Date();
 
 export const isValidDate = (date: Date) => date.toString() !== 'Invalid Date';
 export const parseDate = (dateString: string) => parse(dateString, DATE_FORMAT, today);
-export const formatDate = (date: Date) => format(date, DATE_FORMAT);
+export const formatDate = (date: Date = today) => format(date, DATE_FORMAT);
 export const toDisplayDate = (date: Date | string) =>
   typeof date === 'string' ? format(parseDate(date), DATE_DISPLAY_FORMAT) : format(date, DATE_DISPLAY_FORMAT);
 export const isFuture = (date: Date) => isAfter(date, today);

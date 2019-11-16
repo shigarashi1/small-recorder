@@ -25,12 +25,12 @@ const actions = {
 export const recordActions = actions;
 
 // reducers
-interface IRecordState {
+export type TRecordFeatureState = {
   records: TRecord[];
   dateRange: TDateRange;
-}
+};
 
-const initialState: IRecordState = {
+const initialState: TRecordFeatureState = {
   records: [],
   dateRange: {
     from: '',

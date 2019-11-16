@@ -46,7 +46,7 @@ const load: Epic<AnyAction, Action<TDateRange>, AppState> = (action$, store) =>
 const setDate: Epic<AnyAction, Action<TDateRange>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(reportPageActions.setDate),
-    filter(({ payload }) => !isValidDate(payload.date)),
+    filter(({ payload }) => isValidDate(payload.date)),
     map(({ payload }) => {
       const { reportPageState } = appStateSelector(store.value);
       return { payload, reportPageState };

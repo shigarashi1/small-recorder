@@ -17,6 +17,7 @@ import { TDateRange } from '../../../types';
 const changeDate: Epic<AnyAction, Action<TDateRange>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(recordPageActions.changeDate),
+    // TODO: 将来日の場合、上にメッセージを表示する
     filter(({ payload }) => isValidDate(payload.date) && isPast(payload.date)),
     debounceTime(400),
     map(({ payload }) => {

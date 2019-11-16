@@ -124,4 +124,9 @@ class AppStateSelector {
   get reportPageState() {
     return path(this.state.page, 'report');
   }
+
+  // searchPage
+  get searchPageState() {
+    return path(this.state.page, 'search');
+  }
 }
