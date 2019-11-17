@@ -36,9 +36,10 @@ $ npm run test
 - [x] user の登録
 
 - [x] reportPage の設定
-- [ ] searchPage の設定
+- [x] searchPage の設定
 - [x] ListItemText
 
+- [ ] recordPage のバグ修正（修正時に新規の textarea にも表示される）
 - [ ] login でも sidebar を表示する
 - [ ] sidebar に権限チェックをつけて manual は表示できるようにする
 - [ ] deploy 後は sample は表示できないようにする
