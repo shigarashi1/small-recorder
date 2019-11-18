@@ -37,6 +37,8 @@ const initialFormState = {
   record: '',
 };
 
+const CATEGORY_NEW = '999';
+
 const RecordPage: React.FC<TProps> = (props: TProps) => {
   const [displayDate, setDisplayDate] = useState(new Date());
 
@@ -67,6 +69,10 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
 
   const onChangeValue = (key: keyof TRecord) => (e: React.ChangeEvent<any>) => {
     const value = e.target.value || '';
+    if (key === 'category' && value === CATEGORY_NEW) {
+      props.showCategoryDialog();
+      return;
+    }
     setFormState({ ...formState, [key]: value });
   };
 
@@ -186,6 +192,10 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                           {v.name}
                         </MenuItem>
                       ))}
+                      <MenuItem value={CATEGORY_NEW}>
+                        <Icon fontSize="small">add</Icon>
+                        Create New Category
+                      </MenuItem>
                     </Select>
                   </FormControl>
                   {/* record */}

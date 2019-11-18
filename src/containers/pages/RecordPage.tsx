@@ -6,6 +6,7 @@ import { AppState } from '../../store';
 import { getState } from '../../store-observable/state-selector';
 import { commonPageActions } from '../../store-observable/pages/common-page';
 import { recordPageActions } from '../../store-observable/pages/record-page';
+import { categoryDialogActions } from '../../store-observable/utilities/dialogs';
 
 function mapStateToProps(state: AppState) {
   return {
@@ -16,7 +17,9 @@ function mapStateToProps(state: AppState) {
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
+  const { show: showCategoryDialog } = bindActionCreators(categoryDialogActions, dispatch);
   return {
+    showCategoryDialog,
     ...bindActionCreators(commonPageActions, dispatch),
     ...bindActionCreators(recordPageActions, dispatch),
   };
