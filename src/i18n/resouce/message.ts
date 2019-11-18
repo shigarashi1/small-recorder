@@ -62,6 +62,10 @@ const warm = {
     jp: 'passwordを入力してください.',
     en: 'please input password.',
   },
+  '0010': {
+    jp: 'そのカテゴリ名はすでに登録されています.',
+    en: 'please input password.',
+  },
 };
 
 const info = {

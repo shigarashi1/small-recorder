@@ -85,6 +85,10 @@ export const getState = {
         appStateSelector,
         selector => selector.infoDialog,
       ),
+      category: createSelector(
+        appStateSelector,
+        selector => selector.categoryDialogData,
+      ),
     },
   },
   pages: {

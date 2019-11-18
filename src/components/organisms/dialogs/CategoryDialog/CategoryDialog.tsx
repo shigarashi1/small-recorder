@@ -1,46 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import styles from './CategoryDialog.module.scss';
 
 import BaseDialog from '../BaseDialog/BaseDialog';
-import { TCategory } from '../../../../types/firebase';
-import { Nullable } from '../../../../types';
 
-interface IProps {
-  hasOpen: boolean;
-  category: Nullable<TCategory>;
-  onClose: () => void;
-  onAction: (v: TCategory) => void;
-}
+import { TCategoryDialogProps } from '../../../../containers/components/dialogs/CategoryDialog';
+import { TCategoryDialog } from '../../../../store-observable/utilities/dialogs/category/action-reducers';
 
-const getLabel = (id: Nullable<string>) => (id !== null && id !== '' ? 'Edit' : 'Create');
+type TProps = TCategoryDialogProps;
 
-const getCategory = (v: Nullable<TCategory>) => v || ({ id: '', name: '' } as TCategory);
+const CategoryDialog: React.FC<TProps> = ({ hasOpen, id, name, create, update, setState, close }) => {
+  const isEdit = !!id;
+  const label = isEdit ? 'Edit' : 'Create';
 
-const CategoryDialog: React.FC<IProps> = (props: IProps) => {
-  const [category, setCategory] = useState(getCategory(props.category));
-  const { hasOpen, onClose } = props;
-
-  useEffect(() => {
-    setCategory(getCategory(props.category));
-  }, [props.category]);
-
-  const onChangeValue = (key: keyof TCategory) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value || '';
-    setCategory({ ...category, [key]: value });
+  const onClose = () => {
+    close();
   };
 
   const onAction = () => {
-    props.onAction(category);
-    onClose();
+    if (isEdit) {
+      update();
+    } else {
+      create();
+    }
+  };
+
+  const onChangeValue = (key: keyof TCategoryDialog) => (e: React.ChangeEvent<any>) => {
+    setState({ key, value: e.target.value || '' });
   };
 
   const buttonChildren = (
     <div className={styles.btnWrapper}>
       <Button onClick={onClose}>Close</Button>
-      <Button onClick={onAction}>{getLabel(category.id)}</Button>
+      <Button onClick={onAction} disabled={!name}>
+        {label}
+      </Button>
     </div>
   );
 
@@ -49,14 +45,15 @@ const CategoryDialog: React.FC<IProps> = (props: IProps) => {
       <BaseDialog
         hasOpen={hasOpen}
         onClose={onClose}
-        title={`${getLabel(category.id)} Category`}
+        title={`${label} Category`}
         areaLabeledby="dialog-category"
         buttonChildren={buttonChildren}
       >
         <TextField
           className={styles.text}
           label="Category Name"
-          value={category.name}
+          placeholder="please Input Category"
+          value={name}
           onChange={onChangeValue('name')}
         />
       </BaseDialog>

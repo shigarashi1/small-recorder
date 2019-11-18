@@ -15,6 +15,7 @@ import { errorReducers, errorEpics } from './error';
 import { rootActions } from './actions';
 import { targetReducers, targetEpics } from './target';
 import { recordReducers, recordEpics } from './record';
+import { categoryDialogEpics } from './utilities/dialogs/category';
 
 // reducer
 export const reducers = combineReducers({
@@ -53,6 +54,7 @@ const rootEpic = combineEpics(
   categoryEpics,
   targetEpics,
   recordEpics,
+  categoryDialogEpics,
   errorEpics,
 );
 const epicMiddleware = createEpicMiddleware<AnyAction, AnyAction, AppState>();

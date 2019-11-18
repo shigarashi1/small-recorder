@@ -9,12 +9,11 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 //
 import styles from './SettingPage.module.scss';
 //
-import CategoryDialog from '../../organisms/dialogs/CategoryDialog/CategoryDialog';
 import SettingTable from '../../organisms/SettingTable/SettingTable';
 import TargetDialog from '../../organisms/dialogs/TargetDialog/TargetDialog';
 //
 import { TPageProps } from '../../../containers/pages/SettingPage';
-import { TTarget, TCategory } from '../../../types/firebase';
+import { TTarget } from '../../../types/firebase';
 import { Nullable, TMode, Mode, ESettingTableTab } from '../../../types';
 import { by } from '../../../helpers/generals';
 
@@ -25,17 +24,11 @@ type TProps = TPageProps;
 const SettingPage: React.FC<TProps> = (props: TProps) => {
   const [tabIndex, setTabIndex] = useState(ESettingTableTab.category);
   // dialogs
-  const [hasOpenedCategory, setHasOpenedCategory] = useState(false);
   const [hasOpenedTarget, setHasOpenedTarget] = useState(false);
   // checkbox
   const [canShowDeleted, setCanShowDeleted] = useState(false);
   // filteredData
-  const [selectedCategory, setSelectedCategory] = useState<Nullable<TCategory>>(null);
   const [selectedTarget, setSelectedTarget] = useState<Nullable<TTarget>>(null);
-
-  const onCloseCategoryDialog = () => {
-    setHasOpenedCategory(false);
-  };
 
   const onCloseTargetDialog = () => {
     setHasOpenedTarget(false);
@@ -53,8 +46,7 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
 
   const onShowCreateMode = () => {
     if (tabIndex === ESettingTableTab.category) {
-      setSelectedCategory(null);
-      setHasOpenedCategory(true);
+      props.showCategoryDialog();
     } else {
       setSelectedTarget(null);
       setHasOpenedTarget(true);
@@ -92,9 +84,7 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
   const onActionTable = (mode: TMode, id: string) => {
     if (mode === Mode.edit) {
       if (tabIndex === ESettingTableTab.category) {
-        const category = props.categories.find(v => v.id === id) || null;
-        setSelectedCategory(category);
-        setHasOpenedCategory(true);
+        props.showCategoryDialog(id);
       } else {
         const target = props.targets.find(v => v.id === id) || null;
         setSelectedTarget(target);
@@ -103,14 +93,6 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
     } else {
       const data = getYesNoDialogData(id);
       props.onShowYesNoDialog(data);
-    }
-  };
-
-  const onActionCategory = (v: TCategory) => {
-    if (v.id) {
-      props.updateCategory({ id: String(v.id), name: v.name });
-    } else {
-      props.createCategory({ name: v.name });
     }
   };
 
@@ -159,12 +141,6 @@ const SettingPage: React.FC<TProps> = (props: TProps) => {
           </div>
         </div>
       </div>
-      <CategoryDialog
-        hasOpen={hasOpenedCategory}
-        onClose={onCloseCategoryDialog}
-        onAction={onActionCategory}
-        category={selectedCategory}
-      />
       <TargetDialog
         hasOpen={hasOpenedTarget}
         onClose={onCloseTargetDialog}

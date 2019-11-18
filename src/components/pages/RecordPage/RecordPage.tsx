@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import Button from '@material-ui/core/Button';
-import Fab from '@material-ui/core/Fab';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -199,9 +198,10 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                     />
                   </FormControl>
                   <div className={styles.btnWrapper}>
-                    <Fab onClick={onCreateRecord} size="small" color="primary">
-                      <Icon>post_add</Icon>
-                    </Fab>
+                    <Button onClick={onCreateRecord} variant="contained" color="primary">
+                      <Icon>save</Icon>
+                      Save
+                    </Button>
                   </div>
                 </div>
               </ExpansionPanelDetails>

@@ -5,7 +5,7 @@ import { map, filter, debounceTime } from 'rxjs/operators';
 import { AppState } from '../../../store';
 import { recordPageActions } from '../record-page';
 import { isValidDate, matchCondition, by } from '../../../helpers/generals';
-import { formatDate, isPast } from '../../../helpers/generals/date';
+import { formatDate } from '../../../helpers/generals/date';
 import { recordActions } from '../../record';
 import { appStateSelector } from '../../state-selector';
 import { WrapAction } from '../../../types/actions';
@@ -17,8 +17,7 @@ import { TDateRange } from '../../../types';
 const changeDate: Epic<AnyAction, Action<TDateRange>, AppState> = (action$, store) =>
   action$.pipe(
     ofAction(recordPageActions.changeDate),
-    // TODO: 将来日の場合、上にメッセージを表示する
-    filter(({ payload }) => isValidDate(payload.date) && isPast(payload.date)),
+    filter(({ payload }) => isValidDate(payload.date)),
     debounceTime(400),
     map(({ payload }) => {
       const date = formatDate(payload.date);
@@ -43,7 +42,12 @@ const createRecord: Epic<
     map(({ payload, userId, dateRange }) => {
       const { category, record } = payload;
       const errorCode = matchCondition<TWarmCode>(
-        [['0000', !userId], ['0003', !category], ['0004', !record], ['0000', dateRange.from !== dateRange.to]],
+        [
+          ['0000', !userId], //
+          ['0003', !category], //
+          ['0004', !record], //
+          ['0000', dateRange.from !== dateRange.to],
+        ],
         undefined,
       );
       if (errorCode) {

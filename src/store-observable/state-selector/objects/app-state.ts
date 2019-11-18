@@ -108,7 +108,11 @@ class AppStateSelector {
   }
 
   get selectionDialogData() {
-    return this.state.utility.dialog.yesNo;
+    return { ...this.state.utility.dialog.yesNo };
+  }
+
+  get categoryDialogData() {
+    return { ...this.state.utility.dialog.category };
   }
 
   // errors
