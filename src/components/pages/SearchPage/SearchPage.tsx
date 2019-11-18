@@ -99,7 +99,7 @@ const SearchPage: React.FC<TProps> = (props: TProps) => {
     <div id={styles.root}>
       <div className={styles.title}>
         <Typography variant="h4" color="inherit">
-          SearchPage
+          Search Page
         </Typography>
       </div>
       <div className={styles.contents}>

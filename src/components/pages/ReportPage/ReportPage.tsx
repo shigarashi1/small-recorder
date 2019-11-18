@@ -58,14 +58,14 @@ const ReportPage: React.FC<TProps> = props => {
     <div id={styles.root}>
       <div className={styles.title}>
         <Typography variant="h4" color="inherit">
-          RecordPage
+          Report Page
         </Typography>
       </div>
       <div className={styles.contents}>
         <Grid container={true} spacing={2} alignContent="flex-start" justify="flex-start">
           <Grid item={true} xs={12} sm={6} md={4}>
             <Card className={styles.card} square={true}>
-              <CardHeader className={styles.header} title="Record Date" />
+              <CardHeader className={styles.header} title="Filter" />
               <CardContent className={styles.content}>
                 <Typography variant="subtitle1">Date From</Typography>
                 <div className={styles.dateSelector}>
@@ -73,11 +73,7 @@ const ReportPage: React.FC<TProps> = props => {
                     selectedDate={pageState.dateRange.from}
                     onChangeDate={onChangeDate('from')}
                     margin="none"
-                  >
-                    <Button onClick={onSetThisDate} variant="contained" color="primary" size="small">
-                      {pageState.isMonth ? 'This Month' : 'This Week'}
-                    </Button>
-                  </DateSelector>
+                  />
                 </div>
                 <Typography variant="subtitle1">Date To</Typography>
                 <div className={styles.dateSelector}>
@@ -92,6 +88,9 @@ const ReportPage: React.FC<TProps> = props => {
                     labelPlacement="end"
                     label="Month"
                   />
+                  <Button onClick={onSetThisDate} variant="contained" color="primary" size="small">
+                    {pageState.isMonth ? 'This Month' : 'This Week'}
+                  </Button>
                 </div>
               </CardContent>
             </Card>

@@ -52,7 +52,7 @@ const CategoryDialog: React.FC<TProps> = ({ hasOpen, id, name, create, update, s
         <TextField
           className={styles.text}
           label="Category Name"
-          placeholder="please Input Category"
+          placeholder="Please Input Category"
           value={name}
           onChange={onChangeValue('name')}
         />
