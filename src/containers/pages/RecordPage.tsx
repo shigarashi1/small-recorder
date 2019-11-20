@@ -10,6 +10,7 @@ import { categoryDialogActions } from '../../store-observable/utilities/dialogs'
 
 function mapStateToProps(state: AppState) {
   return {
+    pageState: getState.pages.recordPageState(state),
     categories: getState.lookups.categories(state),
     targets: getState.lookups.targets(state),
     records: getState.record.records(state),

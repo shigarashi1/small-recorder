@@ -100,6 +100,10 @@ export const getState = {
       appStateSelector,
       selector => selector.searchPageState,
     ),
+    recordPageState: createSelector(
+      appStateSelector,
+      selector => selector.recordPageState,
+    ),
   },
   // error
   error: {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
@@ -29,101 +29,76 @@ import { Nullable } from '../../../types';
 import { TRecord } from '../../../types/firebase';
 import { TPageProps } from '../../../containers/pages/RecordPage';
 import { by } from '../../../helpers/generals';
+import { TInputFormKey, TEditFormKey } from '../../../store-observable/pages/record-page/actions-reducer';
 
 type TProps = TPageProps;
-
-const initialFormState = {
-  category: '',
-  record: '',
-};
 
 const CATEGORY_NEW = '999';
 
 const RecordPage: React.FC<TProps> = (props: TProps) => {
-  const [displayDate, setDisplayDate] = useState(new Date());
+  const { pageState, load } = props;
 
-  // FIXME: 下記は全てReduxへ
-  const [formState, setFormState] = useState({ ...initialFormState });
-  const [modifyId, setModifyId] = useState('');
-  const [recordText, setRecordText] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
+  useEffect(() => {
+    load();
+  }, [load]);
 
-  const { changeDate, createRecord, records } = props;
+  if (!pageState) {
+    return null;
+  }
+
   const selectableCategories = props.categories.filter(v => !v.hasDeleted);
-  const showableCategories = props.categories.filter(v => records.map(vv => String(vv.category)).includes(v.id || ''));
+  const showableCategories = props.categories.filter(v =>
+    props.records.map(vv => String(vv.category)).includes(v.id || ''),
+  );
+
+  const onCloseYesNoDialog = () => {
+    props.onCloseYesNoDialog();
+  };
 
   const onChangeDate = (date: Nullable<Date>) => {
-    setDisplayDate(date || new Date());
-  };
-
-  // record追加後に削除する
-  // FIXME: 登録完了後に初期化したいのであれば、formStateはreduxに持つしかない気が。。。
-  // 初期化するのはrecordだけでよくないか？
-  useEffect(() => {
-    setFormState({ ...initialFormState });
-  }, [records, setFormState]);
-
-  useEffect(() => {
-    changeDate({ date: displayDate });
-  }, [changeDate, displayDate]);
-
-  const onChangeValue = (key: keyof TRecord) => (e: React.ChangeEvent<any>) => {
-    const value = e.target.value || '';
-    if (key === 'category' && value === CATEGORY_NEW) {
-      props.showCategoryDialog();
-      return;
-    }
-    setFormState({ ...formState, [key]: value });
-  };
-
-  const onCreateRecord = () => {
-    createRecord({ ...formState });
-  };
-
-  const onSetCategoryRef = (id: string) => () => {
-    setSelectedCategory(id);
-  };
-
-  const onCreateRecordByCategory = (category: string) => () => {
-    if (!recordText) {
-      return;
-    }
-    createRecord({ record: recordText, category });
-    setRecordText('');
-    setSelectedCategory('');
+    props.changeDate({ date: date || new Date() });
   };
 
   const onSetToday = () => {
     onChangeDate(null);
   };
 
-  const onCloseYesNoDialog = () => {
-    props.onCloseYesNoDialog();
-  };
-
-  const getRecordText = (id: string): string => (records.find(by('id')(id)) || { record: '' }).record;
-
-  const onTogleEdit = (id: string) => () => {
-    const record = getRecordText(id);
-    if (id !== modifyId) {
-      setModifyId(id);
-      setRecordText(record);
-    } else {
-      if (record !== recordText) {
-        props.updateRecord({ id, record: recordText });
-      }
-      setModifyId('');
-      setRecordText('');
-    }
-  };
-
-  const onEditRecord = (e: React.ChangeEvent<any>) => {
+  const onChangeInputForm = (key: TInputFormKey) => (e: React.ChangeEvent<any>) => {
     const value = e.target.value || '';
-    setRecordText(value);
+    if (key === 'categoryId' && value === CATEGORY_NEW) {
+      props.showCategoryDialog();
+      return;
+    }
+    props.setInputFormState({ key, value });
   };
 
-  const onConfirmDelete = (id: string) => () => {
-    const record = getRecordText(id);
+  const onChangeEditForm = (key: TEditFormKey) => (e: React.ChangeEvent<any>) => {
+    const value = e.target.value || '';
+    props.setEditFormState({ key, value });
+  };
+
+  const onCreateRecord = () => {
+    props.createRecord();
+  };
+
+  const onSelectModifyRecord = (recordId: string) => () => {
+    props.selectModifyRecord(recordId);
+  };
+
+  const onBlurModifyRecord = () => {
+    props.updateRecord();
+  };
+
+  const onFocusRecord = (categoryId: string) => () => {
+    props.selectCategoryRecord(categoryId);
+  };
+
+  const onBlurRecord = () => {
+    props.createRecord();
+  };
+
+  const onConfirmDelete = (records: TRecord[]) => (id: string) => () => {
+    const { record } = records.find(by('id')(id)) || { record: '' };
     const data = {
       hasOpen: true,
       title: '確認',
@@ -152,7 +127,7 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
               <CardHeader className={styles.header} title="Record Date" />
               <CardContent className={styles.content}>
                 <FormControl className={styles.formControl}>
-                  <DateSelector selectedDate={displayDate} onChangeDate={onChangeDate} margin="none">
+                  <DateSelector selectedDate={pageState.displayedDate} onChangeDate={onChangeDate} margin="none">
                     <Button
                       className={styles.today}
                       onClick={onSetToday}
@@ -180,15 +155,15 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                   <FormControl className={styles.formControl}>
                     <InputLabel htmlFor="category">Category</InputLabel>
                     <Select
-                      value={formState.category}
-                      onChange={onChangeValue('category')}
+                      value={pageState.inputForm.categoryId}
+                      onChange={onChangeInputForm('categoryId')}
                       inputProps={{
                         name: 'Category',
                         id: 'category',
                       }}
                     >
                       {selectableCategories.map((v, i) => (
-                        <MenuItem key={i} value={String(v.id)}>
+                        <MenuItem key={i} value={v.id}>
                           {v.name}
                         </MenuItem>
                       ))}
@@ -202,13 +177,18 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                   <FormControl className={styles.formControl}>
                     <TextField
                       className={styles.text}
-                      value={formState.record}
-                      onChange={onChangeValue('record')}
+                      value={pageState.inputForm.recordText}
+                      onChange={onChangeInputForm('recordText')}
                       label="Record"
                     />
                   </FormControl>
                   <div className={styles.btnWrapper}>
-                    <Button onClick={onCreateRecord} variant="contained" color="primary">
+                    <Button
+                      onClick={onCreateRecord}
+                      variant="contained"
+                      color="primary"
+                      disabled={!pageState.inputForm.recordText || !pageState.inputForm.recordText}
+                    >
                       <Icon>save</Icon>
                       Save
                     </Button>
@@ -230,18 +210,22 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                 <ExpansionPanelDetails>
                   <div className={styles.detail}>
                     <List component="div" className={styles.list}>
-                      {records.filter(by('category')(category.id)).map((v, index) => (
+                      {props.records.filter(by('category')(category.id)).map((v, index) => (
                         <React.Fragment key={index}>
                           <ListItem className={styles.listItem}>
-                            {v.id !== modifyId ? (
+                            {v.id !== pageState.editForm.recordId || !pageState.isEditForm ? (
                               <React.Fragment>
                                 <ListItemText
                                   className={styles.record}
-                                  onClick={onTogleEdit(String(v.id))}
+                                  onClick={onSelectModifyRecord(v.id)}
                                   primary={`${index + 1}. ${v.record}`}
                                 />
                                 <ListItemSecondaryAction>
-                                  <IconButton onClick={onConfirmDelete(String(v.id))} edge="end" aria-label="comments">
+                                  <IconButton
+                                    onClick={onConfirmDelete(props.records)(v.id)}
+                                    edge="end"
+                                    aria-label="comments"
+                                  >
                                     <Icon color="secondary">delete</Icon>
                                   </IconButton>
                                 </ListItemSecondaryAction>
@@ -249,10 +233,10 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                             ) : (
                               <TextField
                                 className={styles.record}
-                                value={recordText}
-                                onChange={onEditRecord}
+                                value={pageState.editForm.recordText}
+                                onChange={onChangeEditForm('recordText')}
                                 autoFocus={true}
-                                onBlur={onTogleEdit(String(v.id))}
+                                onBlur={onBlurModifyRecord}
                                 variant="outlined"
                                 label="Edit Record"
                               />
@@ -265,10 +249,16 @@ const RecordPage: React.FC<TProps> = (props: TProps) => {
                         <TextField
                           className={styles.text}
                           fullWidth={true}
-                          value={category.id !== selectedCategory ? '' : recordText}
-                          onChange={onEditRecord}
-                          onFocus={onSetCategoryRef(String(category.id))}
-                          onBlur={onCreateRecordByCategory(String(category.id))}
+                          value={
+                            category.id === pageState.editForm.categoryId &&
+                            !!pageState.isEditForm &&
+                            !pageState.editForm.recordId
+                              ? pageState.editForm.recordText
+                              : ''
+                          }
+                          onChange={onChangeEditForm('recordText')}
+                          onFocus={onFocusRecord(category.id)}
+                          onBlur={onBlurRecord}
                           label="New Record"
                         />
                       </ListItem>

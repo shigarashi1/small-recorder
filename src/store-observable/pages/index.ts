@@ -5,7 +5,7 @@ import { loginPageEpics } from './login-page';
 import { commonPageEpics } from './common-page';
 import { backgroundEpics } from './background';
 import { settingPageEpics } from './setting-page';
-import { recordPageEpics } from './record-page';
+import { recordPageEpics, recordPageReducers } from './record-page';
 import { reportPageEpics, reportPageReducers } from './report-page';
 import { searchPageReducers, searchPageEpics } from './search-page';
 
@@ -19,4 +19,8 @@ export const eventListenerEpics = combineEpics(
   searchPageEpics,
 );
 
-export const pageReducer = combineReducers({ report: reportPageReducers, search: searchPageReducers });
+export const pageReducer = combineReducers({
+  report: reportPageReducers,
+  search: searchPageReducers,
+  record: recordPageReducers,
+});
